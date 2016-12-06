@@ -1,0 +1,25 @@
+# Compiled files
+bin
+*.class
+
+# IDE Settings
+*.eml
+*.iml
+*.ipr
+*.iws
+.idea
+.DS_Store
+
+eclipse-bin/*
+eclipse-bin/**/*
+.classpath
+.project
+.settings
+out/**
+
+target/
+target/**/*
+target/*
+**/dependency-reduced-pom.xml
+**/*.pid
+**/src/generated/**
