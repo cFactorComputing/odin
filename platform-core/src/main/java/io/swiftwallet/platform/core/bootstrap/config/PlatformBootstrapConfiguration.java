@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PlatformBootstrapConfiguration {
 
-    public static final String BOOTSTRAP_PROPERTY_NAME = "bootstrap.properties";
 
     @Bean
     public ConfigurationPropertiesBindingPostProcessor configurationPropertiesBindingPostProcessor() {
