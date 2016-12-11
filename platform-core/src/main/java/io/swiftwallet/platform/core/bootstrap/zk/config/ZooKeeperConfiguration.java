@@ -22,12 +22,13 @@ public class ZooKeeperConfiguration {
     private ZooKeeperProperties zooKeeperProperties;
 
     @Bean
-    public CuratorFramework curatorFramework() {
+    public CuratorFramework curatorFramework() throws InterruptedException {
         final CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder();
         CuratorFramework curatorFramework = builder.connectString(zooKeeperProperties.getConnectString()).
                 retryPolicy(new ExponentialBackoffRetry(zooKeeperProperties.getBaseSleepTimeMs(),
                         zooKeeperProperties.getMaxRetries(), zooKeeperProperties.getMaxSleepMs())).build();
         curatorFramework.start();
+        curatorFramework.blockUntilConnected(zooKeeperProperties.getBlockUntilConnectedWait(), zooKeeperProperties.getBlockUntilConnectedUnit());
         return curatorFramework;
     }
 
