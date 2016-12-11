@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Nibodha Technologies Pvt. Ltd. 2016. All rights reserved.  http://www.nibodha.com
- */
-
 package io.swiftwallet.platform.core.bootstrap;
 
 import org.springframework.boot.builder.ParentContextApplicationContextInitializer;
