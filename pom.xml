@@ -21,12 +21,14 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <platform-junit.version>4.12</platform-junit.version>
-        <platform-spring-boot.version>1.4.2.RELEASE</platform-spring-boot.version>
-        <platform-spring-kafka.version>1.1.1.RELEASE</platform-spring-kafka.version>
-        <platform-jetty.version>9.3.14.v20161028</platform-jetty.version>
+        <swp-junit.version>4.12</swp-junit.version>
+        <swp-spring-boot.version>1.4.2.RELEASE</swp-spring-boot.version>
+        <swp-spring-kafka.version>1.1.1.RELEASE</swp-spring-kafka.version>
+        <swp-jetty.version>9.3.14.v20161028</swp-jetty.version>
         <swp-jacoco.version>0.7.7.201606060606</swp-jacoco.version>
         <swp-curator.version>2.10.0</swp-curator.version>
+        <swp-commons-collections4.version>4.1</swp-commons-collections4.version>
+        <swp-commons-lang3.version>3.4</swp-commons-lang3.version>
     </properties>
 
     <modules>
@@ -39,7 +41,7 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>${platform-junit.version}</version>
+                <version>${swp-junit.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -50,18 +52,18 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
-                <version>${platform-spring-boot.version}</version>
+                <version>${swp-spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
-                <version>${platform-spring-kafka.version}</version>
+                <version>${swp-spring-kafka.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <optional>true</optional>
-                <version>${platform-spring-boot.version}</version>
+                <version>${swp-spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
@@ -108,6 +110,16 @@
                         <artifactId>netty</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${swp-commons-collections4.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${swp-commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
