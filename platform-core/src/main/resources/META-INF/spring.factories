@@ -2,7 +2,8 @@ io.swiftwallet.platform.core.bootstrap.config.SwiftWalletConfiguration=\
 io.swiftwallet.platform.core.config.PlatformConfiguration
 
 io.swiftwallet.platform.core.bootstrap.config.BootstrapConfiguration=\
-io.swiftwallet.platform.core.bootstrap.config.PlatformBootstrapConfiguration
+io.swiftwallet.platform.core.bootstrap.config.PlatformBootstrapConfiguration,\
+io.swiftwallet.platform.core.bootstrap.zk.config.ZooKeeperConfiguration
 
 org.springframework.context.ApplicationListener=\
 io.swiftwallet.platform.core.bootstrap.BootstrapApplicationListener
