@@ -52,13 +52,9 @@
                 <version>${platform-spring-kafka.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-servlets</artifactId>
-                <version>${platform-jetty.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-undertow</artifactId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <optional>true</optional>
                 <version>${platform-spring-boot.version}</version>
             </dependency>
         </dependencies>
