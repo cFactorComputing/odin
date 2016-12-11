@@ -2,7 +2,7 @@
  * Copyright (c) Nibodha Technologies Pvt. Ltd. 2016. All rights reserved.  http://www.nibodha.com
  */
 
-package io.swiftwallet.platform.core.bootstrap;
+package io.swiftwallet.platform.core.config;
 
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor;
@@ -16,14 +16,11 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import java.util.Collections;
 
 /**
- * @author gibugeorge on 09/12/16.
+ * @author gibugeorge on 11/12/16.
  * @version 1.0
  */
 @Configuration
-public class PlatformBootstrapConfiguration {
-
-    public static final String BOOTSTRAP_PROPERTY_NAME = "bootstrap.properties";
-
+public class PlatformConfiguration {
 
     @Bean
     public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory() {
