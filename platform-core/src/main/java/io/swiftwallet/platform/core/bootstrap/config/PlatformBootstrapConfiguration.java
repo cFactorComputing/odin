@@ -4,6 +4,8 @@
 
 package io.swiftwallet.platform.core.bootstrap.config;
 
+import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -15,5 +17,8 @@ public class PlatformBootstrapConfiguration {
 
     public static final String BOOTSTRAP_PROPERTY_NAME = "bootstrap.properties";
 
-
+    @Bean
+    public ConfigurationPropertiesBindingPostProcessor configurationPropertiesBindingPostProcessor() {
+        return new ConfigurationPropertiesBindingPostProcessor();
+    }
 }

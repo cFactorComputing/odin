@@ -42,8 +42,4 @@ public class PlatformConfiguration {
     }
 
 
-    @Bean
-    public ConfigurationPropertiesBindingPostProcessor configurationPropertiesBindingPostProcessor() {
-        return new ConfigurationPropertiesBindingPostProcessor();
-    }
 }
