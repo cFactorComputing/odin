@@ -24,7 +24,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.swiftwallet.platform</groupId>
+            <groupId>io.swiftwallet.platform</groupId>
             <artifactId>platform-core</artifactId>
         </dependency>
         <dependency>
