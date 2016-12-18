@@ -9,11 +9,11 @@
         <version>1.4.2.RELEASE</version>
     </parent>
     <groupId>io.swiftwallet</groupId>
-    <artifactId>swiftwallet-platform</artifactId>
+    <artifactId>odin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Swiftwallet Platform</name>
+    <name>Swiftwallet::Odin</name>
     <url>http://swiftwallet.io/</url>
 
     <properties>
@@ -21,54 +21,60 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <swp-junit.version>4.12</swp-junit.version>
-        <swp-spring-boot.version>1.4.2.RELEASE</swp-spring-boot.version>
-        <swp-spring-kafka.version>1.1.1.RELEASE</swp-spring-kafka.version>
-        <swp-jetty.version>9.3.14.v20161028</swp-jetty.version>
-        <swp-jacoco.version>0.7.7.201606060606</swp-jacoco.version>
-        <swp-curator.version>2.10.0</swp-curator.version>
-        <swp-commons-collections4.version>4.1</swp-commons-collections4.version>
-        <swp-commons-lang3.version>3.4</swp-commons-lang3.version>
+        <odin-junit.version>4.12</odin-junit.version>
+        <odin-spring-boot.version>1.4.2.RELEASE</odin-spring-boot.version>
+        <odin-spring-kafka.version>1.1.1.RELEASE</odin-spring-kafka.version>
+        <odin-jetty.version>9.3.14.v20161028</odin-jetty.version>
+        <odin-jacoco.version>0.7.7.201606060606</odin-jacoco.version>
+        <odin-curator.version>2.10.0</odin-curator.version>
+        <odin-commons-collections4.version>4.1</odin-commons-collections4.version>
+        <odin-commons-lang3.version>3.4</odin-commons-lang3.version>
+        <odin-hikariCP.verion>2.4.3</odin-hikariCP.verion>
+        <odin-jackson.version>2.8.5</odin-jackson.version>
+        <odin-netflix-zuul.version>1.3.0</odin-netflix-zuul.version>
+        <odin-netflix-hystrix.version>1.5.8</odin-netflix-hystrix.version>
+        <odin-netflix-ribbon.version>2.2.2</odin-netflix-ribbon.version>
+        <odin-netflix-servo.version>0.12.12</odin-netflix-servo.version>
     </properties>
 
     <modules>
-        <module>platform-core</module>
-        <module>platform-main</module>
-        <module>platform-configuration</module>
+        <module>odin-core</module>
+        <module>odin-main</module>
+        <module>odin-configuration</module>
     </modules>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>${swp-junit.version}</version>
+                <version>${odin-junit.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>com.swiftwallet.platform</groupId>
-                <artifactId>platform-core</artifactId>
+                <groupId>io.swiftwallet.odin</groupId>
+                <artifactId>odin-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
-                <version>${swp-spring-boot.version}</version>
+                <version>${odin-spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
-                <version>${swp-spring-kafka.version}</version>
+                <version>${odin-spring-kafka.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <optional>true</optional>
-                <version>${swp-spring-boot.version}</version>
+                <version>${odin-spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
-                <version>${swp-curator.version}</version>
+                <version>${odin-curator.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>log4j</groupId>
@@ -83,7 +89,7 @@
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-x-discovery</artifactId>
-                <version>${swp-curator.version}</version>
+                <version>${odin-curator.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>log4j</groupId>
@@ -98,7 +104,7 @@
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-test</artifactId>
-                <version>${swp-curator.version}</version>
+                <version>${odin-curator.version}</version>
                 <scope>test</scope>
                 <exclusions>
                     <exclusion>
@@ -114,12 +120,42 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
-                <version>${swp-commons-collections4.version}</version>
+                <version>${odin-commons-collections4.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>${swp-commons-lang3.version}</version>
+                <version>${odin-commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${odin-hikariCP.verion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${odin-jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.hystrix</groupId>
+                <artifactId>hystrix-core</artifactId>
+                <version>${odin-netflix-hystrix.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.servo</groupId>
+                <artifactId>servo-core</artifactId>
+                <version>${odin-netflix-servo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.ribbon</groupId>
+                <artifactId>ribbon-core</artifactId>
+                <version>${odin-netflix-ribbon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.zuul</groupId>
+                <artifactId>zuul-core</artifactId>
+                <version>${odin-netflix-zuul.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -153,7 +189,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${swp-jacoco.version}</version>
+                    <version>${odin-jacoco.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
