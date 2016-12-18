@@ -1,0 +1,11 @@
+io.swiftwallet.odin.core.bootstrap.config.OdinConfiguration=\
+io.swiftwallet.odin.core.config.PlatformConfiguration
+
+io.swiftwallet.odin.core.bootstrap.config.OdinBootstrapConfiguration=\
+io.swiftwallet.odin.core.bootstrap.config.PlatformBootstrapConfiguration,\
+io.swiftwallet.odin.core.bootstrap.zk.config.ZooKeeperConfiguration,\
+io.swiftwallet.odin.core.bootstrap.cd.config.ConfigurationDiscoveryConfiguration,\
+io.swiftwallet.odin.core.bootstrap.config.PropertySourceBootstrapConfiguration
+
+org.springframework.context.ApplicationListener=\
+io.swiftwallet.odin.core.bootstrap.BootstrapApplicationListener
