@@ -1,4 +1,4 @@
-package io.swiftwallet.odin.core.service.jdbc;
+package io.swiftwallet.odin.core.services.jdbc;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -13,7 +13,7 @@
     <artifactId>odin-configuration</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Swiftwallet::Odin::Configuration</name>
+    <name>Swift Wallet::Odin::Configuration</name>
     <url>http://swiftwallet.io/</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -90,13 +90,13 @@ public class BootstrapApplicationListener implements ApplicationListener<Applica
         boolean installed = false;
         for (ApplicationContextInitializer<?> initializer : application
                 .getInitializers()) {
-            if (initializer instanceof ParentContextInitilizer) {
+            if (initializer instanceof BootstrapContextInitilizer) {
                 installed = true;
-                ((ParentContextInitilizer) initializer).setParentContext(context);
+                ((BootstrapContextInitilizer) initializer).setParentContext(context);
             }
         }
         if (!installed) {
-            application.addInitializers(new ParentContextInitilizer(context));
+            application.addInitializers(new BootstrapContextInitilizer(context));
         }
 
     }
