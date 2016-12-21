@@ -1,9 +1,10 @@
-package io.swiftwallet.odin.core.service.jdbc.config;
+package io.swiftwallet.odin.core.services.jdbc.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import io.swiftwallet.odin.core.service.jdbc.DataSourceProperties;
-import io.swiftwallet.odin.core.service.jdbc.exception.DataSourceConfigurationException;
+import io.swiftwallet.odin.core.services.jdbc.DataSourceProperties;
+import io.swiftwallet.odin.core.services.jdbc.exception.DataSourceConfigurationException;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +75,12 @@ public class DataSourceConfiguration implements ApplicationContextInitializer<Co
             final String driverClassName = getProperty("driver-class-name", dataSourceName) != null ? getProperty("driver-class-name", dataSourceName) : null;
             if (StringUtils.isNotEmpty(driverClassName)) {
                 hikariConfig.setDriverClassName(driverClassName);
+            }
+            final String autoCommit=getProperty("auto-commit",dataSourceName);
+            if(StringUtils.isEmpty(autoCommit)) {
+                hikariConfig.setAutoCommit(false);
+            } else {
+                hikariConfig.setAutoCommit(BooleanUtils.toBoolean(autoCommit));
             }
             final String connectionTestQuery = getProperty("connection-test-query", dataSourceName);
             if (StringUtils.isNotEmpty(connectionTestQuery)) {

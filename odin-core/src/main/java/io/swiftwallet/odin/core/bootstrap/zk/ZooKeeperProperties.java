@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * @author gibugeorge on 11/12/16.
  * @version 1.0
  */
-@ConfigurationProperties(prefix = "swp.zookeeper")
+@ConfigurationProperties(prefix = "odin.zookeeper")
 public class ZooKeeperProperties {
 
     private String connectString = "localhost:2181";

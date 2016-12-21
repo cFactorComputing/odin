@@ -9,11 +9,11 @@ import org.springframework.core.Ordered;
  * @author gibugeorge on 11/12/16.
  * @version 1.0
  */
-public class ParentContextInitilizer implements ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
+public class BootstrapContextInitilizer implements ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
 
     private ConfigurableApplicationContext parentContext;
 
-    public ParentContextInitilizer(final ConfigurableApplicationContext parentContext) {
+    public BootstrapContextInitilizer(final ConfigurableApplicationContext parentContext) {
         this.parentContext = parentContext;
     }
 
