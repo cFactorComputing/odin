@@ -6,7 +6,7 @@ io.swiftwallet.odin.core.bootstrap.config.PlatformBootstrapConfiguration,\
 io.swiftwallet.odin.core.bootstrap.zk.config.ZooKeeperConfiguration,\
 io.swiftwallet.odin.core.bootstrap.cd.config.ConfigurationDiscoveryConfiguration,\
 io.swiftwallet.odin.core.bootstrap.config.PropertySourceBootstrapConfiguration,\
-io.swiftwallet.odin.core.service.jdbc.config.DataSourceConfiguration
+io.swiftwallet.odin.core.services.jdbc.config.DataSourceConfiguration
 
 org.springframework.context.ApplicationListener=\
 io.swiftwallet.odin.core.bootstrap.BootstrapApplicationListener

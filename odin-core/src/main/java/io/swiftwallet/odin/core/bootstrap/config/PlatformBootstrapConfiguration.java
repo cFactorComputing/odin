@@ -18,4 +18,5 @@ public class PlatformBootstrapConfiguration {
     public ConfigurationPropertiesBindingPostProcessor configurationPropertiesBindingPostProcessor() {
         return new ConfigurationPropertiesBindingPostProcessor();
     }
+    
 }

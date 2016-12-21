@@ -1,4 +1,4 @@
-package io.swiftwallet.odin.core.service.jdbc.exception;
+package io.swiftwallet.odin.core.services.jdbc.exception;
 
 import io.swiftwallet.odin.core.exception.OdinException;
 
