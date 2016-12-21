@@ -1,5 +1,6 @@
 io.swiftwallet.odin.core.bootstrap.config.OdinConfiguration=\
-io.swiftwallet.odin.core.config.PlatformConfiguration
+io.swiftwallet.odin.core.config.PlatformConfiguration,\
+io.swiftwallet.odin.core.services.server.config.EmbeddedServerConfiguration
 
 io.swiftwallet.odin.core.bootstrap.config.OdinBootstrapConfiguration=\
 io.swiftwallet.odin.core.bootstrap.config.PlatformBootstrapConfiguration,\

@@ -19,11 +19,6 @@ import java.util.Collections;
 public class PlatformConfiguration {
 
     @Bean
-    public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory() {
-        return new JettyEmbeddedServletContainerFactory();
-    }
-
-    @Bean
     public DispatcherServlet dispatcherServlet() {
         return new DispatcherServlet();
     }
