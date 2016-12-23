@@ -1,0 +1,36 @@
+<beans:beans xmlns:sec="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <beans:bean id="digestAuthenticationFilter"
+                class="org.springframework.security.web.authentication.www.DigestAuthenticationFilter">
+        <beans:property name="userDetailsService" ref="userDetailsService"/>
+        <beans:property name="authenticationEntryPoint" ref="digestAuthenticationEntryPoint"/>
+    </beans:bean>
+    <beans:bean id="digestAuthenticationEntryPoint"
+                class="org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint">
+        <beans:property name="realmName" value="${security.digest.realm}"/>
+        <beans:property name="key" value="uniqueAndSecret"/>
+    </beans:bean>
+
+    <sec:authentication-manager>
+        <sec:authentication-provider>
+            <sec:user-service id="userDetailsService">
+                <sec:user name="${security.user.name}" password="${security.user.password}" authorities="ROLE_USER"/>
+            </sec:user-service>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <sec:http use-expressions="true" create-session="stateless"  entry-point-ref="digestAuthenticationEntryPoint">
+        <sec:custom-filter ref="digestAuthenticationFilter" after="BASIC_AUTH_FILTER"/>
+        <sec:http-basic/>
+        <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
+        <sec:csrf disabled="true"/>
+    </sec:http>
+
+
+</beans:beans>

@@ -51,7 +51,7 @@ public class EmbeddedServerConfiguration {
             final HTTP2CServerConnectionFactory http2CServerConnectionFactory = new HTTP2CServerConnectionFactory(httpConfiguration);
             final ServerConnector serverConnector = new ServerConnector(server, httpConnectionFactory, http2CServerConnectionFactory);
             if (properties.getPort() == 0) {
-                throw new EmbeddedServerConfigurationException("\"odin.server.port\" cannot be 0");
+                throw new EmbeddedServerConfigurationException("\"server.port\" cannot be 0");
             }
             serverConnector.setPort(properties.getPort());
             server.addConnector(serverConnector);
@@ -61,7 +61,6 @@ public class EmbeddedServerConfiguration {
                 server.addBean(connectorServer);
             } catch (Exception e) {
                 throw new EmbeddedServerConfigurationException("Exception configuring the mbean connector server", e);
-
             }
             final MBeanContainer mbContainer = new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
             mbContainer.setDomain("io.swiftwallet.odin");
