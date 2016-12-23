@@ -29,14 +29,14 @@ public class ConfigurationSourceLocator implements PropertySourceLocator {
     @Override
     public PropertySource<?> locate(final Environment environment) {
         final StandardEnvironment swiftwalletEnvironment = (StandardEnvironment) environment;
-        final String microServiceId = swiftwalletEnvironment.getProperty("swp.micro-service.id");
+        final String microServiceId = swiftwalletEnvironment.getProperty("micro-service.id");
         if (StringUtils.isEmpty(microServiceId)) {
-            throw new ConfigurationDiscoveryException("\"odin.micro-service.id\" cannot be empty");
+            throw new ConfigurationDiscoveryException("\"micro-service.id\" cannot be empty");
         }
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Found micro service id {}", microServiceId);
         }
-        String profile = swiftwalletEnvironment.getProperty("odin.micro-service.profile");
+        String profile = swiftwalletEnvironment.getProperty("micro-service.profile");
         if (StringUtils.isEmpty(profile)) {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("Using default \"local\" profile as no profile is configured");
