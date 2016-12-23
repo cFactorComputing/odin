@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author gibugeorge on 11/12/16.
  * @version 1.0
  */
-@ConfigurationProperties(prefix = "odin.configuration-manager")
+@ConfigurationProperties(prefix = "configuration-manager")
 public class ConfigurationDiscoveryProperties {
 
     private String root = "configuration";

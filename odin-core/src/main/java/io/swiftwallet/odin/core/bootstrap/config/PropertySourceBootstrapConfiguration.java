@@ -15,9 +15,8 @@ import org.springframework.core.env.PropertySource;
  */
 @Configuration
 public class PropertySourceBootstrapConfiguration implements ApplicationContextInitializer<ConfigurableApplicationContext>,Ordered {
-    private static final String BOOTSTRAP_PROPERTY_NAME = "bootstrapProperties";
-    private static final String BOOTSTRAP_PROPERTY_SOURCE_NAME="bootstrap.properties";
 
+    private static final String BOOTSTRAP_PROPERTY_SOURCE_NAME="bootstrap.properties";
     @Autowired
     private PropertySourceLocator propertySourceLocator;
 
