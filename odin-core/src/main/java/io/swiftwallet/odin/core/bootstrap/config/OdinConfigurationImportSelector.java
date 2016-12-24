@@ -2,6 +2,7 @@
 
 package io.swiftwallet.odin.core.bootstrap.config;
 
+import io.swiftwallet.odin.core.bootstrap.config.annotations.OdinConfiguration;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.context.annotation.DeferredImportSelector;
 import org.springframework.core.Ordered;
