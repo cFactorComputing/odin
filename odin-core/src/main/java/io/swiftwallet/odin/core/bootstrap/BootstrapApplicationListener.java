@@ -2,7 +2,7 @@
 
 package io.swiftwallet.odin.core.bootstrap;
 
-import io.swiftwallet.odin.core.bootstrap.config.OdinBootstrapConfiguration;
+import io.swiftwallet.odin.core.bootstrap.config.annotations.OdinBootstrapConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ListableBeanFactory;

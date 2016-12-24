@@ -1,7 +1,8 @@
 
 
-package io.swiftwallet.odin.core.bootstrap.config;
+package io.swiftwallet.odin.core.bootstrap.config.annotations;
 
+import io.swiftwallet.odin.core.bootstrap.config.OdinConfigurationImportSelector;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
