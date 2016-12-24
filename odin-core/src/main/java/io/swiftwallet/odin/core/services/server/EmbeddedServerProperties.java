@@ -10,6 +10,7 @@ public class EmbeddedServerProperties {
 
     private int port=8080;
     private int jmxPort=1099;
+    private boolean sslEnabled;
 
     public int getPort() {
         return port;
@@ -25,5 +26,13 @@ public class EmbeddedServerProperties {
 
     public void setJmxPort(final int jmxPort) {
         this.jmxPort = jmxPort;
+    }
+
+    public boolean isSslEnabled() {
+        return sslEnabled;
+    }
+
+    public void setSslEnabled(boolean sslEnabled) {
+        this.sslEnabled = sslEnabled;
     }
 }
