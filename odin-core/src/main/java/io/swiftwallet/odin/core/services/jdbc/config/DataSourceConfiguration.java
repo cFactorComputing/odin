@@ -26,7 +26,7 @@ import org.springframework.core.env.Environment;
  */
 @Configuration
 @EnableConfigurationProperties(DataSourceProperties.class)
-@ConditionalOnProperty(prefix = "odin.jdbc.data-source", value = "enabled", havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = "jdbc.data-source", value = "enabled", havingValue = "true", matchIfMissing = false)
 public class DataSourceConfiguration implements ApplicationContextInitializer<ConfigurableApplicationContext>, EnvironmentAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceConfiguration.class);
@@ -39,13 +39,13 @@ public class DataSourceConfiguration implements ApplicationContextInitializer<Co
     private String[] getDsNames() {
         final String commaSeparatedDSNames = dataSourceProperties.getNames();
         if (StringUtils.isEmpty(commaSeparatedDSNames)) {
-            throw new DataSourceConfigurationException("\"odin.jdbc.data-source.names\" property cannot be empty when \"odin.jdbc.data-source.enabled=true\".");
+            throw new DataSourceConfigurationException("\"jdbc.data-source.names\" property cannot be empty when \"jdbc.data-source.enabled=true\".");
         }
         return commaSeparatedDSNames.split(",");
     }
 
     private String getProperty(final String key, final String dataSourceName) {
-        final String actualKey = "odin.jdbc.datasource." + dataSourceName + "." + key;
+        final String actualKey = "jdbc.datasource." + dataSourceName + "." + key;
         return environment.getProperty(actualKey) != null ? environment.getProperty(actualKey) : environment.getProperty("odin.jdbc.datasource.default." + key);
     }
 
