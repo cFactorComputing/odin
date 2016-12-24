@@ -1,6 +1,6 @@
 package io.swiftwallet.odin.main;
 
-import io.swiftwallet.odin.core.bootstrap.config.OdinConfiguration;
+import io.swiftwallet.odin.core.bootstrap.config.annotations.OdinConfiguration;
 import org.springframework.boot.SpringApplication;
 
 /**
