@@ -1,5 +1,6 @@
 package io.swiftwallet.odin.core.bootstrap.cd;
 
+import io.swiftwallet.odin.core.bootstrap.cd.exception.ConfigurationDiscoveryException;
 import io.swiftwallet.odin.core.bootstrap.config.PropertySourceLocator;
 import org.apache.curator.framework.CuratorFramework;
 import org.slf4j.Logger;
