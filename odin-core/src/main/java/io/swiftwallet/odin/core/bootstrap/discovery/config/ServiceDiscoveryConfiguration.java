@@ -2,7 +2,9 @@ package io.swiftwallet.odin.core.bootstrap.discovery.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swiftwallet.odin.core.bootstrap.MicroServiceProperties;
+import io.swiftwallet.odin.core.bootstrap.discovery.ServiceChangeWatcher;
 import io.swiftwallet.odin.core.bootstrap.discovery.ServiceDiscoveryProperties;
+import io.swiftwallet.odin.core.bootstrap.discovery.event.ServiceChangeListener;
 import io.swiftwallet.odin.core.bootstrap.discovery.exception.ServiceDiscoveryException;
 import io.swiftwallet.odin.core.lb.OdinServer;
 import io.swiftwallet.odin.core.lb.OdinServerRegistry;
@@ -44,6 +46,11 @@ public class ServiceDiscoveryConfiguration implements Ordered {
     @Bean
     public OdinServerRegistry serverRegistry() {
         final OdinServerRegistry serverRegistry = new OdinServerRegistry();
+        register(serverRegistry);
+        return serverRegistry;
+    }
+
+    public void register(OdinServerRegistry serverRegistry) {
         List<String> serviceNames = null;
         try {
             serviceNames = curatorFramework.getChildren().forPath(this.properties.getRoot());
@@ -84,7 +91,16 @@ public class ServiceDiscoveryConfiguration implements Ordered {
 
             }
         }
-        return serverRegistry;
+    }
+
+    @Bean
+    public ServiceChangeWatcher serviceChangeWatcher() {
+        return new ServiceChangeWatcher(properties.getRoot());
+    }
+
+    @Bean
+    public ServiceChangeListener serviceChangeListener() {
+        return new ServiceChangeListener();
     }
 
     @Override
