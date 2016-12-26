@@ -1,6 +1,6 @@
 package io.swiftwallet.odin.core.bootstrap.cd;
 
-import io.swiftwallet.odin.core.bootstrap.cd.event.ConfigurationChangeEvent;
+import io.swiftwallet.odin.core.bootstrap.cd.event.listener.ConfigurationChangeEvent;
 import io.swiftwallet.odin.core.bootstrap.zk.AbstractZooKeeperChangeWatcher;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 
