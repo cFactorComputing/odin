@@ -32,10 +32,10 @@ import java.util.Enumeration;
 @Configuration
 @EnableConfigurationProperties({ServiceDiscoveryProperties.class, MicroServiceProperties.class, EmbeddedServerProperties.class})
 @ConditionalOnProperty(prefix = "service-discovery", value = "register", havingValue = "true", matchIfMissing = true)
-public class SericeRegistrationConfiguration {
+public class ServiceRegistrationConfiguration {
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SericeRegistrationConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceRegistrationConfiguration.class);
 
     @Autowired
     private ConfigurableBeanFactory beanFactory;
