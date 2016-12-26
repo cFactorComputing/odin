@@ -1,5 +1,6 @@
 package io.swiftwallet.odin.core.bootstrap.cd;
 
+import io.swiftwallet.odin.core.bootstrap.cd.exception.ConfigurationDiscoveryException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.curator.framework.CuratorFramework;
