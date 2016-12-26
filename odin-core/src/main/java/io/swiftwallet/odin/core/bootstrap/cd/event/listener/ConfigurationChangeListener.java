@@ -1,7 +1,6 @@
 package io.swiftwallet.odin.core.bootstrap.cd.event.listener;
 
 import io.swiftwallet.odin.core.bootstrap.cd.RuntimeConfiguration;
-import io.swiftwallet.odin.core.bootstrap.cd.event.ConfigurationChangeEvent;
 import io.swiftwallet.odin.core.bootstrap.cd.exception.ConfigurationChangeListenerException;
 import ognl.Ognl;
 import ognl.OgnlContext;
@@ -34,7 +33,7 @@ public class ConfigurationChangeListener {
             }
             Object expr = null;
             try {
-                expr = ConfigurationChangeListener.getOgnlExpression(configurationChangeEvent.getRuntimeContext(), path);
+                expr = getOgnlExpression(configurationChangeEvent.getNode(), path);
             } catch (OgnlException e) {
                 throw new ConfigurationChangeListenerException("Exception creating ognl expression", e);
             }
