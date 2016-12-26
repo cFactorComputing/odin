@@ -1,4 +1,4 @@
-package io.swiftwallet.odin.core.bootstrap.cd;
+package io.swiftwallet.odin.core.bootstrap.cd.exception;
 
 import io.swiftwallet.odin.core.exception.OdinException;
 

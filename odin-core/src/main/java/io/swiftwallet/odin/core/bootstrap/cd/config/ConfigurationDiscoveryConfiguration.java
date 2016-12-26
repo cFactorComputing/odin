@@ -1,7 +1,9 @@
 package io.swiftwallet.odin.core.bootstrap.cd.config;
 
-import io.swiftwallet.odin.core.bootstrap.cd.ConfigurationSourceLocator;
+import io.swiftwallet.odin.core.bootstrap.cd.ConfigurationChangeWatcher;
 import io.swiftwallet.odin.core.bootstrap.cd.ConfigurationDiscoveryProperties;
+import io.swiftwallet.odin.core.bootstrap.cd.ConfigurationSourceLocator;
+import io.swiftwallet.odin.core.bootstrap.cd.event.listener.ConfigurationChangeListener;
 import org.apache.curator.framework.CuratorFramework;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -25,5 +27,15 @@ public class ConfigurationDiscoveryConfiguration {
     @Bean
     public ConfigurationSourceLocator configurationSourceLocator() {
         return new ConfigurationSourceLocator(curatorFramework, configurationDiscoveryProperties);
+    }
+
+    @Bean
+    public ConfigurationChangeWatcher configurationChangeWatcher() {
+        return new ConfigurationChangeWatcher(configurationDiscoveryProperties.getRuntimeConfiguration());
+    }
+
+    @Bean
+    public ConfigurationChangeListener configurationChangeListener() {
+        return new ConfigurationChangeListener();
     }
 }

@@ -36,6 +36,7 @@
         <odin-netflix-ribbon.version>2.2.2</odin-netflix-ribbon.version>
         <odin-netflix-servo.version>0.12.12</odin-netflix-servo.version>
         <odin-spring-security.version>4.2.0.RELEASE</odin-spring-security.version>
+        <odin-ognl.version>3.1.12</odin-ognl.version>
     </properties>
 
     <modules>
@@ -177,6 +178,11 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-web</artifactId>
                 <version>${odin-spring-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ognl</groupId>
+                <artifactId>ognl</artifactId>
+                <version>${odin-ognl.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
