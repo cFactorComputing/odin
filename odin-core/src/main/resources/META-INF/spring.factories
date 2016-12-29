@@ -1,7 +1,9 @@
 io.swiftwallet.odin.core.bootstrap.config.annotations.OdinConfiguration=\
 io.swiftwallet.odin.core.config.PlatformConfiguration,\
 io.swiftwallet.odin.core.services.server.config.EmbeddedServerConfiguration,\
-io.swiftwallet.odin.core.services.security.config.OdinSecurityConfiguration
+io.swiftwallet.odin.core.services.security.config.OdinSecurityConfiguration,\
+io.swiftwallet.odin.core.services.kafka.config.KafkaProducerConfiguration,\
+io.swiftwallet.odin.core.services.kafka.config.KafkaConsumerConfiguration
 io.swiftwallet.odin.core.bootstrap.config.annotations.OdinBootstrapConfiguration=\
 io.swiftwallet.odin.core.bootstrap.config.OdinBootstrapConfiguration,\
 io.swiftwallet.odin.core.bootstrap.zk.config.ZooKeeperConfiguration,\
