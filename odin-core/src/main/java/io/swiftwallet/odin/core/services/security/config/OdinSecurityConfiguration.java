@@ -17,6 +17,8 @@
 package io.swiftwallet.odin.core.services.security.config;
 
 import io.swiftwallet.odin.core.services.security.OdinSecurityProperties;
+import io.swiftwallet.odin.core.services.security.digest.config.OdinDigestAuthenticationConfiguration;
+import io.swiftwallet.odin.core.services.security.oauth2.config.OAuth2SecurityConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean;
@@ -36,7 +38,7 @@ import static org.springframework.security.web.context.AbstractSecurityWebApplic
  */
 @Configuration
 @EnableWebSecurity
-@Import({ObjectPostProcessorConfiguration.class, OdinDigestAuthenticationConfiguration.class})
+@Import({ObjectPostProcessorConfiguration.class, OdinDigestAuthenticationConfiguration.class, OAuth2SecurityConfiguration.class})
 @EnableConfigurationProperties(OdinSecurityProperties.class)
 public class OdinSecurityConfiguration {
 
