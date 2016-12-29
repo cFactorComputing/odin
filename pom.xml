@@ -54,6 +54,7 @@
         <odin-spring-security.version>4.2.0.RELEASE</odin-spring-security.version>
         <odin-ognl.version>3.1.12</odin-ognl.version>
         <odin-spring.version>4.3.5.RELEASE</odin-spring.version>
+        <odin-spring-security-oauth2.version>2.0.12.RELEASE</odin-spring-security-oauth2.version>
     </properties>
 
     <modules>
@@ -229,6 +230,11 @@
                 <artifactId>spring-boot-test</artifactId>
                 <version>${odin-spring-boot.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${odin-spring-security-oauth2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

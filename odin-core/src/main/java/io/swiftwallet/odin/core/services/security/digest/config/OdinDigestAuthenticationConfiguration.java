@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.swiftwallet.odin.core.services.security.config;
+package io.swiftwallet.odin.core.services.security.digest.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;

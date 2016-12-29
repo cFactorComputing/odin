@@ -17,6 +17,7 @@
 package io.swiftwallet.odin.core.services.security;
 
 import io.swiftwallet.odin.core.services.security.digest.DigestAuthenticationProperties;
+import io.swiftwallet.odin.core.services.security.oauth2.OAuth2SecurityProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class OdinSecurityProperties {
     private boolean enabled = true;
 
     private DigestAuthenticationProperties digest;
+
+    private OAuth2SecurityProperties oauth2;
 
     private User user;
 
