@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.2.RELEASE</version>
+        <version>1.4.3.RELEASE</version>
     </parent>
     <groupId>io.swiftwallet</groupId>
     <artifactId>odin</artifactId>
@@ -22,7 +22,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <odin-junit.version>4.12</odin-junit.version>
-        <odin-spring-boot.version>1.4.2.RELEASE</odin-spring-boot.version>
+        <odin-spring-boot.version>1.4.3.RELEASE</odin-spring-boot.version>
         <odin-spring-kafka.version>1.1.1.RELEASE</odin-spring-kafka.version>
         <odin-jetty.version>9.3.14.v20161028</odin-jetty.version>
         <odin-jacoco.version>0.7.7.201606060606</odin-jacoco.version>
@@ -37,6 +37,7 @@
         <odin-netflix-servo.version>0.12.12</odin-netflix-servo.version>
         <odin-spring-security.version>4.2.0.RELEASE</odin-spring-security.version>
         <odin-ognl.version>3.1.12</odin-ognl.version>
+        <odin-spring.version>4.3.5.RELEASE</odin-spring.version>
     </properties>
 
     <modules>
@@ -183,6 +184,35 @@
                 <groupId>ognl</groupId>
                 <artifactId>ognl</artifactId>
                 <version>${odin-ognl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${odin-spring-kafka.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${odin-spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka-test</artifactId>
+                <version>${odin-spring-kafka.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-test</artifactId>
+                <version>${odin-spring-boot.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
