@@ -22,7 +22,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author gibugeorge on 12/12/16.
  * @version 1.0
  */
-@ConfigurationProperties(prefix = "odin.jdbc.data-source")
+@ConfigurationProperties(prefix = "jdbc.data-source")
 public class DataSourceProperties {
 
     private boolean enabled = false;
