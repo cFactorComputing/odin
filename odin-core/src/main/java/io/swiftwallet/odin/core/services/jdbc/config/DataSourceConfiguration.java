@@ -62,7 +62,7 @@ public class DataSourceConfiguration implements ApplicationContextInitializer<Co
 
     private String getProperty(final String key, final String dataSourceName) {
         final String actualKey = "jdbc.datasource." + dataSourceName + "." + key;
-        return environment.getProperty(actualKey) != null ? environment.getProperty(actualKey) : environment.getProperty("odin.jdbc.datasource.default." + key);
+        return environment.getProperty(actualKey) != null ? environment.getProperty(actualKey) : environment.getProperty("jdbc.datasource.default." + key);
     }
 
     @Override
@@ -92,8 +92,8 @@ public class DataSourceConfiguration implements ApplicationContextInitializer<Co
             if (StringUtils.isNotEmpty(driverClassName)) {
                 hikariConfig.setDriverClassName(driverClassName);
             }
-            final String autoCommit=getProperty("auto-commit",dataSourceName);
-            if(StringUtils.isEmpty(autoCommit)) {
+            final String autoCommit = getProperty("auto-commit", dataSourceName);
+            if (StringUtils.isEmpty(autoCommit)) {
                 hikariConfig.setAutoCommit(false);
             } else {
                 hikariConfig.setAutoCommit(BooleanUtils.toBoolean(autoCommit));
