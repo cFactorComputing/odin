@@ -24,15 +24,12 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConstructorArgumentValues;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
@@ -43,7 +40,7 @@ import org.springframework.core.env.Environment;
 @Configuration
 @EnableConfigurationProperties(DataSourceProperties.class)
 @ConditionalOnProperty(prefix = "jdbc.data-source", value = "enabled", havingValue = "true", matchIfMissing = false)
-public class DataSourceConfiguration implements ApplicationContextInitializer<ConfigurableApplicationContext>, EnvironmentAware {
+public class DataSourceConfiguration implements EnvironmentAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceConfiguration.class);
     @Autowired
@@ -61,8 +58,8 @@ public class DataSourceConfiguration implements ApplicationContextInitializer<Co
     }
 
     private String getProperty(final String key, final String dataSourceName) {
-        final String actualKey = "jdbc.datasource." + dataSourceName + "." + key;
-        return environment.getProperty(actualKey) != null ? environment.getProperty(actualKey) : environment.getProperty("jdbc.datasource.default." + key);
+        final String actualKey = "jdbc.data-source." + dataSourceName + "." + key;
+        return environment.getProperty(actualKey) != null ? environment.getProperty(actualKey) : environment.getProperty("jdbc.data-source.default." + key);
     }
 
     @Override
@@ -70,8 +67,8 @@ public class DataSourceConfiguration implements ApplicationContextInitializer<Co
         this.environment = environment;
     }
 
-    @Override
-    public void initialize(final ConfigurableApplicationContext applicationContext) {
+    @Bean
+    public boolean createDataSources(final ConfigurableApplicationContext applicationContext) {
         final String[] dataSourceNames = getDsNames();
         for (final String dataSourceName : dataSourceNames) {
             if (LOGGER.isInfoEnabled()) {
@@ -105,18 +102,13 @@ public class DataSourceConfiguration implements ApplicationContextInitializer<Co
             hikariConfig.addDataSourceProperty("cachePrepStmts", getProperty("cache-prep-stmts", dataSourceName));
             hikariConfig.addDataSourceProperty("prepStmtCacheSize", getProperty("prep-stmt-cache-size", dataSourceName));
             hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", getProperty("prep-stmt-cache-sql-limit", dataSourceName));
-            final GenericBeanDefinition dataSourceDefinition = new GenericBeanDefinition();
-            dataSourceDefinition.setBeanClass(HikariDataSource.class);
-            final ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
-            constructorArgumentValues.addGenericArgumentValue(hikariConfig);
-            dataSourceDefinition.setConstructorArgumentValues(constructorArgumentValues);
-            final MutablePropertyValues mutablePropertyValues = new MutablePropertyValues();
-            mutablePropertyValues.add("maximumPoolSize", getProperty("maximum-pool-size", dataSourceName));
-            mutablePropertyValues.add("maxLifetime", getProperty("max-life-time", dataSourceName));
-            mutablePropertyValues.add("idleTimeout", getProperty("idle-timeout", dataSourceName));
-            dataSourceDefinition.setPropertyValues(mutablePropertyValues);
-            applicationContext.getBeanFactory().registerSingleton(dataSourceName, dataSourceDefinition);
+            final HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
+            hikariDataSource.setMaximumPoolSize(Integer.parseInt(getProperty("maximum-pool-size", dataSourceName)));
+            hikariDataSource.setMaxLifetime(Integer.parseInt(getProperty("max-life-time", dataSourceName)));
+            hikariDataSource.setMaximumPoolSize(Integer.parseInt(getProperty("idle-timeout", dataSourceName)));
+            applicationContext.getBeanFactory().registerSingleton(dataSourceName, hikariDataSource);
 
         }
+        return true;
     }
 }
