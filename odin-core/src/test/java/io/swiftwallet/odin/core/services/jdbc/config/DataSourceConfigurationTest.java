@@ -24,12 +24,8 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.sql.SQLException;
 
@@ -62,9 +58,49 @@ public class DataSourceConfigurationTest {
                 "jdbc.data-source.default.use-server-prep-stmts=true",
                 "jdbc.data-source.testDS.driver-class-name=org.h2.Driver"
         };
-        final ApplicationContext applicationContext = OdinTestUtil.load(environment, OdinBootstrapConfiguration.class,DataSourceConfiguration.class);
+        final ApplicationContext applicationContext = OdinTestUtil.load(environment, OdinBootstrapConfiguration.class, DataSourceConfiguration.class);
         Assert.assertNotNull(applicationContext.getBean(HikariDataSource.class));
     }
+
+    @Test(expected = BeanCreationException.class)
+    public void whenJdbcUrlIsMissingExcepionIsThrown() {
+        final String[] environment = new String[]{"jdbc.data-source.enabled=true",
+                "jdbc.data-source.names=testDS"};
+        OdinTestUtil.load(environment, OdinBootstrapConfiguration.class, DataSourceConfiguration.class);
+    }
+    @Test(expected = BeanCreationException.class)
+    public void whenDSNamesIsMissingExcepionIsThrown() {
+        final String[] environment = new String[]{"jdbc.data-source.enabled=true"};
+        OdinTestUtil.load(environment, OdinBootstrapConfiguration.class, DataSourceConfiguration.class);
+    }
+
+    @Test
+    public void whenAutoCommitAndTestQueryAreSetTheyAddedToConfig() {
+        final String[] environment = new String[]{"jdbc.data-source.enabled=true",
+                "jdbc.data-source.names=testDS",
+                "jdbc.data-source.testDS.jdbc-url=jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
+                "jdbc.data-source.testDS.password=",
+                "jdbc.data-source.testDS.user-name=",
+                "jdbc.data-source.testDS.cache-prep-stmts=true",
+                "jdbc.data-source.testDS.auto-commit=true",
+                "jdbc.data-source.testDS.connection-test-query=select 1",
+                "jdbc.data-source.testDS.idle-timeout=30000",
+                "jdbc.data-source.default.max-life-time=30000",
+                "jdbc.data-source.default.maximum-pool-size=5",
+                "jdbc.data-source.default.prep-stmt-cache-size=250",
+                "jdbc.data-source.default.prep-stmt-cache-sql-limit=100",
+                "jdbc.data-source.default.use-server-prep-stmts=true",
+                "jdbc.data-source.testDS.driver-class-name=org.h2.Driver"
+        };
+        final ApplicationContext applicationContext = OdinTestUtil.load(environment, OdinBootstrapConfiguration.class, DataSourceConfiguration.class);
+        final HikariDataSource hikariDataSource =applicationContext.getBean(HikariDataSource.class);
+        Assert.assertEquals("select 1",hikariDataSource.getConnectionTestQuery());
+        Assert.assertTrue(hikariDataSource.isAutoCommit());
+
+    }
+
+
+
 
     @AfterClass
     public static void tearDown() {
