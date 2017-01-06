@@ -17,7 +17,9 @@
 package io.swiftwallet.odin.core.services.security.oauth2.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -38,9 +40,11 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
+    @Qualifier("clientDetailsServiceBean")
     private ClientDetailsService clientDetailsService;
 
     @Autowired
+    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Override
@@ -57,8 +61,12 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints)
             throws Exception {
-        final TokenStore tokenStore = new InMemoryTokenStore();
-        endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager);
+        endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager).allowedTokenEndpointRequestMethods();
+    }
+
+    @Bean
+    public TokenStore tokenStore() {
+        return new InMemoryTokenStore();
     }
 
 }
