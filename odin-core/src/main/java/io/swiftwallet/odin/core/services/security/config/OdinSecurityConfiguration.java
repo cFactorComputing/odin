@@ -22,15 +22,18 @@ import io.swiftwallet.odin.core.services.security.oauth2.config.OAuth2SecurityCo
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static io.swiftwallet.odin.core.services.security.OdinSecurityProperties.BASIC_AUTH_ORDER;
 import static org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME;
 
 /**
@@ -52,7 +55,13 @@ public class OdinSecurityConfiguration {
     public DelegatingFilterProxyRegistrationBean securityFilterChain() {
         final DelegatingFilterProxyRegistrationBean registration = new DelegatingFilterProxyRegistrationBean(
                 DEFAULT_FILTER_NAME);
+        registration.setOrder(BASIC_AUTH_ORDER);
         return registration;
+    }
+
+    @Bean
+    public DefaultAuthenticationEventPublisher authenticationEventPublisher(final ApplicationEventPublisher publisher) {
+        return new DefaultAuthenticationEventPublisher(publisher);
     }
 
 }
