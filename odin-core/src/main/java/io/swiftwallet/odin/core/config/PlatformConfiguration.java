@@ -16,12 +16,11 @@
 
 package io.swiftwallet.odin.core.config;
 
-import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
-import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
@@ -32,6 +31,7 @@ import java.util.Collections;
  * @version 1.0
  */
 @Configuration
+@EnableWebMvc
 public class PlatformConfiguration {
 
     @Bean
