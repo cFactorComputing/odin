@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 SwiftWallet Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License"),
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -22,6 +22,7 @@ import io.swiftwallet.odin.core.bootstrap.MicroServiceProperties;
 import io.swiftwallet.odin.core.bootstrap.discovery.ServiceDiscoveryProperties;
 import io.swiftwallet.odin.core.lb.OdinServer;
 import io.swiftwallet.odin.core.services.server.EmbeddedServerProperties;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
@@ -90,8 +91,8 @@ public class ServiceRegistrationConfiguration {
             unRegister();
         }
         String address = null;
-        Collection<InetAddress> ips = getAllLocalIPs();
-        if (ips.size() > 0) {
+        final Collection<InetAddress> ips = getAllLocalIPs();
+        if (CollectionUtils.isNotEmpty(ips)) {
             address = ips.iterator().next().getHostAddress();   // default to the first address
         }
         final int serverPort = embeddedServerProperties.getPort();
