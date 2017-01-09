@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 SwiftWallet Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License"),
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -61,9 +61,12 @@ public class EmbeddedServerConfiguration {
 
         @Override
         public void customize(final Server server) {
+            info("Removing the existing connector");
             server.removeConnector(server.getConnectors()[0]);
             final HttpConfiguration httpConfiguration = new HttpConfiguration();
+            info("Creating  Http 1.x connection factory");
             final HttpConnectionFactory httpConnectionFactory = new HttpConnectionFactory(httpConfiguration);
+            info("Creating  Http 2.x connection factory");
             final HTTP2CServerConnectionFactory http2CServerConnectionFactory = new HTTP2CServerConnectionFactory(httpConfiguration);
             final ServerConnector serverConnector = new ServerConnector(server, httpConnectionFactory, http2CServerConnectionFactory);
             if (properties.getPort() == 0) {
@@ -74,6 +77,7 @@ public class EmbeddedServerConfiguration {
             try {
                 final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + properties.getJmxPort() + "/jmxrmi"),
                         "io.swiftwallet.odin.jmx:name=rmiconnectorserver");
+                info("Adding  JMX Connector Server");
                 server.addBean(connectorServer);
             } catch (Exception e) {
                 throw new EmbeddedServerConfigurationException("Exception configuring the mbean connector server", e);
@@ -83,4 +87,11 @@ public class EmbeddedServerConfiguration {
             server.addBean(mbContainer);
         }
     }
+
+    private static void info(final String message) {
+        if(LOGGER.isInfoEnabled()) {
+            LOGGER.info(message);
+        }
+    }
+
 }
