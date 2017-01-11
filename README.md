@@ -1,10 +1,10 @@
-#Odin#
-##Introduction##
+# Odin #
+## Introduction ##
 Odin is platform to build microservices. The name Odin is taken from the norse mythology, in Norse mythology, Odin was the king of the Æsir. He is a god of war and death, as well as a sky god and the god of wisdom and poetry. Along with being a god, he is the All-Father of all the Nordic Gods. 
 
 ![](Odin.jpg)
 
-##Architecture##
+## Architecture ##
 The Odin micro-services platform is based on spring boot, which provides a light weight container on top of which swift wallet can build the micro-services required meet the business requirements.
 
 Odin has a layered architecture that consists of
@@ -16,7 +16,7 @@ The diagram below shows the different components
 
 ![](Odin-Architecture.png)
 
-###Bootstrap Layer###
+### Bootstrap Layer ###
 The Odin boostrap layer is based on spring boot runtime, the bootstrap layer boots up the micro-services and provides the following features:
 
 * Configuration Discovery
@@ -24,7 +24,7 @@ The Odin boostrap layer is based on spring boot runtime, the bootstrap layer boo
 * Service Registration
 * Service Discovery
 
-###Services Layer###
+### Services Layer ###
 The services layer provides different services required by the microservices, it consists of:
 
 * Security
@@ -33,7 +33,7 @@ The services layer provides different services required by the microservices, it
 * In Memory Datagrid Connector
 * Embedded Server
 
-###Technology Stack###
+### Technology Stack ###
 
 * Spring Boot 1.4.2 RELEASE
 * Spring Framework 4.3.5 RELEASE
