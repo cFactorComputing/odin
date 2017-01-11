@@ -394,32 +394,32 @@
                 </executions>
             </plugin>
             <plugin>
-            <groupId>org.basepom.maven</groupId>
-            <artifactId>duplicate-finder-maven-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>default</id>
-                    <phase>verify</phase>
-                    <goals>
-                        <goal>check</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <skip>false</skip>
-                <quiet>false</quiet>
-                <checkCompileClasspath>true</checkCompileClasspath>
-                <checkRuntimeClasspath>true</checkRuntimeClasspath>
-                <checkTestClasspath>true</checkTestClasspath>
-                <failBuildInCaseOfDifferentContentConflict>false</failBuildInCaseOfDifferentContentConflict>
-                <failBuildInCaseOfEqualContentConflict>false</failBuildInCaseOfEqualContentConflict>
-                <failBuildInCaseOfConflict>false</failBuildInCaseOfConflict>
-                <printEqualFiles>false</printEqualFiles>
-                <preferLocal>true</preferLocal>
-                <includeBootClasspath>false</includeBootClasspath>
-                <bootClasspathProperty>sun.boot.class.path</bootClasspathProperty>
-                <includePomProjects>false</includePomProjects>
-            </configuration>
+                <groupId>org.basepom.maven</groupId>
+                <artifactId>duplicate-finder-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>false</skip>
+                    <quiet>false</quiet>
+                    <checkCompileClasspath>true</checkCompileClasspath>
+                    <checkRuntimeClasspath>true</checkRuntimeClasspath>
+                    <checkTestClasspath>true</checkTestClasspath>
+                    <failBuildInCaseOfDifferentContentConflict>false</failBuildInCaseOfDifferentContentConflict>
+                    <failBuildInCaseOfEqualContentConflict>false</failBuildInCaseOfEqualContentConflict>
+                    <failBuildInCaseOfConflict>false</failBuildInCaseOfConflict>
+                    <printEqualFiles>false</printEqualFiles>
+                    <preferLocal>true</preferLocal>
+                    <includeBootClasspath>false</includeBootClasspath>
+                    <bootClasspathProperty>sun.boot.class.path</bootClasspathProperty>
+                    <includePomProjects>false</includePomProjects>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -453,4 +453,16 @@
             </build>
         </profile>
     </profiles>
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Releases</name>
+            <url>http://artifacts.swiftwallet.aws.local/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Snapshot</name>
+            <url>http://artifacts.swiftwallet.aws.local/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
