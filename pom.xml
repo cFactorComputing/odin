@@ -56,6 +56,8 @@
         <odin-spring.version>4.3.5.RELEASE</odin-spring.version>
         <odin-spring-security-oauth2.version>2.0.12.RELEASE</odin-spring-security-oauth2.version>
         <odin-assertj.version>1.0.0</odin-assertj.version>
+        <odin-spring-data-gemfire.version>1.8.6.RELEASE</odin-spring-data-gemfire.version>
+        <odin-gemfire.version>8.2.0</odin-gemfire.version>
     </properties>
 
     <modules>
@@ -237,6 +239,17 @@
                 <artifactId>assertj-core</artifactId>
                 <version>${odin-assertj.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-gemfire</artifactId>
+                <version>${odin-spring-data-gemfire.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gemstone.gemfire</groupId>
+                <artifactId>gemfire</artifactId>
+                <version>${odin-gemfire.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>
