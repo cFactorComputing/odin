@@ -45,3 +45,10 @@ The services layer provides different services required by the microservices, it
 * Hikari CP
 * Spring Kafka
 
+## Building from Source ##
+
+## License ##
+Odin is Open Source software release under the 
+[Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+
