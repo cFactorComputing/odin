@@ -479,8 +479,8 @@
         </snapshotRepository>
     </distributionManagement>
     <scm>
-        <connection>scm:git:ssh://swiftwallet.aws.local:swiftwallet/odin.git</connection>
-        <developerConnection>scm:git:ssh://swiftwallet.aws.local:swiftwallet/odin.git</developerConnection>
+        <connection>scm:git:ssh://swiftwallet.aws.local/swiftwallet/odin.git</connection>
+        <developerConnection>scm:git:ssh://swiftwallet.aws.local/swiftwallet/odin.git</developerConnection>
     </scm>
 
 </project>
