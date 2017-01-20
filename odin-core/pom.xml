@@ -21,11 +21,10 @@
     <parent>
         <groupId>io.swiftwallet</groupId>
         <artifactId>odin</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
     <groupId>io.swiftwallet.odin</groupId>
     <artifactId>odin-core</artifactId>
-    <version>1.0</version>
     <name>Swift Wallet::Odin::Core</name>
     <url>http://swiftwallet.io/</url>
     <properties>
