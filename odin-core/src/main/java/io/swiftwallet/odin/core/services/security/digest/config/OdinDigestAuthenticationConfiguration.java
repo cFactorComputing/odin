@@ -25,7 +25,7 @@ import org.springframework.context.annotation.ImportResource;
  */
 @Configuration
 @ConditionalOnProperty(prefix = "odin.security", name = "enabled", matchIfMissing = true)
-@ImportResource("classpath*:META-INF/spring/digest-auth-context.xml")
+@ImportResource("classpath*:META-INF/spring/digest-authentication-context.xml")
 public class OdinDigestAuthenticationConfiguration {
 
 
