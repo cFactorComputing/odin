@@ -35,11 +35,11 @@ public class OdinSecurityProperties {
     public static final int BASIC_AUTH_ORDER = SecurityProperties.BASIC_AUTH_ORDER;
     private boolean enabled = true;
 
-    private DigestAuthenticationProperties digest;
+    private DigestAuthenticationProperties digest = new DigestAuthenticationProperties();
 
     private OAuth2SecurityProperties oauth2;
 
-    private User user;
+    private User user = new User();
 
     public boolean isEnabled() {
         return enabled;
