@@ -37,7 +37,7 @@ public class OdinSecurityProperties {
 
     private DigestAuthenticationProperties digest = new DigestAuthenticationProperties();
 
-    private OAuth2SecurityProperties oauth2;
+    private OAuth2SecurityProperties oauth2 = new OAuth2SecurityProperties();
 
     private User user = new User();
 
