@@ -25,21 +25,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 /**
  * Created by gibugeorge on 06/02/2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class, classes = {OdinBootstrapConfiguration.class, OdinSecurityConfiguration.class})
-@EnableWebMvc
-@EnableWebSecurity
-@WebAppConfiguration
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {OdinBootstrapConfiguration.class, OdinSecurityConfiguration.class})
 public class OdinSecurityConfigurationTest {
 
     @Autowired
@@ -47,8 +41,7 @@ public class OdinSecurityConfigurationTest {
 
     @BeforeClass
     public static void setup() {
-        System.setProperty("security.user.name", "admin");
-        System.setProperty("security.user.password", "admin");
+        System.setProperty("security.enabled", "false");
     }
 
     @Test
