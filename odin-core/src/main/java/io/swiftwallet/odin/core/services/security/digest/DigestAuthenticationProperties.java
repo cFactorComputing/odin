@@ -26,6 +26,7 @@ public class DigestAuthenticationProperties {
     private String realm = "Odin";
     private SecurityAuthorizeMode authorizeMode = SecurityAuthorizeMode.ROLE;
     private String[] path = new String[]{"/**"};
+    private String key = "uniqueAndSecret";
 
     public String getRealm() {
         return realm;
@@ -49,5 +50,13 @@ public class DigestAuthenticationProperties {
 
     public void setPath(String[] path) {
         this.path = path;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
