@@ -3,13 +3,13 @@ io.swiftwallet.odin.core.config.PlatformConfiguration,\
 io.swiftwallet.odin.core.services.server.config.EmbeddedServerConfiguration,\
 io.swiftwallet.odin.core.services.security.config.OdinSecurityConfiguration,\
 io.swiftwallet.odin.core.services.kafka.config.KafkaProducerConfiguration,\
-io.swiftwallet.odin.core.services.kafka.config.KafkaConsumerConfiguration
+io.swiftwallet.odin.core.services.kafka.config.KafkaConsumerConfiguration,\
+io.swiftwallet.odin.core.bootstrap.discovery.config.ServiceRegistrationConfiguration
 io.swiftwallet.odin.core.bootstrap.config.annotations.OdinBootstrapConfiguration=\
 io.swiftwallet.odin.core.bootstrap.config.OdinBootstrapConfiguration,\
 io.swiftwallet.odin.core.bootstrap.zk.config.ZooKeeperConfiguration,\
 io.swiftwallet.odin.core.bootstrap.cd.config.ConfigurationDiscoveryConfiguration,\
 io.swiftwallet.odin.core.bootstrap.config.PropertySourceBootstrapConfiguration,\
-io.swiftwallet.odin.core.bootstrap.discovery.config.ServiceRegistrationConfiguration,\
 io.swiftwallet.odin.core.bootstrap.discovery.config.ServiceDiscoveryConfiguration,\
 io.swiftwallet.odin.core.services.jdbc.config.DataSourceConfiguration,\
 io.swiftwallet.odin.core.services.gemfire.config.GemfireConfiguration

@@ -47,7 +47,6 @@ public class OdinSecurityConfigurationTest {
 
     @BeforeClass
     public static void setup() {
-        System.setProperty("security.enabled", "true");
         System.setProperty("security.user.name", "admin");
         System.setProperty("security.user.password", "admin");
     }
