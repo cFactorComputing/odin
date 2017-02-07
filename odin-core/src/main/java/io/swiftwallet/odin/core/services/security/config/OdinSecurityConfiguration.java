@@ -45,8 +45,8 @@ import static org.springframework.security.web.context.AbstractSecurityWebApplic
 @EnableConfigurationProperties(OdinSecurityProperties.class)
 public class OdinSecurityConfiguration {
 
-    private static List<String> DEFAULT_IGNORED = Arrays.asList("/css/**", "/js/**",
-            "/images/**", "/webjars/**", "/**/favicon.ico");
+    public static String[] DEFAULT_IGNORED = new String[]{"/css/**", "/js/**",
+            "/images/**", "/webjars/**", "/**/favicon.ico"};
 
     @Autowired
     private OdinSecurityProperties securityProperties;
