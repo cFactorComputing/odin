@@ -48,7 +48,6 @@ import java.util.Enumeration;
  */
 @Configuration
 @EnableConfigurationProperties({ServiceDiscoveryProperties.class, MicroServiceProperties.class, EmbeddedServerProperties.class})
-@ConditionalOnProperty(prefix = "service-discovery", value = "register", havingValue = "true", matchIfMissing = true)
 public class ServiceRegistrationConfiguration {
 
 
