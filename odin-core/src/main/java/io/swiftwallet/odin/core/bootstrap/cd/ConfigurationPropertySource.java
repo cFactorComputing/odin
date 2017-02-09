@@ -69,33 +69,39 @@ public class ConfigurationPropertySource extends EnumerablePropertySource<Curato
 
     private void loadProperties(final String context) {
         try {
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info("Entering findProperties for path: {}", context);
-            }
+            log("Entering findProperties for path: {}", context);
             final List<String> children = getChildren(context);
             if (CollectionUtils.isEmpty(children)) {
-                if (LOGGER.isInfoEnabled()) {
-                    LOGGER.info("No properties for path: {}", context);
-                }
+                log("No properties for path: {}", context);
                 return;
             }
             for (final String child : children) {
                 String childPath = context + "/" + child;
                 if (!childPath.startsWith(this.runtimeConfigContext)) {
-                    byte[] bytes = getPropertyBytes(childPath);
-                    if (ArrayUtils.isEmpty(bytes)) {
-                        loadProperties(childPath);
-                    } else {
-                        final String key = sanitizeKey(childPath);
-                        this.properties.put(key, new String(bytes, Charset.forName("UTF-8")));
-                    }
+                    addProperties(childPath);
                 }
             }
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info("Leaving findProperties for path: {}", context);
-            }
+
+            log("Leaving findProperties for path: {}", context);
+
         } catch (Exception exception) {
             throw new ConfigurationDiscoveryException("Exception loading properties from zookeeper", exception);
+        }
+    }
+
+    private static void log(final String message, Object... params) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(message, params);
+        }
+    }
+
+    private void addProperties(final String childPath) {
+        byte[] bytes = getPropertyBytes(childPath);
+        if (ArrayUtils.isEmpty(bytes)) {
+            loadProperties(childPath);
+        } else {
+            final String key = sanitizeKey(childPath);
+            this.properties.put(key, new String(bytes, Charset.forName("UTF-8")));
         }
     }
 
