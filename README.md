@@ -64,31 +64,64 @@ the `.mvn` configuration
 
 ### Embedded Server
 Odin uses embdedd jetty(9.3.1) server for its http services and servlet container. It also supports HTTP/2(SPDY protocol developed by google).
+
 `/configuration/<micro-service-id>/<environment>/server/port=<port>` default is 8080
+
 `/configuration/<micro-service-id>/<environment>/server/jmx-port=<jmx-port>` default is 1099
+
 `/configuration/<micro-service-id>/<environment>/server/ssl-enabled=<ssl-enabled>` default is false
 
 ### Security
 Odin uses spring security to provide authentication/authorization. It support digest as well as OAuth2 based authentication.
+
+`/configuration/odin/<environment>/security/digest=authorize-mode=AUTHENTICATED`
+
+`/configuration/odin/<environment>/security/digest=realm=<realm-name>`
+
+`/configuration/odin/<environment>/security/user=name=<user-name>`
+
+`/configuration/odin/<environment>/security/user=password=<password>`
+
+`/configuration/odin/<environment>/security/oauth2=enabled=<true-or-false>` - Default is false
+
+`/configuration/odin/<environment>/security/oauth2=authorization-server=<true-or-false>` - To enable authorization server
+
+`/configuration/odin/<environment>/security/oauth2=resource-server=<true-or-false>` - To enable resource server
+
+
 
 ### Datasource (JDBC)
 
 Odin uses HikariCP for Connection pooling. Following are the configurations supported by the datasource.
 
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/enabled=<true-or-false>`- by default it is disabled
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/names=<comma separted list of datasources>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/jdbc-url=<jdbc-url>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/user-name=<user-name>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/password=<password>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/driver-class-name=<driver-class-name>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/auto-commit=<auto-commit>` - default is false
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/connection-test-query=<connection-test-query>` - for some of the dbs like mysql this is mandatory
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/cache-prep-stmts=<cache-prep-stmts>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/prep-stmt-cache-size=<prep-stmt-cache-size>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/cache-prep-stmts=<cache-prep-stmts>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/prep-stmt-cache-sql-limit=<prep-stmt-cache-sql-limit>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/maximum-pool-size=<maximum-pool-size>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/max-life-time=<max-life-time>`
+
 `/configuration/<micro-service-id>/<environment>/jdbc/data-source/<name>/idle-timeout=<idle-timeout>`
 
 
