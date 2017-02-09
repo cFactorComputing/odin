@@ -53,48 +53,7 @@ public class OdinDigestAuthenticationConfiguration extends WebSecurityConfigurer
 
     @Bean
     public UserDetailsService userDetailsService() {
-        final UserDetails userDetails = new UserDetails() {
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-
-                final List<GrantedAuthority> simpleGrantedAuthorityList = new ArrayList<>();
-                for (String role : odinSecurityProperties.getUser().getRole()) {
-                    final GrantedAuthority authority = new SimpleGrantedAuthority(role);
-                    simpleGrantedAuthorityList.add(authority);
-                }
-                return simpleGrantedAuthorityList;
-            }
-
-            @Override
-            public String getPassword() {
-                return odinSecurityProperties.getUser().getPassword();
-            }
-
-            @Override
-            public String getUsername() {
-                return odinSecurityProperties.getUser().getName();
-            }
-
-            @Override
-            public boolean isAccountNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isAccountNonLocked() {
-                return true;
-            }
-
-            @Override
-            public boolean isCredentialsNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-        };
+        final UserDetails userDetails = new OdinUserDetails();
         return new InMemoryUserDetailsManager(Arrays.asList(userDetails));
     }
 
@@ -116,4 +75,46 @@ public class OdinDigestAuthenticationConfiguration extends WebSecurityConfigurer
                 .addFilterAfter(authenticationFilter, BasicAuthenticationFilter.class);
     }
 
+    private class OdinUserDetails implements UserDetails {
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+
+            final List<GrantedAuthority> simpleGrantedAuthorityList = new ArrayList<>();
+            for (String role : odinSecurityProperties.getUser().getRole()) {
+                final GrantedAuthority authority = new SimpleGrantedAuthority(role);
+                simpleGrantedAuthorityList.add(authority);
+            }
+            return simpleGrantedAuthorityList;
+        }
+
+        @Override
+        public String getPassword() {
+            return odinSecurityProperties.getUser().getPassword();
+        }
+
+        @Override
+        public String getUsername() {
+            return odinSecurityProperties.getUser().getName();
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+            return true;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return true;
+        }
+    }
 }
