@@ -30,9 +30,6 @@ import org.springframework.security.authentication.DefaultAuthenticationEventPub
 import org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static io.swiftwallet.odin.core.services.security.OdinSecurityProperties.BASIC_AUTH_ORDER;
 import static org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME;
 
