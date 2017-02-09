@@ -35,15 +35,15 @@ public class BootstrapContextInitilizer implements ApplicationContextInitializer
 
     @Override
     public void initialize(final ConfigurableApplicationContext applicationContext) {
-        ConfigurableApplicationContext parentContext = null;
+        ConfigurableApplicationContext context = null;
         while (applicationContext.getParent() != null && applicationContext.getParent() != applicationContext) {
-            parentContext = (ConfigurableApplicationContext) applicationContext.getParent();
+            context = (ConfigurableApplicationContext) applicationContext.getParent();
         }
-        if (parentContext == null) {
-            parentContext = applicationContext;
+        if (context == null) {
+            context = applicationContext;
         }
         new ParentContextApplicationContextInitializer(this.parentContext)
-                .initialize(parentContext);
+                .initialize(context);
     }
 
     @Override
