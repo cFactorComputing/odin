@@ -57,6 +57,8 @@
         <odin-assertj.version>1.0.0</odin-assertj.version>
         <odin-spring-data-gemfire.version>1.8.6.RELEASE</odin-spring-data-gemfire.version>
         <odin-gemfire.version>8.2.0</odin-gemfire.version>
+        <odin-metrics-spring.version>3.1.3</odin-metrics-spring.version>
+        <odin-metrics.version>3.1.2</odin-metrics.version>
     </properties>
 
     <modules>
@@ -248,7 +250,26 @@
                 <artifactId>gemfire</artifactId>
                 <version>${odin-gemfire.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.ryantenney.metrics</groupId>
+                <artifactId>metrics-spring</artifactId>
+                <version>${odin-metrics-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-jvm</artifactId>
+                <version>${odin-metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-graphite</artifactId>
+                <version>${odin-metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-servlets</artifactId>
+                <version>${odin-metrics.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
