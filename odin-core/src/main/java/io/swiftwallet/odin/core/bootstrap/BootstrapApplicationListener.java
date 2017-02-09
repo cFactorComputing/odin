@@ -123,6 +123,6 @@ public class BootstrapApplicationListener implements ApplicationListener<Applica
     }
 
     protected final <T> List<T> removeDuplicates(List<T> list) {
-        return new ArrayList<T>(new LinkedHashSet<T>(list));
+        return new ArrayList<>(new LinkedHashSet<>(list));
     }
 }
