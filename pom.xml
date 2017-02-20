@@ -59,6 +59,7 @@
         <odin-gemfire.version>8.2.0</odin-gemfire.version>
         <odin-metrics-spring.version>3.1.3</odin-metrics-spring.version>
         <odin-metrics.version>3.1.2</odin-metrics.version>
+        <odin-spring-cloud-netflix.version>1.3.0.M1</odin-spring-cloud-netflix.version>
     </properties>
 
     <modules>
@@ -269,6 +270,22 @@
                 <groupId>io.dropwizard.metrics</groupId>
                 <artifactId>metrics-servlets</artifactId>
                 <version>${odin-metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-netflix-core</artifactId>
+                <version>${odin-spring-cloud-netflix.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.ribbon</groupId>
+                <artifactId>ribbon-httpclient</artifactId>
+                <version>${odin-netflix-ribbon.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.code.findbugs</groupId>
+                        <artifactId>annotations</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -176,5 +176,13 @@
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-servlets</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.ribbon</groupId>
+            <artifactId>ribbon-httpclient</artifactId>
+        </dependency>
     </dependencies>
 </project>
