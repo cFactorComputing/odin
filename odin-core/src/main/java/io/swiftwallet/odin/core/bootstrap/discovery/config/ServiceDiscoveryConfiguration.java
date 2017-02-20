@@ -17,13 +17,15 @@
 package io.swiftwallet.odin.core.bootstrap.discovery.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.loadbalancer.ILoadBalancer;
+import com.netflix.loadbalancer.LoadBalancerBuilder;
+import com.netflix.loadbalancer.Server;
 import io.swiftwallet.odin.core.bootstrap.MicroServiceProperties;
 import io.swiftwallet.odin.core.bootstrap.discovery.ServiceChangeWatcher;
 import io.swiftwallet.odin.core.bootstrap.discovery.ServiceDiscoveryProperties;
 import io.swiftwallet.odin.core.bootstrap.discovery.event.ServiceChangeListener;
 import io.swiftwallet.odin.core.bootstrap.discovery.exception.ServiceDiscoveryException;
 import io.swiftwallet.odin.core.lb.OdinServer;
-import io.swiftwallet.odin.core.lb.OdinServerRegistry;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.slf4j.Logger;
@@ -31,6 +33,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.netflix.ribbon.apache.RibbonLoadBalancingHttpClient;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -62,13 +66,7 @@ public class ServiceDiscoveryConfiguration implements Ordered {
 
 
     @Bean
-    public OdinServerRegistry serverRegistry() {
-        final OdinServerRegistry serverRegistry = new OdinServerRegistry();
-        register(serverRegistry);
-        return serverRegistry;
-    }
-
-    public void register(OdinServerRegistry serverRegistry) {
+    public boolean register(final ConfigurableApplicationContext applicationContext) {
         List<String> serviceNames = null;
         try {
             serviceNames = curatorFramework.getChildren().forPath(this.properties.getRoot());
@@ -79,7 +77,7 @@ public class ServiceDiscoveryConfiguration implements Ordered {
         if (CollectionUtils.isNotEmpty(serviceNames)) {
             for (final String serviceName : serviceNames) {
                 if (!serviceName.equals(microServiceProperties.getName())) {
-                    final List<OdinServer> serverList = new ArrayList<>();
+                    final List<Server> serverList = new ArrayList<>();
                     final String childPath = this.properties.getRoot() + "/" + serviceName;
                     List<String> microServiceIds = null;
                     try {
@@ -102,13 +100,16 @@ public class ServiceDiscoveryConfiguration implements Ordered {
                                 serverList.add(server);
                             }
                         }
-                        serverRegistry.register(serviceName, serverList);
+                        final ILoadBalancer loadBalancer = LoadBalancerBuilder.newBuilder().buildFixedServerListLoadBalancer(serverList);
+                        final RibbonLoadBalancingHttpClient loadBalancingHttpClient = new RibbonLoadBalancingHttpClient(loadBalancer);
+                        applicationContext.getBeanFactory().registerSingleton(serviceName, loadBalancingHttpClient);
 
                     }
                 }
 
             }
         }
+        return true;
     }
 
     @Bean
