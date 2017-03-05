@@ -22,6 +22,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -47,10 +48,16 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
+    @Autowired(required = false)
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public void configure(final AuthorizationServerSecurityConfigurer oauthServer)
             throws Exception {
         oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+        if (passwordEncoder != null) {
+            oauthServer.passwordEncoder(passwordEncoder);
+        }
     }
 
     @Override
