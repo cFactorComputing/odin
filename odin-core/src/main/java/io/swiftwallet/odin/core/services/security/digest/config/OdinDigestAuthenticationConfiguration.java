@@ -23,6 +23,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,6 +31,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint;
@@ -50,6 +52,8 @@ public class OdinDigestAuthenticationConfiguration extends WebSecurityConfigurer
 
     @Autowired
     private OdinSecurityProperties odinSecurityProperties;
+    @Autowired(required = false)
+    private PasswordEncoder passwordEncoder;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -75,6 +79,14 @@ public class OdinDigestAuthenticationConfiguration extends WebSecurityConfigurer
                 .addFilterAfter(authenticationFilter, BasicAuthenticationFilter.class);
     }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        if (passwordEncoder != null) {
+            auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder);
+        }
+        super.configure(auth);
+    }
+
     private class OdinUserDetails implements UserDetails {
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -89,6 +101,9 @@ public class OdinDigestAuthenticationConfiguration extends WebSecurityConfigurer
 
         @Override
         public String getPassword() {
+            if (passwordEncoder != null) {
+                return passwordEncoder.encode(odinSecurityProperties.getUser().getPassword());
+            }
             return odinSecurityProperties.getUser().getPassword();
         }
 
