@@ -49,6 +49,9 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
     private AuthenticationManager authenticationManager;
 
     @Autowired(required = false)
+    private TokenStore tokenStore;
+
+    @Autowired(required = false)
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -68,12 +71,7 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints)
             throws Exception {
-        endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager).allowedTokenEndpointRequestMethods();
-    }
-
-    @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
+        endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager).allowedTokenEndpointRequestMethods();
     }
 
 }
