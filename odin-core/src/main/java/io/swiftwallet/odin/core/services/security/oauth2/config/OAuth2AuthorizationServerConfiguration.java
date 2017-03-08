@@ -19,9 +19,9 @@ package io.swiftwallet.odin.core.services.security.oauth2.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -30,7 +30,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 /**
  * Created by gibugeorge on 29/12/2016.
@@ -47,6 +46,10 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    @Qualifier("userDetailsServiceBean")
+    private UserDetailsService userDetailsService;
 
     @Autowired(required = false)
     private TokenStore tokenStore;
@@ -71,7 +74,11 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints)
             throws Exception {
-        endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager).allowedTokenEndpointRequestMethods();
+        endpoints
+                .tokenStore(tokenStore)
+                .authenticationManager(authenticationManager)
+                .allowedTokenEndpointRequestMethods().userDetailsService(userDetailsService);
+        endpoints.setClientDetailsService(clientDetailsService);
     }
 
 }
