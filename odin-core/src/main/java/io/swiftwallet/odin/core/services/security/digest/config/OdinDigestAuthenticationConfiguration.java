@@ -46,7 +46,6 @@ import java.util.List;
  * Created by gibugeorge on 21/12/2016.
  */
 @Configuration
-@ConditionalOnProperty(prefix = "security", name = "enabled", matchIfMissing = true)
 @EnableConfigurationProperties(OdinSecurityProperties.class)
 public class OdinDigestAuthenticationConfiguration extends WebSecurityConfigurerAdapter {
 
