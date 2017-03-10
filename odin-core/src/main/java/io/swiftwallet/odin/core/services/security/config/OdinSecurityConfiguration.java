@@ -20,6 +20,7 @@ import io.swiftwallet.odin.core.services.security.OdinSecurityProperties;
 import io.swiftwallet.odin.core.services.security.digest.config.OdinDigestAuthenticationConfiguration;
 import io.swiftwallet.odin.core.services.security.oauth2.config.OAuth2SecurityConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean;
 import org.springframework.context.ApplicationEventPublisher;
