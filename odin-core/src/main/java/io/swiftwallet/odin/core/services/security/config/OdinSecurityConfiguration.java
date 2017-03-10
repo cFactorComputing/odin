@@ -40,6 +40,7 @@ import static org.springframework.security.web.context.AbstractSecurityWebApplic
 @EnableWebSecurity
 @Import({ObjectPostProcessorConfiguration.class, OdinDigestAuthenticationConfiguration.class, OAuth2SecurityConfiguration.class})
 @EnableConfigurationProperties(OdinSecurityProperties.class)
+@ConditionalOnProperty(prefix = "security", name = "enabled", matchIfMissing = true)
 public class OdinSecurityConfiguration {
 
     public static final String[] DEFAULT_IGNORED = new String[]{"/css/**", "/js/**",
