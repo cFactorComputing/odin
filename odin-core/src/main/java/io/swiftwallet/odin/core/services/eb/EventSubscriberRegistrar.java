@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.Ordered;
 
 import javax.annotation.PostConstruct;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -61,7 +62,15 @@ public class EventSubscriberRegistrar implements Ordered {
     }
 
     private boolean isSubscribeAnnotationPresent(Class<?> clazz) {
-        return ArrayUtils.isNotEmpty(clazz.getAnnotationsByType(Subscribe.class));
+        final Method[] methods = clazz.getMethods();
+        boolean isAnnotated = false;
+        for (final Method method : methods) {
+            isAnnotated = ArrayUtils.isNotEmpty(method.getAnnotationsByType(Subscribe.class));
+            if (isAnnotated) {
+                break;
+            }
+        }
+        return isAnnotated;
     }
 
     @Override
