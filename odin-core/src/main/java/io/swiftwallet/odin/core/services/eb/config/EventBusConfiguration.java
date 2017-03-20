@@ -5,6 +5,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.SubscriberExceptionHandler;
 import io.swiftwallet.odin.core.services.eb.DefaultExceptionHandler;
 import io.swiftwallet.odin.core.services.eb.EventBusProperties;
+import io.swiftwallet.odin.core.services.eb.EventSubscriberRegistrar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class EventBusConfiguration {
     @Bean
     public EventBus eventBus() {
         return new EventBus(getSubscriberExceptionHandler());
+    }
+
+    @Bean
+    public EventSubscriberRegistrar eventSubscriberRegistrar() {
+        return new EventSubscriberRegistrar();
     }
 
 
