@@ -48,7 +48,7 @@ public class PropertySourceBootstrapConfiguration implements Ordered {
         final PropertySource propertySource = propertySourceLocator.locate(applicationContext.getEnvironment());
         compositePropertySource.addPropertySource(propertySource);
         applicationContext.getEnvironment().getPropertySources().addFirst(compositePropertySource);
-        if (propertySource instanceof CompositePropertySource) {
+        if (propertySource instanceof ConfigurationPropertySource) {
             applicationContext.getBeanFactory().registerSingleton("runtimeConfiguration", ((ConfigurationPropertySource) propertySource).getRuntimeConfiguration());
         }
 
