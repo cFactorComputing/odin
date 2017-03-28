@@ -1,7 +1,7 @@
 package io.swiftwallet.odin.core.services.eb;
 
 import com.google.common.eventbus.AsyncEventBus;
-import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.SimpleEventBus;
 import com.google.common.eventbus.Subscribe;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class EventSubscriberRegistrar implements Ordered {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventSubscriberRegistrar.class);
     @Autowired
-    private EventBus eventBus;
+    private SimpleEventBus eventBus;
 
     @Autowired
     private AsyncEventBus asyncEventBus;

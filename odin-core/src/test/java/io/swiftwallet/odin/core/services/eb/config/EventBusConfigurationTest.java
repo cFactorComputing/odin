@@ -1,8 +1,6 @@
 package io.swiftwallet.odin.core.services.eb.config;
 
-import com.google.common.eventbus.AsyncEventBus;
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
+import com.google.common.eventbus.*;
 import io.swiftwallet.odin.core.exception.OdinException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +22,7 @@ public class EventBusConfigurationTest {
     private AsyncEventBus asyncEventBus;
 
     @Autowired(required = false)
-    private EventBus eventBus;
+    private SimpleEventBus eventBus;
 
     @Test
     public void testEventBusConfiguration() {
@@ -38,6 +36,13 @@ public class EventBusConfigurationTest {
         asyncEventBus.post(new Event());
     }
 
+    @Test(expected = OdinException.class)
+    public void testSimpleEventBusExceptionHandler() {
+        final SimpleEventBus simpleEventBus = new SimpleEventBus(new TestHandler());
+        simpleEventBus.register(new EventSubscriber());
+        simpleEventBus.post(new Event());
+    }
+
     public static class EventSubscriber {
 
         @Subscribe
@@ -49,6 +54,16 @@ public class EventBusConfigurationTest {
 
     public static class Event {
 
+    }
+
+    public static class TestHandler implements SubscriberExceptionHandler {
+
+        @Override
+        public void handleException(Throwable exception, SubscriberExceptionContext context) {
+            if (exception instanceof OdinException) {
+                throw (OdinException) exception;
+            }
+        }
     }
 
 }
