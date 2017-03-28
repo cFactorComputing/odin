@@ -1,7 +1,7 @@
 package io.swiftwallet.odin.core.services.eb.config;
 
 import com.google.common.eventbus.AsyncEventBus;
-import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.SimpleEventBus;
 import com.google.common.eventbus.SubscriberExceptionHandler;
 import io.swiftwallet.odin.core.services.eb.DefaultExceptionHandler;
 import io.swiftwallet.odin.core.services.eb.EventBusProperties;
@@ -42,8 +42,8 @@ public class EventBusConfiguration {
     }
 
     @Bean
-    public EventBus eventBus() {
-        return new EventBus(getSubscriberExceptionHandler());
+    public SimpleEventBus eventBus() {
+        return new SimpleEventBus(getSubscriberExceptionHandler());
     }
 
     @Bean
