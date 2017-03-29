@@ -17,6 +17,9 @@
 package io.swiftwallet.odin.core.bootstrap.discovery.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.client.config.DefaultClientConfigImpl;
+import com.netflix.client.config.IClientConfig;
+import com.netflix.client.config.IClientConfigKey;
 import com.netflix.loadbalancer.ILoadBalancer;
 import com.netflix.loadbalancer.LoadBalancerBuilder;
 import com.netflix.loadbalancer.Server;
@@ -25,6 +28,7 @@ import io.swiftwallet.odin.core.bootstrap.discovery.ServiceChangeWatcher;
 import io.swiftwallet.odin.core.bootstrap.discovery.ServiceDiscoveryProperties;
 import io.swiftwallet.odin.core.bootstrap.discovery.event.ServiceChangeListener;
 import io.swiftwallet.odin.core.bootstrap.discovery.exception.ServiceDiscoveryException;
+import io.swiftwallet.odin.core.lb.LoadBalancingClientProperties;
 import io.swiftwallet.odin.core.lb.OdinServer;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.curator.framework.CuratorFramework;
@@ -34,6 +38,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.netflix.ribbon.DefaultServerIntrospector;
+import org.springframework.cloud.netflix.ribbon.ServerIntrospector;
 import org.springframework.cloud.netflix.ribbon.apache.RibbonLoadBalancingHttpClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +54,7 @@ import java.util.List;
  * @version 1.0
  */
 @Configuration
-@EnableConfigurationProperties({ServiceDiscoveryProperties.class, MicroServiceProperties.class})
+@EnableConfigurationProperties({ServiceDiscoveryProperties.class, MicroServiceProperties.class, LoadBalancingClientProperties.class})
 @ConditionalOnProperty(prefix = "service-discovery", value = "enabled", havingValue = "true", matchIfMissing = true)
 public class ServiceDiscoveryConfiguration implements Ordered {
 
@@ -61,6 +67,9 @@ public class ServiceDiscoveryConfiguration implements Ordered {
 
     @Autowired
     private MicroServiceProperties microServiceProperties;
+
+    @Autowired
+    private LoadBalancingClientProperties loadBalancingClientProperties;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -76,7 +85,7 @@ public class ServiceDiscoveryConfiguration implements Ordered {
             //Do nothing
             LOGGER.info("No services registered");
         }
-        if(isServiceRootAvailable!=null) {
+        if (isServiceRootAvailable != null) {
             try {
                 serviceNames = curatorFramework.getChildren().forPath(this.properties.getRoot());
             } catch (Exception e) {
@@ -110,7 +119,9 @@ public class ServiceDiscoveryConfiguration implements Ordered {
                                 }
                             }
                             final ILoadBalancer loadBalancer = LoadBalancerBuilder.newBuilder().buildFixedServerListLoadBalancer(serverList);
-                            final RibbonLoadBalancingHttpClient loadBalancingHttpClient = new RibbonLoadBalancingHttpClient(loadBalancer);
+                            final ServerIntrospector serverIntrospector = new DefaultServerIntrospector();
+                            final RibbonLoadBalancingHttpClient loadBalancingHttpClient = new RibbonLoadBalancingHttpClient(getClientConfig(), serverIntrospector);
+                            loadBalancingHttpClient.setLoadBalancer(loadBalancer);
                             applicationContext.getBeanFactory().registerSingleton(serviceName, loadBalancingHttpClient);
 
                         }
@@ -135,6 +146,15 @@ public class ServiceDiscoveryConfiguration implements Ordered {
     @Override
     public int getOrder() {
         return HIGHEST_PRECEDENCE + 3;
+    }
+
+    private IClientConfig getClientConfig() {
+        final IClientConfig iClientConfig = new DefaultClientConfigImpl();
+        iClientConfig.set(IClientConfigKey.Keys.MaxAutoRetries, loadBalancingClientProperties.getMaxRetries());
+        iClientConfig.set(IClientConfigKey.Keys.MaxAutoRetriesNextServer, loadBalancingClientProperties.getMaxRetriesNextServer());
+        iClientConfig.set(IClientConfigKey.Keys.ReadTimeout, loadBalancingClientProperties.getReadTimeout());
+        iClientConfig.set(IClientConfigKey.Keys.ConnectTimeout, loadBalancingClientProperties.getConnectionTimeout());
+        return iClientConfig;
     }
 
 
