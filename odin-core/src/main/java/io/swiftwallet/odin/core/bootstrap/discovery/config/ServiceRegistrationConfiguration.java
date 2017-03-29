@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -47,7 +48,7 @@ import java.util.Enumeration;
  */
 @Configuration
 @EnableConfigurationProperties({ServiceDiscoveryProperties.class, MicroServiceProperties.class, EmbeddedServerProperties.class})
-public class ServiceRegistrationConfiguration {
+public class ServiceRegistrationConfiguration implements Ordered {
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceRegistrationConfiguration.class);
@@ -133,4 +134,8 @@ public class ServiceRegistrationConfiguration {
         return listAdr;
     }
 
+    @Override
+    public int getOrder() {
+        return HIGHEST_PRECEDENCE;
+    }
 }
