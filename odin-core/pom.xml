@@ -99,6 +99,10 @@
             <artifactId>ribbon-loadbalancer</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.netflix.ribbon</groupId>
+            <artifactId>ribbon-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.netflix.servo</groupId>
             <artifactId>servo-core</artifactId>
         </dependency>

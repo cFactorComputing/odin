@@ -178,6 +178,11 @@
                 <version>${odin-netflix-ribbon.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.netflix.ribbon</groupId>
+                <artifactId>ribbon-core</artifactId>
+                <version>${odin-netflix-ribbon.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.netflix.zuul</groupId>
                 <artifactId>zuul-core</artifactId>
                 <version>${odin-netflix-zuul.version}</version>
