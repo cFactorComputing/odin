@@ -28,7 +28,7 @@ public class ZooKeeperNodeModifiedEvent extends ApplicationEvent {
     private final String eventDesc;
     private final String node;
 
-    public ZooKeeperNodeModifiedEvent(final Object source, final TreeCacheEvent event, final String eventDesc, String node) {
+    public ZooKeeperNodeModifiedEvent(final Object source, final TreeCacheEvent event, final String eventDesc, final String node) {
         super(source);
         this.event = event;
         this.eventDesc = eventDesc;
