@@ -16,6 +16,7 @@
 
 package io.swiftwallet.odin.core.bootstrap.discovery;
 
+import io.swiftwallet.odin.core.bootstrap.MicroServiceProperties;
 import io.swiftwallet.odin.core.bootstrap.discovery.event.ServiceChangeEvent;
 import io.swiftwallet.odin.core.bootstrap.zk.AbstractZooKeeperChangeWatcher;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -25,14 +26,18 @@ import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
  */
 public class ServiceChangeWatcher extends AbstractZooKeeperChangeWatcher {
 
+    private final String microserviceName;
 
-    public ServiceChangeWatcher(String context) {
+    public ServiceChangeWatcher(String context, final String microserviceName) {
         super(context);
+        this.microserviceName = microserviceName;
     }
 
     @Override
     public void publish(TreeCacheEvent treeCacheEvent) {
-        applicationEventPublisher.publishEvent(new ServiceChangeEvent(curatorFramework, treeCacheEvent,
-                getEventDesc(treeCacheEvent), this.context));
+        if (!treeCacheEvent.getData().getPath().contains(this.microserviceName)) {
+            applicationEventPublisher.publishEvent(new ServiceChangeEvent(curatorFramework, treeCacheEvent,
+                    getEventDesc(treeCacheEvent), treeCacheEvent.getData().getPath()));
+        }
     }
 }
