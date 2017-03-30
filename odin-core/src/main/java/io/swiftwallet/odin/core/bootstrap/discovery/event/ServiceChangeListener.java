@@ -17,6 +17,7 @@
 package io.swiftwallet.odin.core.bootstrap.discovery.event;
 
 import io.swiftwallet.odin.core.bootstrap.discovery.config.ServiceDiscoveryConfiguration;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -37,8 +38,10 @@ public class ServiceChangeListener {
     public void handle(final ServiceChangeEvent serviceChangeEvent) {
 
         final TreeCacheEvent.Type eventType = serviceChangeEvent.getEvent().getType();
-        if (eventType == TreeCacheEvent.Type.NODE_ADDED || eventType == TreeCacheEvent.Type.NODE_REMOVED) {
-            configuration.register(applicationContext);
+        final String nodePath = serviceChangeEvent.getNode();
+        if (!nodePath.equals("/services") && eventType == TreeCacheEvent.Type.NODE_ADDED || eventType == TreeCacheEvent.Type.NODE_REMOVED) {
+            final String serviceName= StringUtils.split(nodePath,"/")[1];
+            configuration.discover(applicationContext,serviceName);
         }
 
     }

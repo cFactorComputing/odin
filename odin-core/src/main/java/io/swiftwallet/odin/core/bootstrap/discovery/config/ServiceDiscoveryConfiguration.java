@@ -30,17 +30,21 @@ import io.swiftwallet.odin.core.bootstrap.discovery.event.ServiceChangeListener;
 import io.swiftwallet.odin.core.bootstrap.discovery.exception.ServiceDiscoveryException;
 import io.swiftwallet.odin.core.lb.LoadBalancingClientProperties;
 import io.swiftwallet.odin.core.lb.OdinServer;
+import io.swiftwallet.odin.core.lb.event.ServerListUpdatedEvent;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.netflix.ribbon.DefaultServerIntrospector;
 import org.springframework.cloud.netflix.ribbon.ServerIntrospector;
 import org.springframework.cloud.netflix.ribbon.apache.RibbonLoadBalancingHttpClient;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -74,9 +78,12 @@ public class ServiceDiscoveryConfiguration implements Ordered {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+
 
     @Bean
-    public boolean register(final ConfigurableApplicationContext applicationContext) {
+    public boolean discover(final ConfigurableApplicationContext applicationContext) {
         List<String> serviceNames = null;
         Stat isServiceRootAvailable = null;
         try {
@@ -94,48 +101,66 @@ public class ServiceDiscoveryConfiguration implements Ordered {
 
             if (CollectionUtils.isNotEmpty(serviceNames)) {
                 for (final String serviceName : serviceNames) {
-                    if (!serviceName.equals(microServiceProperties.getName())) {
-                        final List<Server> serverList = new ArrayList<>();
-                        final String childPath = this.properties.getRoot() + "/" + serviceName;
-                        List<String> microServiceIds = null;
-                        try {
-                            microServiceIds = curatorFramework.getChildren().forPath(childPath);
-                        } catch (Exception e) {
-                            throw new ServiceDiscoveryException("exception getting microservice ids for microservice " + serviceName, e);
-                        }
-                        if (CollectionUtils.isNotEmpty(microServiceIds)) {
-                            for (final String micorServiceId : microServiceIds) {
-                                if (LOGGER.isInfoEnabled()) {
-                                    LOGGER.info("Discovered service with id {} for microservice {}", micorServiceId, serviceName);
-                                }
-                                OdinServer server = null;
-                                try {
-                                    server = objectMapper.readValue(curatorFramework.getData().forPath(childPath + "/" + micorServiceId), OdinServer.class);
-                                } catch (Exception e) {
-                                    throw new ServiceDiscoveryException("Exception getting Server Object for " + micorServiceId, e);
-                                }
-                                if (server != null) {
-                                    serverList.add(server);
-                                }
-                            }
-                            final ILoadBalancer loadBalancer = LoadBalancerBuilder.newBuilder().buildFixedServerListLoadBalancer(serverList);
-                            final ServerIntrospector serverIntrospector = new DefaultServerIntrospector();
-                            final RibbonLoadBalancingHttpClient loadBalancingHttpClient = new RibbonLoadBalancingHttpClient(getClientConfig(), serverIntrospector);
-                            loadBalancingHttpClient.setLoadBalancer(loadBalancer);
-                            applicationContext.getBeanFactory().registerSingleton(serviceName, loadBalancingHttpClient);
-
-                        }
-                    }
-
+                    discover(applicationContext, serviceName);
                 }
             }
         }
         return true;
     }
 
+    public void discover(ConfigurableApplicationContext applicationContext, String serviceName) {
+        if (!serviceName.equals(microServiceProperties.getName())) {
+            final List<Server> serverList = new ArrayList<>();
+            final String childPath = this.properties.getRoot() + "/" + serviceName;
+            List<String> microServiceIds = null;
+            try {
+                microServiceIds = curatorFramework.getChildren().forPath(childPath);
+            } catch (Exception e) {
+                throw new ServiceDiscoveryException("exception getting microservice ids for microservice " + serviceName, e);
+            }
+
+            final BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) applicationContext.getBeanFactory();
+            if (beanDefinitionRegistry.containsBeanDefinition(serviceName)) {
+                beanDefinitionRegistry.removeBeanDefinition(serviceName);
+            }
+            if (CollectionUtils.isNotEmpty(microServiceIds)) {
+                for (final String micorServiceId : microServiceIds) {
+                    OdinServer server = createOdinServer(serviceName, childPath, micorServiceId);
+                    if (server != null) {
+                        serverList.add(server);
+                    }
+                }
+                final ILoadBalancer loadBalancer = LoadBalancerBuilder.newBuilder().buildFixedServerListLoadBalancer(serverList);
+                final ServerIntrospector serverIntrospector = new DefaultServerIntrospector();
+                final RibbonLoadBalancingHttpClient loadBalancingHttpClient = new RibbonLoadBalancingHttpClient(getClientConfig(), serverIntrospector);
+                final BeanDefinitionBuilder beanDefinition = BeanDefinitionBuilder.genericBeanDefinition(RibbonLoadBalancingHttpClient.class);
+                beanDefinition.addConstructorArgValue(getClientConfig());
+                beanDefinition.addConstructorArgValue(serverIntrospector);
+                beanDefinition.addPropertyValue("loadBalancer", loadBalancer);
+                loadBalancingHttpClient.setLoadBalancer(loadBalancer);
+                beanDefinitionRegistry.registerBeanDefinition(serviceName, beanDefinition.getBeanDefinition());
+                applicationEventPublisher.publishEvent(new ServerListUpdatedEvent(serviceName));
+
+            }
+        }
+    }
+
+    public OdinServer createOdinServer(String serviceName, String childPath, String micorServiceId) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Discovered service with id {} for microservice {}", micorServiceId, serviceName);
+        }
+        OdinServer server = null;
+        try {
+            server = objectMapper.readValue(curatorFramework.getData().forPath(childPath + "/" + micorServiceId), OdinServer.class);
+        } catch (Exception e) {
+            throw new ServiceDiscoveryException("Exception getting Server Object for " + micorServiceId, e);
+        }
+        return server;
+    }
+
     @Bean
     public ServiceChangeWatcher serviceChangeWatcher() {
-        return new ServiceChangeWatcher(properties.getRoot());
+        return new ServiceChangeWatcher(properties.getRoot(), microServiceProperties.getName());
     }
 
     @Bean
