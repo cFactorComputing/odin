@@ -27,6 +27,7 @@ import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
 import com.codahale.metrics.jvm.ThreadStatesGaugeSet;
 import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
 import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
+import io.swiftwallet.odin.core.bootstrap.MicroServiceProperties;
 import io.swiftwallet.odin.core.services.oicollector.OiCollectorProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -42,7 +43,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Configuration
 @EnableMetrics
-@EnableConfigurationProperties(OiCollectorProperties.class)
+@EnableConfigurationProperties({OiCollectorProperties.class, MicroServiceProperties.class})
 public class OiCollectorConfiguration extends MetricsConfigurerAdapter {
 
     @Autowired
@@ -54,11 +55,14 @@ public class OiCollectorConfiguration extends MetricsConfigurerAdapter {
     @Autowired
     private OiCollectorProperties properties;
 
+    @Autowired
+    private MicroServiceProperties microServiceProperties;
+
     @PostConstruct
     public void init() {
-        metricRegistry.register("gc", new GarbageCollectorMetricSet());
-        metricRegistry.register("memory", new MemoryUsageGaugeSet());
-        metricRegistry.register("threads", new ThreadStatesGaugeSet());
+        metricRegistry.register(microServiceProperties.getId()+"-gc", new GarbageCollectorMetricSet());
+        metricRegistry.register(microServiceProperties.getId()+"-memory", new MemoryUsageGaugeSet());
+        metricRegistry.register(microServiceProperties.getId()+"-threads", new ThreadStatesGaugeSet());
         configureReporters(metricRegistry);
     }
 
