@@ -25,7 +25,7 @@
     </parent>
     <groupId>io.swiftwallet</groupId>
     <artifactId>odin</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <packaging>pom</packaging>
 
     <name>Swift Wallet::Odin</name>
@@ -523,7 +523,7 @@
     <scm>
         <connection>scm:git:ssh://gibu.george@git.swiftwallet.aws.local/swiftwallet/odin.git</connection>
         <developerConnection>scm:git:ssh://gibu.george@git.swiftwallet.aws.local/swiftwallet/odin.git</developerConnection>
-      <tag>odin-1.0</tag>
+      <tag>odin-1.1</tag>
   </scm>
 
 </project>
