@@ -22,9 +22,7 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
 import com.codahale.metrics.health.HealthCheckRegistry;
-import com.codahale.metrics.jvm.GarbageCollectorMetricSet;
-import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
-import com.codahale.metrics.jvm.ThreadStatesGaugeSet;
+import com.codahale.metrics.jvm.*;
 import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
 import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
 import io.swiftwallet.odin.core.bootstrap.MicroServiceProperties;
@@ -60,9 +58,13 @@ public class OiCollectorConfiguration extends MetricsConfigurerAdapter {
 
     @PostConstruct
     public void init() {
-        metricRegistry.register(microServiceProperties.getId()+"-gc", new GarbageCollectorMetricSet());
-        metricRegistry.register(microServiceProperties.getId()+"-memory", new MemoryUsageGaugeSet());
-        metricRegistry.register(microServiceProperties.getId()+"-threads", new ThreadStatesGaugeSet());
+        final String prefix=microServiceProperties.getName()+"."+microServiceProperties.getId();
+        metricRegistry.register(prefix+".gc", new GarbageCollectorMetricSet());
+        metricRegistry.register(prefix+".memory", new MemoryUsageGaugeSet());
+        metricRegistry.register(prefix+".threads", new ThreadStatesGaugeSet());
+        metricRegistry.register(prefix+".classes",new ClassLoadingGaugeSet());
+        metricRegistry.register(prefix+".filedescriptor",new FileDescriptorRatioGauge());
+
         configureReporters(metricRegistry);
     }
 
