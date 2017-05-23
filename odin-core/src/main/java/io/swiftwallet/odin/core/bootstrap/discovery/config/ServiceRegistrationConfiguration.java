@@ -23,6 +23,7 @@ import io.swiftwallet.odin.core.bootstrap.discovery.ServiceDiscoveryProperties;
 import io.swiftwallet.odin.core.lb.OdinServer;
 import io.swiftwallet.odin.core.services.server.EmbeddedServerProperties;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
@@ -90,9 +91,13 @@ public class ServiceRegistrationConfiguration implements Ordered {
             unRegister();
         }
         String address = null;
-        final Collection<InetAddress> ips = getAllLocalIPs();
-        if (CollectionUtils.isNotEmpty(ips)) {
-            address = ips.iterator().next().getHostAddress();   // default to the first address
+        if (StringUtils.isNotEmpty(embeddedServerProperties.getHostName())) {
+            address = embeddedServerProperties.getHostName();
+        } else {
+            final Collection<InetAddress> ips = getAllLocalIPs();
+            if (CollectionUtils.isNotEmpty(ips)) {
+                address = ips.iterator().next().getHostAddress();   // default to the first address
+            }
         }
         final int serverPort = embeddedServerProperties.getPort();
 
