@@ -24,9 +24,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "server")
 public class EmbeddedServerProperties {
 
-    private int port=8080;
-    private int jmxPort=1099;
+    private int port = 8080;
+    private int jmxPort = 1099;
     private boolean sslEnabled;
+    private String hostName;
 
     public int getPort() {
         return port;
@@ -50,5 +51,13 @@ public class EmbeddedServerProperties {
 
     public void setSslEnabled(boolean sslEnabled) {
         this.sslEnabled = sslEnabled;
+    }
+
+    public String getHostName() {
+        return hostName;
+    }
+
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
     }
 }
