@@ -16,7 +16,8 @@
 
 package in.cfcomputing.odin.main;
 
-import io.swiftwallet.odin.core.bootstrap.config.annotations.OdinConfiguration;
+
+import in.cfcomputing.odin.core.bootstrap.config.annotations.OdinConfiguration;
 import org.springframework.boot.SpringApplication;
 
 /**
