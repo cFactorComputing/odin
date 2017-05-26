@@ -76,7 +76,7 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>io.swiftwallet.odin</groupId>
+                <groupId>in.cfcomputing.odin</groupId>
                 <artifactId>odin-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
