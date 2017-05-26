@@ -21,7 +21,7 @@
     <parent>
         <groupId>io.swiftwallet</groupId>
         <artifactId>odin</artifactId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.2</version>
     </parent>
     <groupId>io.swiftwallet.odin</groupId>
     <artifactId>odin-core</artifactId>
