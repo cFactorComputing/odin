@@ -15,6 +15,7 @@
 
 package in.cfcomputing.odin.core.services.gemfire.config;
 
+import in.cfcomputing.odin.core.services.gemfire.CacheRegionFactoryProvider;
 import in.cfcomputing.odin.core.services.gemfire.GemfireProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -49,6 +50,11 @@ public class GemfireConfiguration {
         final ConnectionEndpoint connectionEndpoint = new ConnectionEndpoint(gemfireProperties.getLocatorHost(), gemfireProperties.getLocatorPort());
         poolFactoryBean.addLocators(connectionEndpoint);
         return poolFactoryBean;
+    }
+
+    @Bean
+    public CacheRegionFactoryProvider cacheRegionFactoryProvider(final PoolFactoryBean poolFactoryBean, final ClientCacheFactoryBean clientCacheFactoryBean) {
+        return new CacheRegionFactoryProvider(poolFactoryBean, clientCacheFactoryBean);
     }
 
 
