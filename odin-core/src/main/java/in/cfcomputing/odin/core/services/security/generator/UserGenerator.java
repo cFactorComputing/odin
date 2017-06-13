@@ -23,7 +23,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class UserGenerator<U extends BaseUser<R>, R extends BaseUserRole> {
 
         final List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (R role : userRole) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleType().grantedAuthority()));
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole().grantedAuthority()));
         }
 
         return new User(user.getId(), user.getPassword(), grantedAuthorities);
