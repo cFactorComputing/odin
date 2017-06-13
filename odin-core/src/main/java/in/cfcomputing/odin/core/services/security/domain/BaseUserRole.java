@@ -17,12 +17,13 @@ package in.cfcomputing.odin.core.services.security.domain;
 
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Created by gibugeorge on 08/06/2017.
  */
-public class BaseUserRole {
+public class BaseUserRole implements Serializable{
 
     @Id
     private String id = UUID.randomUUID().toString();

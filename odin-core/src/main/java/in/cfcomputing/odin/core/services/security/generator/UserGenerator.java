@@ -28,7 +28,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class UserGenerator<U extends BaseUser<R>, R extends BaseUserRole> {
 
     public UserDetails generate(final U user) {
