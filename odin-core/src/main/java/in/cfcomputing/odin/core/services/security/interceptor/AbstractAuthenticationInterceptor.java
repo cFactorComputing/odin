@@ -39,8 +39,8 @@ import java.util.Collections;
  */
 public abstract class AbstractAuthenticationInterceptor<C extends GemfireRepository, U extends BaseAuthenticatedUser> extends HandlerInterceptorAdapter {
 
-    private final C authenticatedUserCache;
-    private final UserGenerator userGenerator;
+    protected final C authenticatedUserCache;
+    protected final UserGenerator userGenerator;
 
     @Value("${security.enabled:false}")
     private boolean authenticationEnabled;
