@@ -23,11 +23,11 @@ import java.util.UUID;
 /**
  * Created by gibugeorge on 08/06/2017.
  */
-public class BaseUserRole implements Serializable{
+public class BaseUserRole implements Serializable {
 
     @Id
     private String id = UUID.randomUUID().toString();
-    private IRoleType roleType;
+    private IRoleType role;
 
     public String getId() {
         return id;
@@ -37,11 +37,11 @@ public class BaseUserRole implements Serializable{
         this.id = id;
     }
 
-    public IRoleType getRoleType() {
-        return roleType;
+    public IRoleType getRole() {
+        return role;
     }
 
-    public void setRoleType(IRoleType roleType) {
-        this.roleType = roleType;
+    public void setRole(IRoleType role) {
+        this.role = role;
     }
 }
