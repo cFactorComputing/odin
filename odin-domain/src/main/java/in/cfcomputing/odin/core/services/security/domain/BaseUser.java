@@ -15,33 +15,44 @@
 
 package in.cfcomputing.odin.core.services.security.domain;
 
-import org.springframework.data.annotation.Id;
-
 import java.io.Serializable;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by gibugeorge on 08/06/2017.
  */
-public class BaseUserRole implements Serializable {
+public class BaseUser<R extends BaseUserRole> implements Serializable {
 
-    @Id
-    private String id = UUID.randomUUID().toString();
-    private IRoleType role;
+    private Long userId;
+    private List<R> roles = new ArrayList<>();
+    private String password;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public List<R> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<R> roles) {
+        this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public IRoleType getRole() {
-        return role;
-    }
-
-    public void setRole(IRoleType role) {
-        this.role = role;
+        return String.valueOf(userId);
     }
 }
