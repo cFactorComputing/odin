@@ -16,42 +16,29 @@
 package in.cfcomputing.odin.core.services.security.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by gibugeorge on 08/06/2017.
  */
-public class BaseUser<R extends BaseUserRole> implements Serializable {
+public class BaseUserRole implements Serializable {
 
-    private Long userId;
-    private List<R> roles;
-    private String password;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public List<R> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<R> roles) {
-        this.roles = roles;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private String id = UUID.randomUUID().toString();
+    private IRoleType role;
 
     public String getId() {
-        return String.valueOf(userId);
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public IRoleType getRole() {
+        return role;
+    }
+
+    public void setRole(IRoleType role) {
+        this.role = role;
     }
 }

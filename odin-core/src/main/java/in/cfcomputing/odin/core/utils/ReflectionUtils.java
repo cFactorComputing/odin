@@ -49,7 +49,6 @@ public class ReflectionUtils extends org.springframework.util.ReflectionUtils {
     }
 
     public static Object readFieldValue(final Field field, final Object object) {
-        final Object value;
         try {
             return readField(field, object, true);
         } catch (IllegalAccessException e) {
