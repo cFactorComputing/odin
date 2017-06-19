@@ -66,6 +66,7 @@
         <module>odin-core</module>
         <module>odin-main</module>
         <module>odin-configuration</module>
+        <module>odin-domain</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -78,6 +79,11 @@
             <dependency>
                 <groupId>in.cfcomputing.odin</groupId>
                 <artifactId>odin-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>in.cfcomputing.odin</groupId>
+                <artifactId>odin-domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

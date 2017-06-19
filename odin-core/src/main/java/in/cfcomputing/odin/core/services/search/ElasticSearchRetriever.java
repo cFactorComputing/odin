@@ -40,8 +40,6 @@ import static org.elasticsearch.index.query.QueryBuilders.matchPhrasePrefixQuery
 
 @Component
 public class ElasticSearchRetriever extends AbstractElasticConnector {
-
-    // TODO temporary fix to get near by search distance from configuration
     @Value("${nearby-search-limit-radius-kilometers:3}")
     private double nearBySearchLimitRadius;
 
@@ -55,7 +53,7 @@ public class ElasticSearchRetriever extends AbstractElasticConnector {
         final String indexName = parser.getIndexName();
         final String type = parser.getType();
         final String geoPointFieldName = getGeopointFieldName(responseType);
-        // TODO temporary fix to get near by search distance from configuration
+
         final Double searchableDistance =
                 geoSearchable.getDistance() > 0 ? geoSearchable.getDistance() : nearBySearchLimitRadius;
         Validate.notNull(geoPointFieldName, "Search by geoLocation requires GeoPointField");

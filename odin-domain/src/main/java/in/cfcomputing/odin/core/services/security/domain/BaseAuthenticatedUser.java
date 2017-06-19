@@ -15,9 +15,6 @@
 
 package in.cfcomputing.odin.core.services.security.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.annotation.Id;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -26,9 +23,7 @@ import java.util.Set;
  * Created by gibugeorge on 13/06/2017.
  */
 public class BaseAuthenticatedUser<U extends BaseUser> implements Serializable {
-
     private static final long serialVersionUID = 345678L;
-    @Id
     private String accessToken;
     private U user;
     private String userId;
@@ -37,7 +32,6 @@ public class BaseAuthenticatedUser<U extends BaseUser> implements Serializable {
     private String refreshToken;
     private Date expiration;
 
-    @JsonIgnore
     public Set<String> getScope() {
         return scope;
     }
@@ -62,7 +56,6 @@ public class BaseAuthenticatedUser<U extends BaseUser> implements Serializable {
         this.user = user;
     }
 
-    @JsonIgnore
     public GrantType getGrantType() {
         return grantType;
     }
@@ -88,7 +81,6 @@ public class BaseAuthenticatedUser<U extends BaseUser> implements Serializable {
         return accessToken;
     }
 
-    @JsonIgnore
     public Date getExpiration() {
         return this.expiration;
     }
@@ -97,7 +89,6 @@ public class BaseAuthenticatedUser<U extends BaseUser> implements Serializable {
         this.expiration = expiration;
     }
 
-    @JsonIgnore
     public boolean isExpired() {
         return this.expiration != null && this.expiration.before(new Date());
     }
