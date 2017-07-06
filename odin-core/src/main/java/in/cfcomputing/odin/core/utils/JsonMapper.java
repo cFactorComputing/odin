@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
@@ -46,7 +47,7 @@ public class JsonMapper {
 
     public static <T> T fromJson(final String json, final Class<T> targetType) {
         try {
-            return objectMapper.readValue(json, targetType);
+            return StringUtils.isEmpty(json) ? null : objectMapper.readValue(json, targetType);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
