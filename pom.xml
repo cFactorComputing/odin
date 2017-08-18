@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!--
+  ~ Copyright (c) 2017 cFactor Computing Pvt. Ltd.
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.2.RELEASE</version>
+        <version>1.4.3.RELEASE</version>
     </parent>
-    <groupId>io.swiftwallet</groupId>
+    <groupId>in.cfcomputing</groupId>
     <artifactId>odin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Swift Wallet::Odin</name>
-    <url>http://swiftwallet.io/</url>
+    <name>cFactor::Odin</name>
+    <url>http://cfcomputing.in/</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,7 +36,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <odin-junit.version>4.12</odin-junit.version>
-        <odin-spring-boot.version>1.4.2.RELEASE</odin-spring-boot.version>
+        <odin-spring-boot.version>1.4.3.RELEASE</odin-spring-boot.version>
         <odin-spring-kafka.version>1.1.1.RELEASE</odin-spring-kafka.version>
         <odin-jetty.version>9.3.14.v20161028</odin-jetty.version>
         <odin-jacoco.version>0.7.7.201606060606</odin-jacoco.version>
@@ -36,12 +50,23 @@
         <odin-netflix-ribbon.version>2.2.2</odin-netflix-ribbon.version>
         <odin-netflix-servo.version>0.12.12</odin-netflix-servo.version>
         <odin-spring-security.version>4.2.0.RELEASE</odin-spring-security.version>
+        <odin-ognl.version>3.1.12</odin-ognl.version>
+        <odin-spring.version>4.3.5.RELEASE</odin-spring.version>
+        <odin-spring-security-oauth2.version>2.0.12.RELEASE</odin-spring-security-oauth2.version>
+        <odin-assertj.version>1.0.0</odin-assertj.version>
+        <odin-spring-data-gemfire.version>1.8.6.RELEASE</odin-spring-data-gemfire.version>
+        <odin-gemfire.version>8.2.0</odin-gemfire.version>
+        <odin-metrics-spring.version>3.1.3</odin-metrics-spring.version>
+        <odin-metrics.version>3.1.2</odin-metrics.version>
+        <odin-spring-cloud-netflix.version>1.3.0.M1</odin-spring-cloud-netflix.version>
+        <odin-elastic-search.version>5.3.2</odin-elastic-search.version>
     </properties>
 
     <modules>
         <module>odin-core</module>
         <module>odin-main</module>
         <module>odin-configuration</module>
+        <module>odin-domain</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -52,8 +77,13 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>io.swiftwallet.odin</groupId>
+                <groupId>in.cfcomputing.odin</groupId>
                 <artifactId>odin-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>in.cfcomputing.odin</groupId>
+                <artifactId>odin-domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -154,6 +184,11 @@
                 <version>${odin-netflix-ribbon.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.netflix.ribbon</groupId>
+                <artifactId>ribbon-core</artifactId>
+                <version>${odin-netflix-ribbon.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.netflix.zuul</groupId>
                 <artifactId>zuul-core</artifactId>
                 <version>${odin-netflix-zuul.version}</version>
@@ -177,6 +212,101 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-web</artifactId>
                 <version>${odin-spring-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ognl</groupId>
+                <artifactId>ognl</artifactId>
+                <version>${odin-ognl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${odin-spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka-test</artifactId>
+                <version>${odin-spring-kafka.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-test</artifactId>
+                <version>${odin-spring-boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${odin-spring-security-oauth2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${odin-assertj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-gemfire</artifactId>
+                <version>${odin-spring-data-gemfire.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gemstone.gemfire</groupId>
+                <artifactId>gemfire</artifactId>
+                <version>${odin-gemfire.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ryantenney.metrics</groupId>
+                <artifactId>metrics-spring</artifactId>
+                <version>${odin-metrics-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-jvm</artifactId>
+                <version>${odin-metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-graphite</artifactId>
+                <version>${odin-metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-servlets</artifactId>
+                <version>${odin-metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-netflix-core</artifactId>
+                <version>${odin-spring-cloud-netflix.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.ribbon</groupId>
+                <artifactId>ribbon-httpclient</artifactId>
+                <version>${odin-netflix-ribbon.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.code.findbugs</groupId>
+                        <artifactId>annotations</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>transport</artifactId>
+                <version>${odin-elastic-search.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${odin-elastic-search.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -225,6 +355,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>3.0.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.basepom.maven</groupId>
+                    <artifactId>duplicate-finder-maven-plugin</artifactId>
+                    <version>1.1.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -329,6 +464,34 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.basepom.maven</groupId>
+                <artifactId>duplicate-finder-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>false</skip>
+                    <quiet>false</quiet>
+                    <checkCompileClasspath>true</checkCompileClasspath>
+                    <checkRuntimeClasspath>true</checkRuntimeClasspath>
+                    <checkTestClasspath>true</checkTestClasspath>
+                    <failBuildInCaseOfDifferentContentConflict>false</failBuildInCaseOfDifferentContentConflict>
+                    <failBuildInCaseOfEqualContentConflict>false</failBuildInCaseOfEqualContentConflict>
+                    <failBuildInCaseOfConflict>false</failBuildInCaseOfConflict>
+                    <printEqualFiles>false</printEqualFiles>
+                    <preferLocal>true</preferLocal>
+                    <includeBootClasspath>false</includeBootClasspath>
+                    <bootClasspathProperty>sun.boot.class.path</bootClasspathProperty>
+                    <includePomProjects>false</includePomProjects>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <profiles>
@@ -361,4 +524,22 @@
             </build>
         </profile>
     </profiles>
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Releases</name>
+            <url>http://artifacts.cfcomputing.co.uk/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Snapshot</name>
+            <url>http://artifacts.cfcomputing.co.uk/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:git:ssh://gibu.george@git.cfcomputing.co.uk/swiftwallet/odin.git</connection>
+        <developerConnection>scm:git:ssh://gibu.george@git.cfcomputing.co.uk/swiftwallet/odin.git</developerConnection>
+      <tag>odin-1.2</tag>
+  </scm>
+
 </project>
