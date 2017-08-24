@@ -15,6 +15,7 @@
 
 package in.cfcomputing.odin.core.bootstrap.zk.config;
 
+import in.cfcomputing.odin.core.utils.AvailablePortFinder;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.test.TestingServer;
 import org.junit.Assert;
@@ -39,7 +40,7 @@ public class ZooKeeperConfigurationTest {
 
     @Autowired(required = false)
     private CuratorFramework curatorFramework;
-    private static final int PORT = 2182;
+    private static final int PORT =  AvailablePortFinder.getNextAvailable(2182);
 
 
     @BeforeClass
