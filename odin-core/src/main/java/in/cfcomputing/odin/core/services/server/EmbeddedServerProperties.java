@@ -25,8 +25,8 @@ public class EmbeddedServerProperties {
 
     private int port = 8080;
     private int jmxPort = 1099;
-    private boolean sslEnabled;
     private String hostName;
+    private SslProperties ssl = new SslProperties();
 
     public int getPort() {
         return port;
@@ -44,19 +44,19 @@ public class EmbeddedServerProperties {
         this.jmxPort = jmxPort;
     }
 
-    public boolean isSslEnabled() {
-        return sslEnabled;
-    }
-
-    public void setSslEnabled(boolean sslEnabled) {
-        this.sslEnabled = sslEnabled;
-    }
-
     public String getHostName() {
         return hostName;
     }
 
     public void setHostName(String hostName) {
         this.hostName = hostName;
+    }
+
+    public SslProperties getSsl() {
+        return ssl;
+    }
+
+    public void setSsl(SslProperties ssl) {
+        this.ssl = ssl;
     }
 }

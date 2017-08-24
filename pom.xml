@@ -528,17 +528,17 @@
         <repository>
             <id>nexus</id>
             <name>Releases</name>
-            <url>http://artifacts.swiftwallet.aws.local/repository/maven-releases/</url>
+            <url>http://artifacts.cfcomputing.co.uk/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>nexus</id>
             <name>Snapshot</name>
-            <url>http://artifacts.swiftwallet.aws.local/repository/maven-snapshots/</url>
+            <url>http://artifacts.cfcomputing.co.uk/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <scm>
-        <connection>scm:git:ssh://gibu.george@git.swiftwallet.aws.local/swiftwallet/odin.git</connection>
-        <developerConnection>scm:git:ssh://gibu.george@git.swiftwallet.aws.local/swiftwallet/odin.git</developerConnection>
+        <connection>scm:git:ssh://gibu.george@git.cfcomputing.co.uk/swiftwallet/odin.git</connection>
+        <developerConnection>scm:git:ssh://gibu.george@git.cfcomputing.co.uk/swiftwallet/odin.git</developerConnection>
       <tag>odin-1.2</tag>
   </scm>
 

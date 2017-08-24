@@ -6,6 +6,7 @@ in.cfcomputing.odin.core.services.kafka.config.KafkaProducerConfiguration,\
 in.cfcomputing.odin.core.services.kafka.config.KafkaConsumerConfiguration,\
 in.cfcomputing.odin.core.bootstrap.discovery.config.ServiceRegistrationConfiguration,\
 in.cfcomputing.odin.core.services.oicollector.config.OiCollectorConfiguration,\
+in.cfcomputing.odin.core.services.web.config.WebConfiguration,\
 in.cfcomputing.odin.core.services.eb.config.EventBusConfiguration
 in.cfcomputing.odin.core.bootstrap.config.annotations.OdinBootstrapConfiguration=\
 in.cfcomputing.odin.core.bootstrap.config.OdinBootstrapConfiguration,\

@@ -17,13 +17,12 @@ package in.cfcomputing.odin.core.services.server.config;
 
 import in.cfcomputing.odin.core.services.server.EmbeddedServerProperties;
 import in.cfcomputing.odin.core.services.server.exception.EmbeddedServerConfigurationException;
+import in.cfcomputing.odin.core.utils.AvailablePortFinder;
 import org.eclipse.jetty.http2.server.HTTP2CServerConnectionFactory;
 import org.eclipse.jetty.jmx.ConnectorServer;
 import org.eclipse.jetty.jmx.MBeanContainer;
-import org.eclipse.jetty.server.HttpConfiguration;
-import org.eclipse.jetty.server.HttpConnectionFactory;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,26 +70,46 @@ public class EmbeddedServerConfiguration {
             if (properties.getPort() == 0) {
                 throw new EmbeddedServerConfigurationException("\"server.port\" cannot be 0");
             }
-            serverConnector.setPort(properties.getPort());
+            serverConnector.setPort(AvailablePortFinder.getNextAvailable(properties.getPort()));
             server.addConnector(serverConnector);
+            if (properties.getSsl().isEnabled()) {
+                configureSsl(server);
+            }
             try {
-                final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + properties.getJmxPort() + "/jmxrmi"),
-                        "io.swiftwallet.odin.jmx:name=rmiconnectorserver");
+                final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + AvailablePortFinder.getNextAvailable(properties.getJmxPort()) + "/jmxrmi"),
+                        "in.cfcomputing.odin.jmx:name=rmiconnectorserver");
                 info("Adding  JMX Connector Server");
                 server.addBean(connectorServer);
             } catch (Exception e) {
                 throw new EmbeddedServerConfigurationException("Exception configuring the mbean connector server", e);
             }
             final MBeanContainer mbContainer = new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
-            mbContainer.setDomain("io.swiftwallet.odin");
+            mbContainer.setDomain("in.cfcomputing.odin");
             server.addBean(mbContainer);
         }
     }
 
     private static void info(final String message) {
-        if(LOGGER.isInfoEnabled()) {
+        if (LOGGER.isInfoEnabled()) {
             LOGGER.info(message);
         }
+    }
+
+    private void configureSsl(final Server server) {
+        info("Configuring SSL");
+        HttpConfiguration https = new HttpConfiguration();
+        https.addCustomizer(new SecureRequestCustomizer());
+        SslContextFactory sslContextFactory = new SslContextFactory();
+        sslContextFactory.setKeyStorePath(properties.getSsl().getKeyStorePath());
+        sslContextFactory.setKeyStorePassword(properties.getSsl().getKeyStorePassword());
+        ServerConnector sslConnector = new ServerConnector(server,
+                new SslConnectionFactory(sslContextFactory, "http/1.1"),
+                new HttpConnectionFactory(https));
+        if (properties.getSsl().getPort() == 0) {
+            throw new EmbeddedServerConfigurationException("\"server.ssl.port\" cannot be 0");
+        }
+        sslConnector.setPort(AvailablePortFinder.getNextAvailable(properties.getSsl().getPort()));
+        server.addConnector(sslConnector);
     }
 
 }
