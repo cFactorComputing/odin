@@ -1,4 +1,4 @@
-# Odin #
+# Odin  [![Codacy Badge](https://api.codacy.com/project/badge/Grade/199cccfb2a304c52bf581ee40d3301d7)](https://www.codacy.com/app/gibu.george/odin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cFactorComputing/odin&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/199cccfb2a304c52bf581ee40d3301d7)](https://www.codacy.com/app/gibu.george/odin?utm_source=github.com&utm_medium=referral&utm_content=cFactorComputing/odin&utm_campaign=Badge_Coverage)
 ## Introduction ##
 Odin is platform to build microservices. The name Odin is taken from the norse mythology, in Norse mythology, Odin was the king of the Æsir. He is a god of war and death, as well as a sky god and the god of wisdom and poetry. Along with being a god, he is the All-Father of all the Nordic Gods. 
 
