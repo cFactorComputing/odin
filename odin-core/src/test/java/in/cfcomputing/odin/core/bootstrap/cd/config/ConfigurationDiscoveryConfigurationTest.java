@@ -19,6 +19,7 @@ import in.cfcomputing.odin.core.bootstrap.cd.ConfigurationSourceLocator;
 import in.cfcomputing.odin.core.bootstrap.cd.event.listener.ConfigurationChangeListener;
 import in.cfcomputing.odin.core.bootstrap.cd.ConfigurationChangeWatcher;
 import in.cfcomputing.odin.core.bootstrap.zk.config.ZooKeeperConfiguration;
+import in.cfcomputing.odin.core.utils.AvailablePortFinder;
 import org.apache.curator.test.TestingServer;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,7 +42,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {ConfigurationDiscoveryConfigurationTest.TestConfig.class, ZooKeeperConfiguration.class, ConfigurationDiscoveryConfiguration.class})
 public class ConfigurationDiscoveryConfigurationTest {
 
-    private static final int PORT = 2184;
+    private static final int PORT =  AvailablePortFinder.getNextAvailable(2184);
 
     @Autowired(required = false)
     private ConfigurationSourceLocator configurationSourceLocator;
