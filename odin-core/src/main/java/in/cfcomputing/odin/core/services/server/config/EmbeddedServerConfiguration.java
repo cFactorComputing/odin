@@ -17,6 +17,7 @@ package in.cfcomputing.odin.core.services.server.config;
 
 import in.cfcomputing.odin.core.services.server.EmbeddedServerProperties;
 import in.cfcomputing.odin.core.services.server.exception.EmbeddedServerConfigurationException;
+import in.cfcomputing.odin.core.utils.AvailablePortFinder;
 import org.eclipse.jetty.http2.server.HTTP2CServerConnectionFactory;
 import org.eclipse.jetty.jmx.ConnectorServer;
 import org.eclipse.jetty.jmx.MBeanContainer;
@@ -69,13 +70,13 @@ public class EmbeddedServerConfiguration {
             if (properties.getPort() == 0) {
                 throw new EmbeddedServerConfigurationException("\"server.port\" cannot be 0");
             }
-            serverConnector.setPort(properties.getPort());
+            serverConnector.setPort(AvailablePortFinder.getNextAvailable(properties.getPort()));
             server.addConnector(serverConnector);
             if (properties.getSsl().isEnabled()) {
                 configureSsl(server);
             }
             try {
-                final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + properties.getJmxPort() + "/jmxrmi"),
+                final ConnectorServer connectorServer = new ConnectorServer(new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:" + AvailablePortFinder.getNextAvailable(properties.getJmxPort()) + "/jmxrmi"),
                         "in.cfcomputing.odin.jmx:name=rmiconnectorserver");
                 info("Adding  JMX Connector Server");
                 server.addBean(connectorServer);
@@ -107,7 +108,7 @@ public class EmbeddedServerConfiguration {
         if (properties.getSsl().getPort() == 0) {
             throw new EmbeddedServerConfigurationException("\"server.ssl.port\" cannot be 0");
         }
-        sslConnector.setPort(properties.getSsl().getPort());
+        sslConnector.setPort(AvailablePortFinder.getNextAvailable(properties.getSsl().getPort()));
         server.addConnector(sslConnector);
     }
 
