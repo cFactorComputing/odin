@@ -14,28 +14,24 @@
  */
 package in.cfcomputing.odin.core.services.security.oauth2.access.domain;
 
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class OdinOAuth2Authentication extends AbstractAuthenticationToken {
-    private OdinOAuth2Request storedRequest;
-    private Authentication userAuthentication;
+public class OdinUserDetails implements UserDetails {
+    private String username;
+    private String password;
     private Collection<GrantedAuthority> authorities = new ArrayList<>();
-    private OdinUserDetails principal;
 
-    public void setPrincipal(OdinUserDetails principal) {
-        this.principal = principal;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    @Override
-    public Collection<GrantedAuthority> getAuthorities() {
-        return this.authorities;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setAuthorities(Collection<OdinGrantedAuthority> authorities) {
@@ -46,33 +42,38 @@ public class OdinOAuth2Authentication extends AbstractAuthenticationToken {
         }
     }
 
-    public OdinOAuth2Authentication() {
-        super(new ArrayList<>());
-    }
-
-    public OAuth2Request getOAuth2Request() {
-        return storedRequest;
-    }
-
-    public void setOAuth2Request(OdinOAuth2Request oAuth2Request) {
-        this.storedRequest = oAuth2Request;
-    }
-
-    public Authentication getUserAuthentication() {
-        return userAuthentication;
-    }
-
-    public void setUserAuthentication(OdinOAuth2Authentication userAuthentication) {
-        this.userAuthentication = userAuthentication;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
     @Override
-    public Object getCredentials() {
-        return userAuthentication != null ? userAuthentication.getCredentials() : null;
+    public String getPassword() {
+        return password;
     }
 
     @Override
-    public Object getPrincipal() {
-        return principal;
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
