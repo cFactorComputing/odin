@@ -14,12 +14,41 @@
  */
 package in.cfcomputing.odin.core.services.security.oauth2.access.domain;
 
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 
-public class OdinOAuth2Authentication {
+import java.util.ArrayList;
+import java.util.Collection;
+
+public class OdinOAuth2Authentication extends AbstractAuthenticationToken {
     private OdinOAuth2Request storedRequest;
     private Authentication userAuthentication;
+    private Collection<GrantedAuthority> authorities = new ArrayList<>();
+    private OdinUserDetails principal;
+
+    public void setPrincipal(OdinUserDetails principal) {
+        this.principal = principal;
+    }
+
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    public void setAuthorities(Collection<OdinGrantedAuthority> authorities) {
+        if (authorities != null) {
+            for (GrantedAuthority authority : authorities) {
+                this.authorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
+            }
+        }
+    }
+
+    public OdinOAuth2Authentication() {
+        super(new ArrayList<>());
+    }
 
     public OAuth2Request getOAuth2Request() {
         return storedRequest;
@@ -33,7 +62,17 @@ public class OdinOAuth2Authentication {
         return userAuthentication;
     }
 
-    public void setUserAuthentication(Authentication userAuthentication) {
+    public void setUserAuthentication(OdinOAuth2Authentication userAuthentication) {
         this.userAuthentication = userAuthentication;
+    }
+
+    @Override
+    public Object getCredentials() {
+        return userAuthentication != null ? userAuthentication.getCredentials() : null;
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return principal;
     }
 }
