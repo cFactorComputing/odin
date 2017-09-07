@@ -15,6 +15,7 @@
 
 package in.cfcomputing.odin.core.services.security.interceptor;
 
+import in.cfcomputing.odin.core.services.security.oauth2.domain.AuthenticatedUserDetails;
 import in.cfcomputing.odin.core.services.security.domain.BaseAuthenticatedUser;
 import in.cfcomputing.odin.core.services.security.domain.BaseUser;
 import in.cfcomputing.odin.core.services.security.domain.GrantType;
@@ -89,7 +90,7 @@ public abstract class AbstractAuthenticationInterceptor<C extends GemfireReposit
             final GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(type.grantedAuthority());
             userDetails = new User(authenticatedUser.getUserId(), authenticatedUser.getUserId(), Collections.singleton(grantedAuthority));
         }
-        return userDetails;
+        return new AuthenticatedUserDetails<U>(userDetails, authenticatedUser);
     }
 
     protected U getAuthenticatedUser(final String accessToken) {

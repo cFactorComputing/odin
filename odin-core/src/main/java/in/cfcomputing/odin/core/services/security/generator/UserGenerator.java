@@ -15,6 +15,7 @@
 
 package in.cfcomputing.odin.core.services.security.generator;
 
+import in.cfcomputing.odin.core.services.security.oauth2.domain.AuthenticatedUserDetails;
 import in.cfcomputing.odin.core.services.security.domain.BaseUser;
 import in.cfcomputing.odin.core.services.security.domain.BaseUserRole;
 import org.apache.commons.collections4.CollectionUtils;
@@ -31,7 +32,7 @@ public class UserGenerator<U extends BaseUser<R>, R extends BaseUserRole> {
 
     public UserDetails generate(final U user) {
 
-        Validate.notNull(user, "BaseUser with id [%s] not found.", user.getUserId());
+        Validate.notNull(user, "BaseUser with id [%s] not found.", user.getUserName());
 
         final List<R> userRole = user.getRoles();
         Validate.isTrue(CollectionUtils.isNotEmpty(userRole), "BaseUser has no role specified.");
@@ -40,7 +41,7 @@ public class UserGenerator<U extends BaseUser<R>, R extends BaseUserRole> {
         for (R role : userRole) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole().grantedAuthority()));
         }
-
-        return new User(user.getId(), user.getPassword(), grantedAuthorities);
+        final User userDetails = new User(user.getUserName(), user.getPassword(), grantedAuthorities);
+        return new AuthenticatedUserDetails<U>(userDetails, user);
     }
 }
