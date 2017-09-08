@@ -15,14 +15,12 @@
 
 package in.cfcomputing.odin.core.services.security.generator;
 
-import in.cfcomputing.odin.core.services.security.oauth2.domain.AuthenticatedUserDetails;
 import in.cfcomputing.odin.core.services.security.domain.BaseUser;
 import in.cfcomputing.odin.core.services.security.domain.BaseUserRole;
+import in.cfcomputing.odin.core.services.security.oauth2.access.domain.OdinGrantedAuthority;
+import in.cfcomputing.odin.core.services.security.oauth2.access.domain.OdinUserDetails;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -31,17 +29,25 @@ import java.util.List;
 public class UserGenerator<U extends BaseUser<R>, R extends BaseUserRole> {
 
     public UserDetails generate(final U user) {
-
         Validate.notNull(user, "BaseUser with id [%s] not found.", user.getUserName());
 
         final List<R> userRole = user.getRoles();
         Validate.isTrue(CollectionUtils.isNotEmpty(userRole), "BaseUser has no role specified.");
 
-        final List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        final OdinUserDetails userDetails = new OdinUserDetails();
+
+        final List<OdinGrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (R role : userRole) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole().grantedAuthority()));
+            final OdinGrantedAuthority grantedAuthority = new OdinGrantedAuthority();
+            grantedAuthority.setAuthority(role.getRole().grantedAuthority());
+            grantedAuthorities.add(grantedAuthority);
         }
-        final User userDetails = new User(user.getUserName(), user.getPassword(), grantedAuthorities);
-        return new AuthenticatedUserDetails<U>(userDetails, user);
+
+        userDetails.setAuthorities(grantedAuthorities);
+        userDetails.setPassword(user.getPassword());
+        userDetails.setUsername(user.getUserName());
+        userDetails.setAuthenticatedUser(user);
+
+        return userDetails;
     }
 }
