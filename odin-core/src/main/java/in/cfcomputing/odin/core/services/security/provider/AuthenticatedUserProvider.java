@@ -15,9 +15,8 @@
 
 package in.cfcomputing.odin.core.services.security.provider;
 
-import in.cfcomputing.odin.core.services.security.domain.BaseAuthenticatedUser;
 import in.cfcomputing.odin.core.services.security.domain.GrantType;
-import in.cfcomputing.odin.core.services.security.oauth2.domain.AuthenticatedUserDetails;
+import in.cfcomputing.odin.core.services.security.oauth2.access.domain.OdinUserDetails;
 import org.apache.commons.lang3.Validate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,8 +34,8 @@ public class AuthenticatedUserProvider {
     }
 
     public String userId() {
-        final AuthenticatedUserDetails<BaseAuthenticatedUser> user = user();
-        return user.getAuthenticatedUser().getUserId();
+        final OdinUserDetails user = user();
+        return user.getUserId();
     }
 
     private Object principal() {

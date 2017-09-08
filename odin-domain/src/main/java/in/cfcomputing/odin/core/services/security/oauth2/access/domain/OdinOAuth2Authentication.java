@@ -14,12 +14,17 @@
  */
 package in.cfcomputing.odin.core.services.security.oauth2.access.domain;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,9 +32,10 @@ public class OdinOAuth2Authentication extends AbstractAuthenticationToken {
     private OdinOAuth2Request storedRequest;
     private Authentication userAuthentication;
     private Collection<GrantedAuthority> authorities = new ArrayList<>();
-    private OdinUserDetails principal;
+    private Object principal;
 
-    public void setPrincipal(OdinUserDetails principal) {
+    @JsonDeserialize(using = AuthenticationPrincipalDeSerializer.class)
+    public void setPrincipal(Object principal) {
         this.principal = principal;
     }
 
@@ -74,5 +80,19 @@ public class OdinOAuth2Authentication extends AbstractAuthenticationToken {
     @Override
     public Object getPrincipal() {
         return principal;
+    }
+
+    static class AuthenticationPrincipalDeSerializer extends JsonDeserializer<Object> {
+        public AuthenticationPrincipalDeSerializer() {
+        }
+
+        @Override
+        public Object deserialize(final JsonParser jsonParser,
+                                  final DeserializationContext deserializationContext) throws IOException {
+            if (jsonParser.currentToken().isStructStart()) {
+                return jsonParser.readValueAs(OdinUserDetails.class);
+            }
+            return jsonParser.readValueAs(String.class);
+        }
     }
 }
