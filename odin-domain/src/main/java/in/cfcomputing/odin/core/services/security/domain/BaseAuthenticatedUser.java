@@ -71,8 +71,7 @@ public class BaseAuthenticatedUser<U extends BaseUser> implements Serializable {
 
     public String getUserId() {
         if (user != null) {
-
-            return user.getId();
+            return user.getUserName();
         }
         return userId;
     }
