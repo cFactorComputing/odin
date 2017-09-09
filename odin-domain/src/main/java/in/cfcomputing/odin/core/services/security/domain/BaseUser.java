@@ -23,18 +23,9 @@ import java.util.List;
  * Created by gibugeorge on 08/06/2017.
  */
 public class BaseUser<R extends BaseUserRole> implements Serializable {
-
-    private Long userId;
+    private String userName;
     private List<R> roles = new ArrayList<>();
     private String password;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public List<R> getRoles() {
         return roles;
@@ -52,7 +43,11 @@ public class BaseUser<R extends BaseUserRole> implements Serializable {
         this.password = password;
     }
 
-    public String getId() {
-        return String.valueOf(userId);
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

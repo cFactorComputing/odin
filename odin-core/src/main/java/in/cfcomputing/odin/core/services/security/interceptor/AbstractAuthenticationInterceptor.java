@@ -19,6 +19,8 @@ import in.cfcomputing.odin.core.services.security.domain.BaseAuthenticatedUser;
 import in.cfcomputing.odin.core.services.security.domain.BaseUser;
 import in.cfcomputing.odin.core.services.security.domain.GrantType;
 import in.cfcomputing.odin.core.services.security.generator.UserGenerator;
+import in.cfcomputing.odin.core.services.security.oauth2.access.domain.OdinGrantedAuthority;
+import in.cfcomputing.odin.core.services.security.oauth2.access.domain.OdinUserDetails;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,10 +28,7 @@ import org.springframework.data.gemfire.repository.GemfireRepository;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
@@ -86,9 +85,17 @@ public abstract class AbstractAuthenticationInterceptor<C extends GemfireReposit
             final BaseUser baseUser = authenticatedUser.getUser();
             userDetails = userGenerator.generate(baseUser);
         } else {
-            final GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(type.grantedAuthority());
-            userDetails = new User(authenticatedUser.getUserId(), authenticatedUser.getUserId(), Collections.singleton(grantedAuthority));
+            final OdinUserDetails odinUserDetails = new OdinUserDetails();
+            final OdinGrantedAuthority grantedAuthority = new OdinGrantedAuthority();
+            grantedAuthority.setAuthority(type.grantedAuthority());
+
+            odinUserDetails.setAuthorities(Collections.singleton(grantedAuthority));
+            odinUserDetails.setPassword(authenticatedUser.getUserId());
+            odinUserDetails.setUsername(authenticatedUser.getUserId());
+
+            userDetails = odinUserDetails;
         }
+        ((OdinUserDetails) userDetails).setAuthenticatedUser(authenticatedUser);
         return userDetails;
     }
 

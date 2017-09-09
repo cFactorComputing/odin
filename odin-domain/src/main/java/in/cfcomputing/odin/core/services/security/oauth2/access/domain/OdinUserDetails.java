@@ -14,17 +14,35 @@
  */
 package in.cfcomputing.odin.core.services.security.oauth2.access.domain;
 
+import in.cfcomputing.odin.core.services.security.domain.BaseAuthenticatedUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 public class OdinUserDetails implements UserDetails {
     private String username;
     private String password;
     private Collection<GrantedAuthority> authorities = new ArrayList<>();
+    private Object authenticatedUser;
+
+    public <T> T getFromAuthenticatedUser(final String property) {
+        if (authenticatedUser instanceof Map) {
+            return ((Map<String, T>) authenticatedUser).get(property);
+        }
+        return null;
+    }
+
+    public Object getAuthenticatedUser() {
+        return authenticatedUser;
+    }
+
+    public void setAuthenticatedUser(Object authenticatedUser) {
+        this.authenticatedUser = authenticatedUser;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -75,5 +93,12 @@ public class OdinUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getUserId() {
+        if (authenticatedUser instanceof BaseAuthenticatedUser) {
+            return ((BaseAuthenticatedUser) authenticatedUser).getUserId();
+        }
+        return null;
     }
 }
