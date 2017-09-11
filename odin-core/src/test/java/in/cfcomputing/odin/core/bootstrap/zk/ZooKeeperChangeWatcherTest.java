@@ -16,6 +16,7 @@
 package in.cfcomputing.odin.core.bootstrap.zk;
 
 import in.cfcomputing.odin.core.bootstrap.zk.config.ZooKeeperConfiguration;
+import in.cfcomputing.odin.core.utils.AvailablePortFinder;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.apache.curator.test.TestingServer;
@@ -40,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {ZooKeeperChangeWatcherTest.ZKChangeWatcherTestConfig.class, ZooKeeperConfiguration.class})
 public class ZooKeeperChangeWatcherTest {
-    private static final int PORT = 2183;
+    private static final int PORT = AvailablePortFinder.getNextAvailable(2183);
 
 
     @Autowired

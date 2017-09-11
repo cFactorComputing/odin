@@ -16,10 +16,11 @@
 package in.cfcomputing.odin.core.services.security.provider;
 
 import in.cfcomputing.odin.core.services.security.domain.GrantType;
+import in.cfcomputing.odin.core.services.security.oauth2.access.domain.OdinUserDetails;
 import org.apache.commons.lang3.Validate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,11 +34,8 @@ public class AuthenticatedUserProvider {
     }
 
     public String userId() {
-        if (grantType() == GrantType.USER) {
-            final User user = user();
-            return user.getUsername();
-        }
-        return this.<String>user();
+        final OdinUserDetails user = user();
+        return user.getUserId();
     }
 
     private Object principal() {
@@ -48,7 +46,7 @@ public class AuthenticatedUserProvider {
     }
 
     public GrantType grantType() {
-        if (principal() instanceof User) {
+        if (principal() instanceof UserDetails) {
             return GrantType.USER;
         }
         return GrantType.SYSTEM;
