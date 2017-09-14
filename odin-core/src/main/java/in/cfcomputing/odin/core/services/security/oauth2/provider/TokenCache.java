@@ -25,7 +25,7 @@ public interface TokenCache<T extends OAuth2Token, ID extends Serializable> exte
 
     T findByRefreshToken(String value);
 
-    T findByAuthenticationKey(String authenticationKey);
+    Iterable<T> findByAuthenticationKey(String authenticationKey);
 
     Iterable<T> findByClientIdAndUserName(String clientId, String userName);
 
