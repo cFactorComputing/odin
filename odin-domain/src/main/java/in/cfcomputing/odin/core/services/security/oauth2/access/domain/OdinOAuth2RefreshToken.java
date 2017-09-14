@@ -14,10 +14,42 @@
  */
 package in.cfcomputing.odin.core.services.security.oauth2.access.domain;
 
-import org.springframework.security.oauth2.common.DefaultOAuth2RefreshToken;
+import org.springframework.security.oauth2.common.DefaultExpiringOAuth2RefreshToken;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 
-public class OdinOAuth2RefreshToken extends DefaultOAuth2RefreshToken {
-    public OdinOAuth2RefreshToken() {
-        super((String) null);
+import java.util.Date;
+
+public class OdinOAuth2RefreshToken {
+    private String value;
+    private Date expiration;
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Date getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(Date expiration) {
+        this.expiration = expiration;
+    }
+
+    public OAuth2RefreshToken toRefreshToken() {
+        return new DefaultExpiringOAuth2RefreshToken(getValue(), getExpiration());
+    }
+
+    public static OdinOAuth2RefreshToken fromToken(final OAuth2RefreshToken refreshToken) {
+        final OdinOAuth2RefreshToken token = new OdinOAuth2RefreshToken();
+        token.setValue(refreshToken.getValue());
+
+        if (refreshToken instanceof DefaultExpiringOAuth2RefreshToken) {
+            token.setExpiration(((DefaultExpiringOAuth2RefreshToken) refreshToken).getExpiration());
+        }
+        return token;
     }
 }
