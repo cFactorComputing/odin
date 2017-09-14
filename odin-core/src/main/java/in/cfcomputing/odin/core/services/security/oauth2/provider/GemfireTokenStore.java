@@ -59,12 +59,13 @@ public abstract class GemfireTokenStore<C extends TokenCache> implements TokenSt
     @Override
     public void storeAccessToken(final OAuth2AccessToken oAuth2AccessToken, final OAuth2Authentication oAuth2Authentication) {
         final OAuth2Token token = createNewToken();
+
         token.setToken(oAuth2AccessToken.getValue());
         if (oAuth2AccessToken.getRefreshToken() != null) {
             token.setRefreshToken(oAuth2AccessToken.getRefreshToken().getValue());
-            token.setOAuth2RefreshToken(JsonMapper.toJson(oAuth2AccessToken.getRefreshToken()));
+            token.setOAuth2RefreshToken(JsonMapper.toJson(OdinOAuth2RefreshToken.fromToken(oAuth2AccessToken.getRefreshToken())));
         }
-        token.setOAuth2AccessToken(JsonMapper.toJson(oAuth2AccessToken));
+        token.setOAuth2AccessToken(JsonMapper.toJson(OdinOAuth2AccessToken.fromToken(oAuth2AccessToken)));
         token.setOAuth2Authentication(JsonMapper.toJson(oAuth2Authentication));
         token.setUserName(oAuth2Authentication.isClientOnly() ? StringUtils.EMPTY : oAuth2Authentication.getName());
         token.setClientId(oAuth2Authentication.getOAuth2Request().getClientId());
@@ -72,29 +73,16 @@ public abstract class GemfireTokenStore<C extends TokenCache> implements TokenSt
         final String authenticationKey = keyGenerator.extractKey(oAuth2Authentication);
         token.setAuthenticationKey(authenticationKey);
 
-        tokenCache.delete(token.getToken());
         tokenCache.save(token);
-
-        removeObsolete(token.getUserName());
-    }
-
-    private void removeObsolete(final String userName) {
-        final Iterable<OAuth2Token> tokenIterable = tokenCache.findByUserName(userName);
-        if (tokenIterable != null) {
-            tokenIterable.forEach(token -> {
-                final OAuth2AccessToken oauthToken = JsonMapper.fromJson(token.getOAuth2AccessToken(), OdinOAuth2AccessToken.class);
-                if (oauthToken != null && oauthToken.isExpired()) {
-                    tokenCache.delete(token);
-                }
-            });
-        }
     }
 
     @Override
     public OAuth2AccessToken readAccessToken(final String oauthToken) {
         final OAuth2Token token = tokenCache.findByToken(oauthToken);
         if (token != null) {
-            return JsonMapper.fromJson(token.getOAuth2AccessToken(), OdinOAuth2AccessToken.class);
+            final OdinOAuth2AccessToken auth2AccessToken =
+                    JsonMapper.fromJson(token.getOAuth2AccessToken(), OdinOAuth2AccessToken.class);
+            return auth2AccessToken.toOAuth2AccessToken();
         }
         return null;
     }
@@ -108,8 +96,9 @@ public abstract class GemfireTokenStore<C extends TokenCache> implements TokenSt
     public void storeRefreshToken(final OAuth2RefreshToken oAuth2RefreshToken, final OAuth2Authentication oAuth2Authentication) {
         final OAuth2Token token = tokenCache.findByRefreshToken(oAuth2RefreshToken.getValue());
         if (token != null) {
-            token.setOAuth2RefreshToken(JsonMapper.toJson(oAuth2RefreshToken));
+            token.setOAuth2RefreshToken(JsonMapper.toJson(OdinOAuth2RefreshToken.fromToken(oAuth2RefreshToken)));
             token.setRefreshTokenAuthentication(JsonMapper.toJson(oAuth2Authentication));
+            tokenCache.save(token);
         }
     }
 
@@ -117,7 +106,9 @@ public abstract class GemfireTokenStore<C extends TokenCache> implements TokenSt
     public OAuth2RefreshToken readRefreshToken(final String refreshToken) {
         final OAuth2Token token = tokenCache.findByRefreshToken(refreshToken);
         if (token != null) {
-            return JsonMapper.fromJson(token.getOAuth2RefreshToken(), OdinOAuth2RefreshToken.class);
+            final OdinOAuth2RefreshToken auth2RefreshToken =
+                    JsonMapper.fromJson(token.getOAuth2RefreshToken(), OdinOAuth2RefreshToken.class);
+            return auth2RefreshToken.toRefreshToken();
         }
         return null;
     }
@@ -150,16 +141,20 @@ public abstract class GemfireTokenStore<C extends TokenCache> implements TokenSt
     public void removeAccessTokenUsingRefreshToken(final OAuth2RefreshToken oAuth2RefreshToken) {
         final OAuth2Token token = tokenCache.findByRefreshToken(oAuth2RefreshToken.getValue());
         if (token != null) {
-            tokenCache.delete(token);
+            tokenCache.delete(token.getToken());
         }
     }
 
     @Override
     public OAuth2AccessToken getAccessToken(final OAuth2Authentication oAuth2Authentication) {
         final String authenticationKey = keyGenerator.extractKey(oAuth2Authentication);
-        final OAuth2Token token = tokenCache.findByAuthenticationKey(authenticationKey);
-        if (token != null) {
-            return JsonMapper.fromJson(token.getOAuth2AccessToken(), OdinOAuth2AccessToken.class);
+        final Iterable<OAuth2Token> tokens = tokenCache.findByAuthenticationKey(authenticationKey);
+        if (tokens != null) {
+            for (OAuth2Token token : tokens) {
+                final OdinOAuth2AccessToken auth2AccessToken =
+                        JsonMapper.fromJson(token.getOAuth2AccessToken(), OdinOAuth2AccessToken.class);
+                return auth2AccessToken.toOAuth2AccessToken();
+            }
         }
         return null;
     }
@@ -180,7 +175,9 @@ public abstract class GemfireTokenStore<C extends TokenCache> implements TokenSt
         final List<OAuth2AccessToken> tokens = new ArrayList<>();
         if (tokenIterable != null) {
             tokenIterable.forEach(token -> {
-                tokens.add(JsonMapper.fromJson(token.getOAuth2AccessToken(), OdinOAuth2AccessToken.class));
+                final OdinOAuth2AccessToken auth2AccessToken =
+                        JsonMapper.fromJson(token.getOAuth2AccessToken(), OdinOAuth2AccessToken.class);
+                tokens.add(auth2AccessToken.toOAuth2AccessToken());
             });
         }
         return tokens;
