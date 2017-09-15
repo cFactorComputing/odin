@@ -35,12 +35,15 @@ public class AuthenticatedUserProvider {
     }
 
     public String userId() {
-        if (grantType() == GrantType.USER) {
-            final User user = user();
-            return user.getUsername();
+        final Object userDetails = user();
+        if (userDetails instanceof User) {
+            return ((User) userDetails).getUsername();
+        } else if (userDetails instanceof OdinUserDetails) {
+            return ((OdinUserDetails) userDetails).getUserId();
+        } else if (userDetails instanceof String) {
+            return (String) userDetails;
         }
-        final OdinUserDetails user = user();
-        return user.getUserId();
+        return null;
     }
 
     private Object principal() {
