@@ -20,6 +20,7 @@ import in.cfcomputing.odin.core.services.security.oauth2.access.domain.OdinUserD
 import org.apache.commons.lang3.Validate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,10 @@ public class AuthenticatedUserProvider {
     }
 
     public String userId() {
+        if (grantType() == GrantType.USER) {
+            final User user = user();
+            return user.getUsername();
+        }
         final OdinUserDetails user = user();
         return user.getUserId();
     }
