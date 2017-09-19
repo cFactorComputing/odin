@@ -48,7 +48,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     protected ResponseEntity<Object> handleDefault(final Exception e, final WebRequest request) {
         final ErrorResponse error = new ErrorResponse()
                 .withStatus(INTERNAL_SERVER_ERROR.value())
-                .withCode(INTERNAL_SERVER_ERROR.getReasonPhrase());
+                .withCode(INTERNAL_SERVER_ERROR.name());
         LOGGER.error(String.format("Unexpected Error Occurred :  %s ", error.toString()), e);
         return handleExceptionInternal(e, error, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
     }
@@ -57,7 +57,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     public ResponseEntity<Object> handleAccessDeniedException(final Exception e, final WebRequest request) {
         final ErrorResponse error = new ErrorResponse()
                 .withStatus(FORBIDDEN.value())
-                .withCode(FORBIDDEN.getReasonPhrase());
+                .withCode(FORBIDDEN.name());
         LOGGER.error(String.format("Access Denied :  %s ", error.toString()), e);
         return handleExceptionInternal(e, error, new HttpHeaders(), FORBIDDEN, request);
     }
