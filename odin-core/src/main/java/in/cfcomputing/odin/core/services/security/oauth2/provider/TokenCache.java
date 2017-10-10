@@ -21,9 +21,21 @@ import java.io.Serializable;
 
 public interface TokenCache<T extends OAuth2Token, ID extends Serializable> extends GemfireRepository<T, ID> {
 
-    T findByToken(String oauthToken);
+    default T findByToken(Serializable oauthToken) {
+        final Iterable<T> tokens = findAllByToken(oauthToken);
+        for (T token : tokens) {
+            return token;
+        }
+        return null;
+    }
 
-    T findByRefreshToken(String value);
+    default T findByRefreshToken(String refreshToken) {
+        final Iterable<T> tokens = findAllByRefreshToken(refreshToken);
+        for (T token : tokens) {
+            return token;
+        }
+        return null;
+    }
 
     Iterable<T> findByAuthenticationKey(String authenticationKey);
 
@@ -32,4 +44,13 @@ public interface TokenCache<T extends OAuth2Token, ID extends Serializable> exte
     Iterable<T> findByClientId(String clientId);
 
     Iterable<T> findByUserName(String userName);
+
+    @Override
+    default T findOne(ID id) {
+        return findByToken(id);
+    }
+
+    Iterable<T> findAllByToken(Serializable oauthToken);
+
+    Iterable<T> findAllByRefreshToken(String refreshToken);
 }
