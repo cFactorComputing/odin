@@ -58,7 +58,13 @@ public abstract class GemfireTokenStore<C extends TokenCache> implements TokenSt
 
     @Override
     public void storeAccessToken(final OAuth2AccessToken oAuth2AccessToken, final OAuth2Authentication oAuth2Authentication) {
-        final OAuth2Token token = createNewToken();
+        final OAuth2Token existingToken = tokenCache.findByToken(oAuth2AccessToken.getValue());
+        final OAuth2Token token;
+        if (existingToken == null) {
+            token = createNewToken();
+        } else {
+            token = existingToken;
+        }
 
         token.setToken(oAuth2AccessToken.getValue());
         if (oAuth2AccessToken.getRefreshToken() != null) {
@@ -66,7 +72,11 @@ public abstract class GemfireTokenStore<C extends TokenCache> implements TokenSt
             token.setOAuth2RefreshToken(JsonMapper.toJson(OdinOAuth2RefreshToken.fromToken(oAuth2AccessToken.getRefreshToken())));
         }
         token.setOAuth2AccessToken(JsonMapper.toJson(OdinOAuth2AccessToken.fromToken(oAuth2AccessToken)));
-        token.setOAuth2Authentication(JsonMapper.toJson(oAuth2Authentication));
+        final String oAuth2AuthenticationString = JsonMapper.toJson(oAuth2Authentication);
+        token.setOAuth2Authentication(oAuth2AuthenticationString);
+        if (existingToken == null) {
+            token.setRefreshTokenAuthentication(oAuth2AuthenticationString);
+        }
         token.setUserName(oAuth2Authentication.isClientOnly() ? StringUtils.EMPTY : oAuth2Authentication.getName());
         token.setClientId(oAuth2Authentication.getOAuth2Request().getClientId());
 
