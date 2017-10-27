@@ -20,7 +20,7 @@
     <parent>
         <groupId>in.cfcomputing</groupId>
         <artifactId>odin</artifactId>
-        <version>1.3-SNAPSHOT</version>
+        <version>1.3</version>
     </parent>
     <groupId>in.cfcomputing.odin</groupId>
     <artifactId>odin-main</artifactId>
