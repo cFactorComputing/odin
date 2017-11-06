@@ -18,6 +18,7 @@ package in.cfcomputing.odin.core.exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,7 +41,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                 .withStatus(BAD_REQUEST.value())
                 .withCode(e.getCode().name())
                 .withParams(e.getParams());
-        LOGGER.error(String.format("Exception Occurred : %s ", error.toString()), e);
         return handleExceptionInternal(e, error, new HttpHeaders(), BAD_REQUEST, request);
     }
 
@@ -49,7 +49,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         final ErrorResponse error = new ErrorResponse()
                 .withStatus(INTERNAL_SERVER_ERROR.value())
                 .withCode(INTERNAL_SERVER_ERROR.name());
-        LOGGER.error(String.format("Unexpected Error Occurred :  %s ", error.toString()), e);
         return handleExceptionInternal(e, error, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
     }
 
@@ -58,7 +57,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         final ErrorResponse error = new ErrorResponse()
                 .withStatus(FORBIDDEN.value())
                 .withCode(FORBIDDEN.name());
-        LOGGER.error(String.format("Access Denied :  %s ", error.toString()), e);
         return handleExceptionInternal(e, error, new HttpHeaders(), FORBIDDEN, request);
     }
+
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+            HttpHeaders headers, HttpStatus status, WebRequest request) {
+        LOGGER.error(String.format("Exception Occurred : %s ", body), ex);
+        return super.handleExceptionInternal(ex, body, headers, status, request);
+    }
+
 }
