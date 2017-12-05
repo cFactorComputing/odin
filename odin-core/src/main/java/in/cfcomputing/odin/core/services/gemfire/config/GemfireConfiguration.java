@@ -18,6 +18,7 @@ package in.cfcomputing.odin.core.services.gemfire.config;
 import in.cfcomputing.odin.core.services.gemfire.CacheRegionFactoryProvider;
 import in.cfcomputing.odin.core.services.gemfire.GemfireProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,7 @@ import org.springframework.data.gemfire.support.ConnectionEndpoint;
 @Configuration
 @EnableConfigurationProperties(GemfireProperties.class)
 @EnableGemfireRepositories
+@ConditionalOnClass({ClientCacheFactoryBean.class,PoolFactoryBean.class})
 public class GemfireConfiguration {
 
     @Autowired

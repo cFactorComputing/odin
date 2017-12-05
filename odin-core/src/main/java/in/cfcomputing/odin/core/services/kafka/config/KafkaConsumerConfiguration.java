@@ -18,6 +18,7 @@ package in.cfcomputing.odin.core.services.kafka.config;
 import in.cfcomputing.odin.core.services.kafka.Consumer;
 import in.cfcomputing.odin.core.services.kafka.KafkaProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,7 @@ import java.util.Map;
 @Configuration
 @EnableConfigurationProperties(KafkaProperties.class)
 @ConditionalOnProperty(prefix = "kafka.consumer", value = "enabled", havingValue = "true", matchIfMissing = false)
+@ConditionalOnClass(ConsumerFactory.class)
 public class KafkaConsumerConfiguration {
 
     @Autowired

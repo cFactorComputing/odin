@@ -171,10 +171,12 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-gemfire</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.gemstone.gemfire</groupId>
             <artifactId>gemfire</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.ryantenney.metrics</groupId>
