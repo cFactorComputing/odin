@@ -96,6 +96,7 @@
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
                 <version>${odin-spring-kafka.version}</version>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -257,11 +258,13 @@
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-gemfire</artifactId>
                 <version>${odin-spring-data-gemfire.version}</version>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>com.gemstone.gemfire</groupId>
                 <artifactId>gemfire</artifactId>
                 <version>${odin-gemfire.version}</version>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>com.ryantenney.metrics</groupId>

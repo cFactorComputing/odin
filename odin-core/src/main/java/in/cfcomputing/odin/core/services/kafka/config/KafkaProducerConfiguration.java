@@ -18,6 +18,7 @@ package in.cfcomputing.odin.core.services.kafka.config;
 import in.cfcomputing.odin.core.services.kafka.KafkaProperties;
 import in.cfcomputing.odin.core.services.kafka.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +37,7 @@ import java.util.Map;
 @Configuration
 @ConditionalOnProperty(prefix = "kafka.producer", value = "enabled", havingValue = "true", matchIfMissing = false)
 @EnableConfigurationProperties(KafkaProperties.class)
+@ConditionalOnClass({ProducerFactory.class,KafkaTemplate.class,ProducerListener.class})
 public class KafkaProducerConfiguration {
 
     @Autowired
