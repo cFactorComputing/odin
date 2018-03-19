@@ -29,10 +29,7 @@ import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.data.util.TypeInformation;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -63,7 +60,7 @@ class MappingBuilder {
     public static final String TYPE_VALUE_GEO_HASH_PREFIX = "geohash_prefix";
     public static final String TYPE_VALUE_GEO_HASH_PRECISION = "geohash_precision";
 
-    private static SimpleTypeHolder SIMPLE_TYPE_HOLDER = new SimpleTypeHolder();
+    private static SimpleTypeHolder SIMPLE_TYPE_HOLDER = new SimpleTypeHolder(Collections.emptySet(), true);
 
     static XContentBuilder buildMapping(Class clazz, String indexType, String idFieldName, String parentType) throws IOException {
 

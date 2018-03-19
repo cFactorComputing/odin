@@ -30,7 +30,6 @@ import java.util.List;
 @ConfigurationProperties(prefix = "security")
 public class OdinSecurityProperties {
 
-    public static final int ACCESS_OVERRIDE_ORDER = SecurityProperties.ACCESS_OVERRIDE_ORDER;
     public static final int BASIC_AUTH_ORDER = SecurityProperties.BASIC_AUTH_ORDER;
     private boolean enabled = true;
 

@@ -100,6 +100,6 @@ public abstract class AbstractAuthenticationInterceptor<C extends GemfireReposit
     }
 
     protected U getAuthenticatedUser(final String accessToken) {
-        return (U) authenticatedUserCache.findOne(accessToken);
+        return (U) authenticatedUserCache.findById(accessToken).get();
     }
 }

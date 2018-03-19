@@ -17,6 +17,7 @@ package in.cfcomputing.odin.core.services.security.oauth2.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import in.cfcomputing.odin.core.bootstrap.config.OdinBootstrapConfiguration;
+import in.cfcomputing.odin.core.services.security.config.OdinSecurityConfiguration;
 import in.cfcomputing.odin.core.services.security.support.AccessTokenWrapper;
 import in.cfcomputing.odin.core.services.security.support.SampleClientDetailsService;
 import in.cfcomputing.odin.core.services.security.support.SampleUserDetailsService;
@@ -35,6 +36,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
@@ -62,11 +64,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by gibugeorge on 06/01/2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class, classes = {OAuth2SecurityConfigurationTest.TestConfiguration.class, OdinBootstrapConfiguration.class, OAuth2SecurityConfiguration.class})
+@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class, classes = {OAuth2SecurityConfigurationTest.TestConfiguration.class, OdinBootstrapConfiguration.class, OdinSecurityConfiguration.class})
 @EnableWebMvc
 @EnableWebSecurity
 @WebAppConfiguration
 public class OAuth2SecurityConfigurationTest {
+
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -89,6 +92,8 @@ public class OAuth2SecurityConfigurationTest {
 
     @BeforeClass
     public static void preSetup() {
+        System.setProperty("security.user.name", "user");
+        System.setProperty("security.user.password", "test");
         System.setProperty("security.oauth2.enabled", "true");
         System.setProperty("security.oauth2.authorization-server", "true");
         System.setProperty("security.oauth2.resource-server", "true");
@@ -99,6 +104,7 @@ public class OAuth2SecurityConfigurationTest {
         final OAuth2AuthenticationManager oAuth2Manager = new OAuth2AuthenticationManager();
         oAuth2Manager.setClientDetailsService(clientDetailsService);
         oAuth2Manager.setTokenServices(tokenServices);
+
 
         final OAuth2AuthenticationProcessingFilter oAuth2Filter = new OAuth2AuthenticationProcessingFilter();
         oAuth2Filter.setAuthenticationManager(oAuth2Manager);
@@ -207,6 +213,11 @@ public class OAuth2SecurityConfigurationTest {
         @Bean("clientDetailsServiceBean")
         public ClientDetailsService clientDetailsService() {
             return new SampleClientDetailsService();
+        }
+
+        @Bean
+        public NoOpPasswordEncoder passwordEncoder() {
+            return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
         }
 
     }

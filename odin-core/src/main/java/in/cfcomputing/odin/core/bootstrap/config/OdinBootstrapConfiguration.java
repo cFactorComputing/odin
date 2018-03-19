@@ -18,6 +18,7 @@
 package in.cfcomputing.odin.core.bootstrap.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.context.properties.ConfigurationBeanFactoryMetadata;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,10 @@ import org.springframework.context.annotation.Configuration;
 public class OdinBootstrapConfiguration {
 
 
+    @Bean(name = "org.springframework.boot.context.properties.ConfigurationBeanFactoryMetadata")
+    public ConfigurationBeanFactoryMetadata configurationBeanFactoryMetadata() {
+        return new ConfigurationBeanFactoryMetadata();
+    }
     @Bean
     public ConfigurationPropertiesBindingPostProcessor configurationPropertiesBindingPostProcessor() {
         return new ConfigurationPropertiesBindingPostProcessor();

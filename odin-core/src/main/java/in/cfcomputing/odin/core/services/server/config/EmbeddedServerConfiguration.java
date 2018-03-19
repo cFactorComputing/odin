@@ -26,9 +26,9 @@ import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.embedded.jetty.JettyServerCustomizer;
+import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -48,8 +48,8 @@ public class EmbeddedServerConfiguration {
     private EmbeddedServerProperties properties;
 
     @Bean
-    public JettyEmbeddedServletContainerFactory jettyEmbeddedServletContainerFactory() {
-        final JettyEmbeddedServletContainerFactory containerFactory = new JettyEmbeddedServletContainerFactory();
+    public JettyServletWebServerFactory jettyServletWebServerFactory() {
+        final JettyServletWebServerFactory containerFactory = new JettyServletWebServerFactory();
         containerFactory.addServerCustomizers(new EmbeddedServerCustomizer());
         return containerFactory;
     }
