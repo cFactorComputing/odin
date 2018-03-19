@@ -45,7 +45,6 @@ public interface TokenCache<T extends OAuth2Token, ID extends Serializable> exte
 
     Iterable<T> findByUserName(String userName);
 
-    @Override
     default T findOne(ID id) {
         return findByToken(id);
     }

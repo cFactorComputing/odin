@@ -18,7 +18,6 @@ package in.cfcomputing.odin.core.services.security.config;
 import in.cfcomputing.odin.core.services.security.OdinSecurityProperties;
 import in.cfcomputing.odin.core.services.security.digest.config.OdinDigestAuthenticationConfiguration;
 import in.cfcomputing.odin.core.services.security.oauth2.config.OAuth2SecurityConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean;
@@ -44,9 +43,6 @@ public class OdinSecurityConfiguration {
 
     public static final String[] DEFAULT_IGNORED = new String[]{"/css/**", "/js/**",
             "/images/**", "/webjars/**", "/**/favicon.ico"};
-
-    @Autowired
-    private OdinSecurityProperties securityProperties;
 
     @Bean
     public DelegatingFilterProxyRegistrationBean securityFilterChain() {
