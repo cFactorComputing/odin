@@ -16,6 +16,9 @@
 package in.cfcomputing.odin.core.bootstrap.config;
 
 import in.cfcomputing.odin.core.bootstrap.cd.ConfigurationPropertySource;
+import in.cfcomputing.odin.core.bootstrap.cd.RuntimeConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +36,7 @@ import javax.annotation.PostConstruct;
 public class PropertySourceBootstrapConfiguration implements Ordered {
 
     private static final String BOOTSTRAP_PROPERTY_SOURCE_NAME = "bootstrap.properties";
+    private static final Logger LOGGER = LoggerFactory.getLogger(PropertySourceBootstrapConfiguration.class);
 
     @Autowired
     private PropertySourceLocator propertySourceLocator;
@@ -48,7 +52,14 @@ public class PropertySourceBootstrapConfiguration implements Ordered {
         compositePropertySource.addPropertySource(propertySource);
         applicationContext.getEnvironment().getPropertySources().addFirst(compositePropertySource);
         if (propertySource instanceof ConfigurationPropertySource) {
-            applicationContext.getBeanFactory().registerSingleton("runtimeConfiguration", ((ConfigurationPropertySource) propertySource).getRuntimeConfiguration());
+            final RuntimeConfiguration runtimeConfiguration = ((ConfigurationPropertySource) propertySource).getRuntimeConfiguration();
+            if (runtimeConfiguration != null) {
+                LOGGER.info("Adding runtime configuration as singleton");
+                applicationContext.getBeanFactory().registerSingleton("runtimeConfiguration", runtimeConfiguration);
+            } else {
+                LOGGER.info("No runtime configuration found");
+            }
+
         }
 
     }
