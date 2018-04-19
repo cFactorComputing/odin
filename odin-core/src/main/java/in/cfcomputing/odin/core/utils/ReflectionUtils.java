@@ -26,6 +26,9 @@ import static org.apache.commons.lang3.reflect.FieldUtils.getFieldsListWithAnnot
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 
 public class ReflectionUtils extends org.springframework.util.ReflectionUtils {
+    private static Object object;
+    private static Class annotation;
+
     private ReflectionUtils() {
     }
 
@@ -59,5 +62,9 @@ public class ReflectionUtils extends org.springframework.util.ReflectionUtils {
     public static Object readFieldValueWithAnnotation(final Object object, final Class annotationClazz) {
         final Field field = getFieldWithAnnotation(object.getClass(), annotationClazz);
         return readFieldValue(field, object);
+    }
+
+    public static Object getAnnotationByType(final Object object, Class annotation) {
+        return object.getClass().getAnnotation(annotation);
     }
 }
