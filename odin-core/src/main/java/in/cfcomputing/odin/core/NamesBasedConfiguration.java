@@ -33,8 +33,10 @@ public interface NamesBasedConfiguration {
         return commaSeparatedDSNames.split(",");
     }
 
-    default String getProperty(final String key, final String name, final Environment environment) {
-        final String actualKey = "jdbc.data-source." + name + "." + key;
-        return environment.getProperty(actualKey) != null ? environment.getProperty(actualKey) : environment.getProperty("jdbc.data-source.default." + key);
+    default String getProperty(final String key, final String name, final Environment environment, final NameBasedProperties nameBasedProperties) {
+        final ConfigurationProperties annotation = (ConfigurationProperties) ReflectionUtils.getAnnotationByType(nameBasedProperties, ConfigurationProperties.class);
+        final String prefix = annotation.prefix();
+        final String actualKey = prefix+"." + name + "." + key;
+        return environment.getProperty(actualKey) != null ? environment.getProperty(actualKey) : environment.getProperty(prefix+".default." + key);
     }
 }

@@ -45,7 +45,7 @@ import javax.annotation.PreDestroy;
 
 @Configuration
 @EnableConfigurationProperties({ImdgProperties.class, ImdgMapProperties.class, ImdgQueueProprties.class, ImdgTopicProperties.class})
-@ConditionalOnProperty(prefix = "imdg", value = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "imdg", value = "enabled", havingValue = "true", matchIfMissing = false)
 public class ImdgConfiguration implements NamesBasedConfiguration {
 
 
@@ -111,11 +111,11 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
             final MapConfig mapConfig = new MapConfig(name);
             mapConfig.setInMemoryFormat(InMemoryFormat.OBJECT);
             mapConfig.setMapEvictionPolicy(new LFUEvictionPolicy());
-            final String ttlString = getProperty("time-to-live-seconds", name, environment);
+            final String ttlString = getProperty("time-to-live-seconds", name, environment,imdgMapProperties);
             if (StringUtils.isNotEmpty(ttlString)) {
                 mapConfig.setTimeToLiveSeconds(Integer.valueOf(ttlString));
             }
-            final String maxIdleString = getProperty("max-idle-seconds", name, environment);
+            final String maxIdleString = getProperty("max-idle-seconds", name, environment,imdgMapProperties);
             if (StringUtils.isNotEmpty(maxIdleString)) {
                 mapConfig.setTimeToLiveSeconds(Integer.valueOf(maxIdleString));
             }
@@ -129,11 +129,11 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
         final String[] queueNames = getNames(imdgQueueProprties);
         for (String name : queueNames) {
             final QueueConfig queueConfig = new QueueConfig(name);
-            final String maxSizeString = getProperty("max-size", name, environment);
+            final String maxSizeString = getProperty("max-size", name, environment,imdgMapProperties);
             if (StringUtils.isNotEmpty(maxSizeString)) {
                 queueConfig.setMaxSize(Integer.valueOf(maxSizeString));
             }
-            final String statisticsEnabledString = getProperty("statistics-enabled", name, environment);
+            final String statisticsEnabledString = getProperty("statistics-enabled", name, environment,imdgMapProperties);
             if (StringUtils.isNotEmpty(statisticsEnabledString)) {
                 queueConfig.setStatisticsEnabled(Boolean.valueOf(statisticsEnabledString));
             } else {
@@ -148,7 +148,7 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
         final String[] topicNames = getNames(imdgTopicProperties);
         for (String name : topicNames) {
             final ReliableTopicConfig reliableTopicConfig = new ReliableTopicConfig(name);
-            final String readBatchSizeString = getProperty("read-batch-size", name, environment);
+            final String readBatchSizeString = getProperty("read-batch-size", name, environment,imdgMapProperties);
             if (StringUtils.isNotEmpty(readBatchSizeString)) {
                 reliableTopicConfig.setReadBatchSize(Integer.valueOf(readBatchSizeString));
             }
