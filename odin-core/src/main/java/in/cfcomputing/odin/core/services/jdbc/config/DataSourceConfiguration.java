@@ -62,36 +62,36 @@ public class DataSourceConfiguration implements EnvironmentAware, NamesBasedConf
             }
             final HikariConfig hikariConfig = new HikariConfig();
             hikariConfig.setPoolName(dataSourceName);
-            final String jdbcUrl = getProperty("jdbc-url", dataSourceName, environment);
+            final String jdbcUrl = getProperty("jdbc-url", dataSourceName, environment,dataSourceProperties);
             if (StringUtils.isEmpty(jdbcUrl)) {
                 throw new DataSourceConfigurationException("jdbc-url property cannot be empty for datasource " + dataSourceName);
             }
             hikariConfig.setJdbcUrl(jdbcUrl);
-            final String userName = getProperty("user-name", dataSourceName, environment) != null ? getProperty("user-name", dataSourceName, environment) : "";
+            final String userName = getProperty("user-name", dataSourceName, environment,dataSourceProperties) != null ? getProperty("user-name", dataSourceName, environment,dataSourceProperties) : "";
             hikariConfig.setUsername(userName);
-            final String password = getProperty("password", dataSourceName, environment) != null ? getProperty("password", dataSourceName, environment) : "";
+            final String password = getProperty("password", dataSourceName, environment,dataSourceProperties) != null ? getProperty("password", dataSourceName, environment,dataSourceProperties) : "";
             hikariConfig.setPassword(password);
-            final String driverClassName = getProperty("driver-class-name", dataSourceName, environment) != null ? getProperty("driver-class-name", dataSourceName, environment) : null;
+            final String driverClassName = getProperty("driver-class-name", dataSourceName, environment,dataSourceProperties) != null ? getProperty("driver-class-name", dataSourceName, environment,dataSourceProperties) : null;
             if (StringUtils.isNotEmpty(driverClassName)) {
                 hikariConfig.setDriverClassName(driverClassName);
             }
-            final String autoCommit = getProperty("auto-commit", dataSourceName, environment);
+            final String autoCommit = getProperty("auto-commit", dataSourceName, environment,dataSourceProperties);
             if (StringUtils.isEmpty(autoCommit)) {
                 hikariConfig.setAutoCommit(false);
             } else {
                 hikariConfig.setAutoCommit(BooleanUtils.toBoolean(autoCommit));
             }
-            final String connectionTestQuery = getProperty("connection-test-query", dataSourceName, environment);
+            final String connectionTestQuery = getProperty("connection-test-query", dataSourceName, environment,dataSourceProperties);
             if (StringUtils.isNotEmpty(connectionTestQuery)) {
                 hikariConfig.setConnectionTestQuery(connectionTestQuery);
             }
-            hikariConfig.addDataSourceProperty("cachePrepStmts", getProperty("cache-prep-stmts", dataSourceName, environment));
-            hikariConfig.addDataSourceProperty("prepStmtCacheSize", getProperty("prep-stmt-cache-size", dataSourceName, environment));
-            hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", getProperty("prep-stmt-cache-sql-limit", dataSourceName, environment));
+            hikariConfig.addDataSourceProperty("cachePrepStmts", getProperty("cache-prep-stmts", dataSourceName, environment,dataSourceProperties));
+            hikariConfig.addDataSourceProperty("prepStmtCacheSize", getProperty("prep-stmt-cache-size", dataSourceName, environment,dataSourceProperties));
+            hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", getProperty("prep-stmt-cache-sql-limit", dataSourceName, environment,dataSourceProperties));
             final HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
-            hikariDataSource.setMaximumPoolSize(Integer.parseInt(getProperty("maximum-pool-size", dataSourceName, environment)));
-            hikariDataSource.setMaxLifetime(Integer.parseInt(getProperty("max-life-time", dataSourceName, environment)));
-            hikariDataSource.setMaximumPoolSize(Integer.parseInt(getProperty("idle-timeout", dataSourceName, environment)));
+            hikariDataSource.setMaximumPoolSize(Integer.parseInt(getProperty("maximum-pool-size", dataSourceName, environment,dataSourceProperties)));
+            hikariDataSource.setMaxLifetime(Integer.parseInt(getProperty("max-life-time", dataSourceName, environment,dataSourceProperties)));
+            hikariDataSource.setMaximumPoolSize(Integer.parseInt(getProperty("idle-timeout", dataSourceName, environment,dataSourceProperties)));
             applicationContext.getBeanFactory().registerSingleton(dataSourceName, hikariDataSource);
 
         }
