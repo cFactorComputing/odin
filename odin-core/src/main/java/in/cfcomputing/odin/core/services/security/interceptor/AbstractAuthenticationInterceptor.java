@@ -24,7 +24,6 @@ import in.cfcomputing.odin.core.services.security.oauth2.access.domain.OdinUserD
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.gemfire.repository.GemfireRepository;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,7 +40,7 @@ import java.util.Collections;
 /**
  * Created by gibugeorge on 08/06/2017.
  */
-public abstract class AbstractAuthenticationInterceptor<C extends GemfireRepository, U extends BaseAuthenticatedUser> extends HandlerInterceptorAdapter {
+public abstract class AbstractAuthenticationInterceptor<C, U extends BaseAuthenticatedUser> extends HandlerInterceptorAdapter {
     protected final C authenticatedUserCache;
     protected final UserGenerator userGenerator;
 
@@ -100,6 +99,6 @@ public abstract class AbstractAuthenticationInterceptor<C extends GemfireReposit
     }
 
     protected U getAuthenticatedUser(final String accessToken) {
-        return (U) authenticatedUserCache.findById(accessToken).get();
+        return null;//(U) authenticatedUserCache.findById(accessToken).get();
     }
 }

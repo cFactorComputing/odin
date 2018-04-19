@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2017 cFactor Computing Pvt. Ltd.
+ * Copyright 2018 cFactor Computing Pvt. Ltd.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,19 +14,11 @@
  * limitations under the License.
  */
 
-package in.cfcomputing.odin.core.services.gemfire;
+package in.cfcomputing.odin.core;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
-/**
- * Created by gibugeorge on 12/01/2017.
- */
-@ConfigurationProperties(prefix = "gemfire")
-public class GemfireProperties {
-
-    private boolean enabled;
-    private String locatorHost;
-    private int locatorPort;
+public class NameBasedProperties {
+    private boolean enabled = false;
+    private String names;
 
     public boolean isEnabled() {
         return enabled;
@@ -35,19 +28,11 @@ public class GemfireProperties {
         this.enabled = enabled;
     }
 
-    public String getLocatorHost() {
-        return locatorHost;
+    public String getNames() {
+        return names;
     }
 
-    public void setLocatorHost(String locatorHost) {
-        this.locatorHost = locatorHost;
-    }
-
-    public int getLocatorPort() {
-        return locatorPort;
-    }
-
-    public void setLocatorPort(int locatorPort) {
-        this.locatorPort = locatorPort;
+    public void setNames(String names) {
+        this.names = names;
     }
 }
