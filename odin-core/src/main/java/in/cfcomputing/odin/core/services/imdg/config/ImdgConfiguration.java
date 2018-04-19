@@ -129,11 +129,11 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
         final String[] queueNames = getNames(imdgQueueProprties);
         for (String name : queueNames) {
             final QueueConfig queueConfig = new QueueConfig(name);
-            final String maxSizeString = getProperty("max-size", name, environment,imdgMapProperties);
+            final String maxSizeString = getProperty("max-size", name, environment,imdgQueueProprties);
             if (StringUtils.isNotEmpty(maxSizeString)) {
                 queueConfig.setMaxSize(Integer.valueOf(maxSizeString));
             }
-            final String statisticsEnabledString = getProperty("statistics-enabled", name, environment,imdgMapProperties);
+            final String statisticsEnabledString = getProperty("statistics-enabled", name, environment,imdgQueueProprties);
             if (StringUtils.isNotEmpty(statisticsEnabledString)) {
                 queueConfig.setStatisticsEnabled(Boolean.valueOf(statisticsEnabledString));
             } else {
@@ -148,7 +148,7 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
         final String[] topicNames = getNames(imdgTopicProperties);
         for (String name : topicNames) {
             final ReliableTopicConfig reliableTopicConfig = new ReliableTopicConfig(name);
-            final String readBatchSizeString = getProperty("read-batch-size", name, environment,imdgMapProperties);
+            final String readBatchSizeString = getProperty("read-batch-size", name, environment,imdgTopicProperties);
             if (StringUtils.isNotEmpty(readBatchSizeString)) {
                 reliableTopicConfig.setReadBatchSize(Integer.valueOf(readBatchSizeString));
             }
