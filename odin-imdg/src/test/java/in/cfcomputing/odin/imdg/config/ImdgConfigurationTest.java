@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package in.cfcomputing.odin.core.services.imdg.config;
+package in.cfcomputing.odin.imdg.config;
 
 import com.hazelcast.core.HazelcastInstance;
 import in.cfcomputing.odin.core.bootstrap.config.OdinBootstrapConfiguration;
-import in.cfcomputing.odin.core.test.OdinTestUtil;
+
+import in.cfcomputing.odin.test.OdinTestUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanCreationException;

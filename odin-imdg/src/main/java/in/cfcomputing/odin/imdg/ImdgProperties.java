@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package in.cfcomputing.odin.core.services.imdg;
+package in.cfcomputing.odin.imdg;
 
+import org.jooq.SQLDialect;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "imdg")
 public class ImdgProperties {
 
+    public static final String PERSISTENCE_STORE_SUFFIX = "_STORE";
+    public static final String PRIMARY_KEY_PREFIX = "PK_";
     private boolean enabled;
 
     private boolean persistenceEnabled;
@@ -32,6 +35,8 @@ public class ImdgProperties {
     public Network getNetwork() {
         return network;
     }
+
+    private Persistence persistence = new Persistence();
 
     public void setNetwork(Network network) {
         this.network = network;
@@ -59,6 +64,14 @@ public class ImdgProperties {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Persistence getPersistence() {
+        return persistence;
+    }
+
+    public void setPersistence(Persistence persistence) {
+        this.persistence = persistence;
     }
 
     public static class Network {
@@ -100,6 +113,45 @@ public class ImdgProperties {
 
         public void setPassword(String password) {
             this.password = password;
+        }
+    }
+
+    public static class Persistence {
+        private boolean enabled;
+        private String sqlDialect;
+        private String datasourceName;
+        private SQLDialect jooqDialect;
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        public String getSqlDialect() {
+            return sqlDialect;
+        }
+
+        public void setSqlDialect(String sqlDialect) {
+            this.sqlDialect = sqlDialect;
+        }
+
+        public String getDatasourceName() {
+            return datasourceName;
+        }
+
+        public void setDatasourceName(String datasourceName) {
+            this.datasourceName = datasourceName;
+        }
+
+        public SQLDialect getJooqDialect() {
+            return jooqDialect;
+        }
+
+        public void setJooqDialect(SQLDialect jooqDialect) {
+            this.jooqDialect = jooqDialect;
         }
     }
 

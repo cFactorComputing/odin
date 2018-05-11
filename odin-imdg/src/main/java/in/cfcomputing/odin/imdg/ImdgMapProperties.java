@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package in.cfcomputing.odin.core.services.imdg;
+package in.cfcomputing.odin.imdg;
 
 import in.cfcomputing.odin.core.NameBasedProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "imdg.queues")
-public class ImdgQueueProprties extends NameBasedProperties {
+@ConfigurationProperties(prefix = "imdg.maps")
+public class ImdgMapProperties extends NameBasedProperties {
 }

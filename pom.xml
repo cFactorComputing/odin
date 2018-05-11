@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
   ~ Copyright (c) 2017 cFactor Computing Pvt. Ltd.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +13,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -69,6 +68,8 @@
         <module>odin-main</module>
         <module>odin-configuration</module>
         <module>odin-domain</module>
+        <module>odin-test</module>
+        <module>odin-imdg</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -584,7 +585,7 @@
     <scm>
         <connection>scm:git:ssh://gibu.george@git.cfcomputing.co.uk/cFactor/odin.git</connection>
         <developerConnection>scm:git:ssh://gibu.george@git.cfcomputing.co.uk/cFactor/odin.git</developerConnection>
-      <tag>odin-1.2</tag>
-  </scm>
+        <tag>odin-1.2</tag>
+    </scm>
 
 </project>

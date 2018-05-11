@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package in.cfcomputing.odin.core.services.imdg.config;
+package in.cfcomputing.odin.imdg.config;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.InMemoryFormat;
@@ -26,10 +26,11 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.eviction.LFUEvictionPolicy;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
 import in.cfcomputing.odin.core.NamesBasedConfiguration;
-import in.cfcomputing.odin.core.services.imdg.ImdgMapProperties;
-import in.cfcomputing.odin.core.services.imdg.ImdgProperties;
-import in.cfcomputing.odin.core.services.imdg.ImdgQueueProprties;
-import in.cfcomputing.odin.core.services.imdg.ImdgTopicProperties;
+import in.cfcomputing.odin.imdg.ImdgMapProperties;
+import in.cfcomputing.odin.imdg.ImdgMapStore;
+import in.cfcomputing.odin.imdg.ImdgProperties;
+import in.cfcomputing.odin.imdg.ImdgQueueProprties;
+import in.cfcomputing.odin.imdg.ImdgTopicProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -67,6 +69,9 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
     private Environment environment;
 
     private HazelcastInstance instance;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
 
     @Bean
@@ -111,13 +116,17 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
             final MapConfig mapConfig = new MapConfig(name);
             mapConfig.setInMemoryFormat(InMemoryFormat.OBJECT);
             mapConfig.setMapEvictionPolicy(new LFUEvictionPolicy());
-            final String ttlString = getProperty("time-to-live-seconds", name, environment,imdgMapProperties);
+            final String ttlString = getProperty("time-to-live-seconds", name, environment, imdgMapProperties);
             if (StringUtils.isNotEmpty(ttlString)) {
                 mapConfig.setTimeToLiveSeconds(Integer.valueOf(ttlString));
             }
-            final String maxIdleString = getProperty("max-idle-seconds", name, environment,imdgMapProperties);
+            final String maxIdleString = getProperty("max-idle-seconds", name, environment, imdgMapProperties);
             if (StringUtils.isNotEmpty(maxIdleString)) {
                 mapConfig.setTimeToLiveSeconds(Integer.valueOf(maxIdleString));
+            }
+            if (imdgProperties.getPersistence().isEnabled()) {
+                mapConfig.getMapStoreConfig().setEnabled(true).setImplementation(applicationContext.getBean(name, ImdgMapStore.class));
+
             }
             config.addMapConfig(mapConfig);
         }
@@ -129,11 +138,11 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
         final String[] queueNames = getNames(imdgQueueProprties);
         for (String name : queueNames) {
             final QueueConfig queueConfig = new QueueConfig(name);
-            final String maxSizeString = getProperty("max-size", name, environment,imdgQueueProprties);
+            final String maxSizeString = getProperty("max-size", name, environment, imdgQueueProprties);
             if (StringUtils.isNotEmpty(maxSizeString)) {
                 queueConfig.setMaxSize(Integer.valueOf(maxSizeString));
             }
-            final String statisticsEnabledString = getProperty("statistics-enabled", name, environment,imdgQueueProprties);
+            final String statisticsEnabledString = getProperty("statistics-enabled", name, environment, imdgQueueProprties);
             if (StringUtils.isNotEmpty(statisticsEnabledString)) {
                 queueConfig.setStatisticsEnabled(Boolean.valueOf(statisticsEnabledString));
             } else {
@@ -148,7 +157,7 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
         final String[] topicNames = getNames(imdgTopicProperties);
         for (String name : topicNames) {
             final ReliableTopicConfig reliableTopicConfig = new ReliableTopicConfig(name);
-            final String readBatchSizeString = getProperty("read-batch-size", name, environment,imdgTopicProperties);
+            final String readBatchSizeString = getProperty("read-batch-size", name, environment, imdgTopicProperties);
             if (StringUtils.isNotEmpty(readBatchSizeString)) {
                 reliableTopicConfig.setReadBatchSize(Integer.valueOf(readBatchSizeString));
             }
@@ -161,6 +170,5 @@ public class ImdgConfiguration implements NamesBasedConfiguration {
     public void shutDown() {
         instance.shutdown();
     }
-
 
 }
