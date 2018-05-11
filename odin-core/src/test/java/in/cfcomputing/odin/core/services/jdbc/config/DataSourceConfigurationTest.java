@@ -17,7 +17,7 @@ package in.cfcomputing.odin.core.services.jdbc.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import in.cfcomputing.odin.core.bootstrap.config.OdinBootstrapConfiguration;
-import in.cfcomputing.odin.core.test.OdinTestUtil;
+import in.cfcomputing.odin.test.OdinTestUtil;
 import org.h2.tools.Server;
 import org.junit.AfterClass;
 import org.junit.Assert;
