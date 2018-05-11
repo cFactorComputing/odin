@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package in.cfcomputing.odin.core.services.imdg;
+package in.cfcomputing.odin.imdg.exceptions;
 
-import in.cfcomputing.odin.core.NameBasedProperties;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import in.cfcomputing.odin.core.exception.OdinException;
 
-@ConfigurationProperties(prefix = "imdg.topics")
-public class ImdgTopicProperties extends NameBasedProperties {
-
+public class ImdgPersistenceException extends OdinException {
+    public ImdgPersistenceException(String message, Exception e) {
+        super(message, e);
+    }
 }

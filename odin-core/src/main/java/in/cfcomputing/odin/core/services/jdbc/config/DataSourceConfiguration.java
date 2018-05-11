@@ -31,6 +31,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 
 /**
@@ -40,7 +41,7 @@ import org.springframework.core.env.Environment;
 @Configuration
 @EnableConfigurationProperties(DataSourceProperties.class)
 @ConditionalOnProperty(prefix = "jdbc.data-source", value = "enabled", havingValue = "true", matchIfMissing = false)
-public class DataSourceConfiguration implements EnvironmentAware, NamesBasedConfiguration {
+public class DataSourceConfiguration implements EnvironmentAware, NamesBasedConfiguration,Ordered {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceConfiguration.class);
     @Autowired
@@ -96,5 +97,10 @@ public class DataSourceConfiguration implements EnvironmentAware, NamesBasedConf
 
         }
         return true;
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }

@@ -1,0 +1,3 @@
+in.cfcomputing.odin.core.bootstrap.config.annotations.OdinConfiguration=\
+in.cfcomputing.odin.imdg.config.ImdgPersistenceConfiguration,\
+in.cfcomputing.odin.imdg.config.ImdgConfiguration

@@ -16,7 +16,7 @@
 package in.cfcomputing.odin.core.services.kafka.config;
 
 import in.cfcomputing.odin.core.bootstrap.config.OdinBootstrapConfiguration;
-import in.cfcomputing.odin.core.test.OdinTestUtil;
+import in.cfcomputing.odin.test.OdinTestUtil;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
