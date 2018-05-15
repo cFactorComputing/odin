@@ -39,7 +39,7 @@
         <odin-spring-kafka.version>1.1.1.RELEASE</odin-spring-kafka.version>
         <odin-jetty.version>9.4.9.v20180320</odin-jetty.version>
         <odin-jacoco.version>0.8.1</odin-jacoco.version>
-        <odin-curator.version>4.0.1</odin-curator.version>
+        <odin-curator.version>2.10.0</odin-curator.version>
         <odin-commons-collections4.version>4.1</odin-commons-collections4.version>
         <odin-commons-lang3.version>3.4</odin-commons-lang3.version>
         <odin-hikariCP.verion>2.7.8</odin-hikariCP.verion>
