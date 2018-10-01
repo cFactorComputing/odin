@@ -17,6 +17,8 @@ package in.cfcomputing.odin.core.factory;
 
 import org.springframework.context.ApplicationContext;
 
+import java.util.Map;
+
 
 public abstract class ApplicationContextProvider {
     protected final ApplicationContext applicationContext;
@@ -26,7 +28,11 @@ public abstract class ApplicationContextProvider {
         this.applicationContext = applicationContext;
     }
 
-    public <T> T provide(final Class<T> factoryClazz) {
-        return applicationContext.getBean(factoryClazz);
+    public <T> T provide(final Class<T> clazz) {
+        return applicationContext.getBean(clazz);
+    }
+
+    public <T> Map<String, T> provideByType(final Class<T> clazz) {
+        return applicationContext.getBeansOfType(clazz);
     }
 }
