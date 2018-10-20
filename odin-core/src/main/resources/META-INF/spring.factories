@@ -14,7 +14,6 @@ in.cfcomputing.odin.core.bootstrap.zk.config.ZooKeeperConfiguration,\
 in.cfcomputing.odin.core.bootstrap.cd.config.ConfigurationDiscoveryConfiguration,\
 in.cfcomputing.odin.core.bootstrap.config.PropertySourceBootstrapConfiguration,\
 in.cfcomputing.odin.core.bootstrap.discovery.config.ServiceDiscoveryConfiguration,\
-in.cfcomputing.odin.core.services.jdbc.config.DataSourceConfiguration,\
-in.cfcomputing.odin.core.services.gemfire.config.GemfireConfiguration
+in.cfcomputing.odin.core.services.jdbc.config.DataSourceConfiguration
 org.springframework.context.ApplicationListener=\
 in.cfcomputing.odin.core.bootstrap.BootstrapApplicationListener

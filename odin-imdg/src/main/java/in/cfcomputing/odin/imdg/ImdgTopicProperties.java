@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2017 cFactor Computing Pvt. Ltd.
+ * Copyright 2018 cFactor Computing Pvt. Ltd.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,17 +14,12 @@
  * limitations under the License.
  */
 
-package in.cfcomputing.odin.core.services.jdbc;
+package in.cfcomputing.odin.imdg;
 
 import in.cfcomputing.odin.core.NameBasedProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/**
- * @author gibugeorge on 12/12/16.
- * @version 1.0
- */
-@ConfigurationProperties(prefix = "jdbc.data-source")
-public class DataSourceProperties extends NameBasedProperties {
-
+@ConfigurationProperties(prefix = "imdg.topics")
+public class ImdgTopicProperties extends NameBasedProperties {
 
 }

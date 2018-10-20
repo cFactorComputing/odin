@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2017 cFactor Computing Pvt. Ltd.
+ * Copyright 2018 cFactor Computing Pvt. Ltd.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,7 +14,8 @@
  * limitations under the License.
  */
 
-package in.cfcomputing.odin.core.test;
+package in.cfcomputing.odin.test;
+
 
 import org.springframework.boot.test.util.EnvironmentTestUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
