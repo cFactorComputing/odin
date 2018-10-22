@@ -18,7 +18,7 @@ package in.cfcomputing.odin.imdg.config;
 
 import com.hazelcast.core.HazelcastInstance;
 import in.cfcomputing.odin.core.bootstrap.config.OdinBootstrapConfiguration;
-import in.cfcomputing.odin.core.services.jdbc.config.DataSourceConfiguration;
+import in.cfcomputing.odin.jdbc.config.DataSourceConfiguration;
 import in.cfcomputing.odin.imdg.ImdgMapStore;
 import in.cfcomputing.odin.test.OdinTestUtil;
 import org.junit.Assert;
