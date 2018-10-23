@@ -1,0 +1,2 @@
+in.cfcomputing.odin.core.bootstrap.config.annotations.OdinBootstrapConfiguration=\
+in.cfcomputing.odin.core.services.jdbc.config.DataSourceConfiguration

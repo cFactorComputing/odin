@@ -1,0 +1,5 @@
+in.cfcomputing.odin.core.bootstrap.config.annotations.OdinConfiguration=\
+in.cfcomputing.odin.mvc.config.PlatformConfiguration,\
+in.cfcomputing.odin.mvc.server.config.EmbeddedServerConfiguration,\
+in.cfcomputing.odin.mvc.security.config.OdinSecurityConfiguration,\
+in.cfcomputing.odin.mvc.config.WebConfiguration

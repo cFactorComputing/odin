@@ -12,7 +12,9 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -22,7 +24,7 @@
     <prerequisites>
         <maven>3.5.0</maven>
     </prerequisites>
-    <groupId>in.cfcomputing</groupId>
+    <groupId>io.github.cf</groupId>
     <artifactId>odin</artifactId>
     <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -55,7 +57,7 @@
         <odin-assertj.version>1.0.0</odin-assertj.version>
         <odin-metrics-spring.version>3.1.3</odin-metrics-spring.version>
         <odin-metrics.version>3.1.2</odin-metrics.version>
-        <odin-spring-cloud-netflix.version>1.3.0.M1</odin-spring-cloud-netflix.version>
+        <odin-spring-cloud-netflix.version>1.3.1.RELEASE</odin-spring-cloud-netflix.version>
         <odin-elastic-search.version>5.3.2</odin-elastic-search.version>
         <odin-json-path.version>2.2.0</odin-json-path.version>
         <odin-spring-web.version>${spring.version}</odin-spring-web.version>
@@ -73,8 +75,8 @@
         <module>odin-imdg</module>
         <module>odin-jdbc</module>
         <module>odin-service-discovery</module>
-    <module>odin-mvc</module>
-  </modules>
+        <module>odin-mvc</module>
+    </modules>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -301,11 +303,7 @@
                 <artifactId>metrics-servlets</artifactId>
                 <version>${odin-metrics.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-netflix-core</artifactId>
-                <version>${odin-spring-cloud-netflix.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.netflix.ribbon</groupId>
                 <artifactId>ribbon-httpclient</artifactId>
@@ -566,7 +564,6 @@
                     <includePomProjects>false</includePomProjects>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -610,6 +607,24 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <localCheckout>true</localCheckout>
+                    <pushChanges>false</pushChanges>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <arguments>-Dgpg.passphrase=MM1tt0ps1!</arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>1.9.5</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
     <profiles>
@@ -641,23 +656,51 @@
                 </plugins>
             </build>
         </profile>
+        <!-- GPG Signature on release -->
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>Releases</name>
-            <url>http://artifacts.cfcomputing.co.uk/repository/maven-releases/</url>
-        </repository>
         <snapshotRepository>
-            <id>nexus</id>
-            <name>Snapshot</name>
-            <url>http://artifacts.cfcomputing.co.uk/repository/maven-snapshots/</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
+            </url>
+        </repository>
     </distributionManagement>
     <scm>
-        <connection>scm:git:ssh://gibu.george@git.cfcomputing.co.uk/cFactor/odin.git</connection>
-        <developerConnection>scm:git:ssh://gibu.george@git.cfcomputing.co.uk/cFactor/odin.git</developerConnection>
-        <tag>odin-1.2</tag>
+        <connection>scm:git:git://github.com/cFactorComputing/odin.git</connection>
+        <developerConnection>scm:git:git@github.com:cFactorComputing/odin.git</developerConnection>
+        <url>https://github.com/cFactorComputing/odin</url>
+        <tag>HEAD</tag>
     </scm>
 
 </project>
