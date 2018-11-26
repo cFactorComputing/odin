@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>odin</artifactId>
-        <groupId>in.cfcomputing</groupId>
+        <groupId>io.github.cfactorcomputing</groupId>
         <version>2.0-SNAPSHOT</version>
     </parent>
-    <groupId>in.cfcomputing.odin</groupId>
+    <groupId>io.github.cfactorcomputing.odin</groupId>
     <artifactId>odin-jdbc</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -19,11 +19,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>in.cfcomputing.odin</groupId>
+            <groupId>io.github.cfactorcomputing.odin</groupId>
             <artifactId>odin-core</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>in.cfcomputing.odin</groupId>
+                    <groupId>io.github.cfactorcomputing.odin</groupId>
                     <artifactId>odin-domain</artifactId>
                 </exclusion>
             </exclusions>
@@ -45,7 +45,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>in.cfcomputing.odin</groupId>
+            <groupId>io.github.cfactorcomputing.odin</groupId>
             <artifactId>odin-test</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>

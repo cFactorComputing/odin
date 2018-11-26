@@ -1,9 +1,9 @@
-in.cfcomputing.odin.core.bootstrap.config.annotations.OdinConfiguration=\
-in.cfcomputing.odin.core.services.oicollector.config.OiCollectorConfiguration
-in.cfcomputing.odin.core.bootstrap.config.annotations.OdinBootstrapConfiguration=\
-in.cfcomputing.odin.core.bootstrap.config.OdinBootstrapConfiguration,\
-in.cfcomputing.odin.core.bootstrap.zk.config.ZooKeeperConfiguration,\
-in.cfcomputing.odin.core.bootstrap.cd.config.ConfigurationDiscoveryConfiguration,\
-in.cfcomputing.odin.core.bootstrap.config.PropertySourceBootstrapConfiguration
+io.github.cfactorcomputing.odin.core.bootstrap.config.annotations.OdinConfiguration=\
+io.github.cfactorcomputing.odin.core.services.oicollector.config.OiCollectorConfiguration
+io.github.cfactorcomputing.odin.core.bootstrap.config.annotations.OdinBootstrapConfiguration=\
+io.github.cfactorcomputing.odin.core.bootstrap.config.OdinBootstrapConfiguration,\
+io.github.cfactorcomputing.odin.core.bootstrap.zk.config.ZooKeeperConfiguration,\
+io.github.cfactorcomputing.odin.core.bootstrap.cd.config.ConfigurationDiscoveryConfiguration,\
+io.github.cfactorcomputing.odin.core.bootstrap.config.PropertySourceBootstrapConfiguration
 org.springframework.context.ApplicationListener=\
-in.cfcomputing.odin.core.bootstrap.BootstrapApplicationListener
+io.github.cfactorcomputing.odin.core.bootstrap.BootstrapApplicationListener

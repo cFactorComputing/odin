@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>odin</artifactId>
-        <groupId>in.cfcomputing</groupId>
+        <groupId>io.github.cfactorcomputing</groupId>
         <version>2.0-SNAPSHOT</version>
     </parent>
     <prerequisites>
@@ -12,10 +12,10 @@
     </prerequisites>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>in.cfcomputing.odin</groupId>
+    <groupId>io.github.cfactorcomputing.odin</groupId>
     <artifactId>odin-domain</artifactId>
     <name>cFactor::Odin::Domain</name>
-    <url>http://cfcomputing.in/</url>
+    <url>https://cfactorcomputing.github.io/</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
