@@ -4,15 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>odin</artifactId>
-        <groupId>in.cfcomputing</groupId>
-        <version>1.4-SNAPSHOT</version>
+        <groupId>io.github.cfactorcomputing</groupId>
+        <version>2.0-SNAPSHOT</version>
     </parent>
+    <prerequisites>
+        <maven>3.5.0</maven>
+    </prerequisites>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>in.cfcomputing.odin</groupId>
+    <groupId>io.github.cfactorcomputing.odin</groupId>
     <artifactId>odin-domain</artifactId>
     <name>cFactor::Odin::Domain</name>
-    <url>http://cfcomputing.in/</url>
+    <url>https://cfactorcomputing.github.io/</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -26,6 +29,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>

@@ -1,0 +1,5 @@
+io.github.cfactorcomputing.odin.core.bootstrap.config.annotations.OdinConfiguration=\
+io.github.cfactorcomputing.odin.mvc.config.PlatformConfiguration,\
+io.github.cfactorcomputing.odin.mvc.server.config.EmbeddedServerConfiguration,\
+io.github.cfactorcomputing.odin.mvc.security.config.OdinSecurityConfiguration,\
+io.github.cfactorcomputing.odin.mvc.config.WebConfiguration

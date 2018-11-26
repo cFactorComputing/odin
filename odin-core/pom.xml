@@ -19,20 +19,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>in.cfcomputing</groupId>
+        <groupId>io.github.cfactorcomputing</groupId>
         <artifactId>odin</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>2.0-SNAPSHOT</version>
     </parent>
-    <groupId>in.cfcomputing.odin</groupId>
+    <prerequisites>
+        <maven>3.5.0</maven>
+    </prerequisites>
+    <groupId>io.github.cfactorcomputing.odin</groupId>
     <artifactId>odin-core</artifactId>
     <name>cFactor::Odin::Core</name>
-    <url>http://cfcomputing.in/</url>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <url>https://cfactorcomputing.github.io/</url>
     <dependencies>
         <dependency>
-            <groupId>in.cfcomputing.odin</groupId>
+            <groupId>io.github.cfactorcomputing.odin</groupId>
             <artifactId>odin-domain</artifactId>
         </dependency>
         <dependency>
@@ -42,25 +42,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -89,69 +75,16 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.netflix.ribbon</groupId>
-            <artifactId>ribbon-loadbalancer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.netflix.ribbon</groupId>
-            <artifactId>ribbon-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.netflix.servo</groupId>
-            <artifactId>servo-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-jmx</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-util</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty.http2</groupId>
-            <artifactId>http2-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
         </dependency>
         <dependency>
             <groupId>ognl</groupId>
             <artifactId>ognl</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -160,17 +93,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.ryantenney.metrics</groupId>
@@ -189,14 +113,6 @@
             <artifactId>metrics-servlets</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.netflix.ribbon</groupId>
-            <artifactId>ribbon-httpclient</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>transport</artifactId>
         </dependency>
@@ -205,7 +121,7 @@
             <artifactId>elasticsearch</artifactId>
         </dependency>
         <dependency>
-            <groupId>in.cfcomputing.odin</groupId>
+            <groupId>io.github.cfactorcomputing.odin</groupId>
             <artifactId>odin-domain</artifactId>
         </dependency>
         <dependency>
@@ -217,9 +133,16 @@
             <artifactId>spring-data-commons</artifactId>
         </dependency>
         <dependency>
-            <groupId>in.cfcomputing.odin</groupId>
+            <groupId>io.github.cfactorcomputing.odin</groupId>
             <artifactId>odin-test</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+        </dependency>
     </dependencies>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 </project>

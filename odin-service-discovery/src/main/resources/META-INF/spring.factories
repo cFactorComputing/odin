@@ -1,0 +1,4 @@
+io.github.cfactorcomputing.odin.core.bootstrap.config.annotations.OdinConfiguration=\
+in.cfcomputing.odin.core.bootstrap.discovery.config.ServiceRegistrationConfiguration
+io.github.cfactorcomputing.odin.core.bootstrap.config.annotations.OdinBootstrapConfiguration=\
+in.cfcomputing.odin.core.bootstrap.discovery.config.ServiceDiscoveryConfiguration
