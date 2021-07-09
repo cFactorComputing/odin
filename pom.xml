@@ -40,7 +40,7 @@
         <odin-junit.version>4.12</odin-junit.version>
         <odin-spring-boot.version>2.0.6.RELEASE</odin-spring-boot.version>
         <odin-spring-kafka.version>1.1.1.RELEASE</odin-spring-kafka.version>
-        <odin-jetty.version>9.4.11.v20180605</odin-jetty.version>
+        <odin-jetty.version>9.4.37.v20210219</odin-jetty.version>
         <odin-jacoco.version>0.8.2</odin-jacoco.version>
         <odin-curator.version>2.10.0</odin-curator.version>
         <odin-commons-collections4.version>4.1</odin-commons-collections4.version>
