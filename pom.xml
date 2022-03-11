@@ -46,7 +46,7 @@
         <odin-commons-collections4.version>4.1</odin-commons-collections4.version>
         <odin-commons-lang3.version>3.4</odin-commons-lang3.version>
         <odin-hikariCP.verion>2.7.8</odin-hikariCP.verion>
-        <odin-jackson.version>2.9.8</odin-jackson.version>
+        <odin-jackson.version>2.13.0</odin-jackson.version>
         <odin-netflix-zuul.version>1.3.0</odin-netflix-zuul.version>
         <odin-netflix-hystrix.version>1.5.8</odin-netflix-hystrix.version>
         <odin-netflix-ribbon.version>2.2.2</odin-netflix-ribbon.version>
