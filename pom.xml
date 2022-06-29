@@ -58,7 +58,7 @@
         <odin-metrics-spring.version>3.1.3</odin-metrics-spring.version>
         <odin-metrics.version>3.1.2</odin-metrics.version>
         <odin-spring-cloud-netflix.version>1.3.1.RELEASE</odin-spring-cloud-netflix.version>
-        <odin-elastic-search.version>6.1.0</odin-elastic-search.version>
+        <odin-elastic-search.version>7.17.5</odin-elastic-search.version>
         <odin-json-path.version>2.2.0</odin-json-path.version>
         <odin-spring-web.version>${spring.version}</odin-spring-web.version>
         <odin-hazelcast.version>3.9.3</odin-hazelcast.version>
