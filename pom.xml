@@ -60,7 +60,7 @@
         <odin-spring-cloud-netflix.version>1.3.1.RELEASE</odin-spring-cloud-netflix.version>
         <odin-elastic-search.version>6.1.0</odin-elastic-search.version>
         <odin-json-path.version>2.2.0</odin-json-path.version>
-        <odin-spring-web.version>${spring.version}</odin-spring-web.version>
+        <odin-spring-web.version>5.2.24.RELEASE</odin-spring-web.version>
         <odin-hazelcast.version>3.9.3</odin-hazelcast.version>
         <odin-spring-data.version>2.0.7.RELEASE</odin-spring-data.version>
         <odin.version>2.0-SNAPSHOT</odin.version>
